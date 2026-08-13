@@ -1,0 +1,16 @@
+services:
+  postgres:
+    image: postgres:17
+    container_name: finpay-postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: finpay
+      POSTGRES_USER: finpay
+      POSTGRES_PASSWORD: finpay_dev_password
+    ports:
+      - "5434:5432"
+    volumes:
+      - finpay_postgres_data:/var/lib/postgresql/data
+
+volumes:
+  finpay_postgres_data:
