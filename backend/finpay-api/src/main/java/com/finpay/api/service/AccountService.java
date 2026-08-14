@@ -3,6 +3,9 @@ package com.finpay.api.service;
 import com.finpay.api.dto.CreateAccountRequest;
 import com.finpay.api.entity.Account;
 import com.finpay.api.entity.User;
+import com.finpay.api.exception.AccountNotFoundException;
+import com.finpay.api.exception.DuplicateResourceException;
+import com.finpay.api.exception.UserNotFoundException;
 import com.finpay.api.repository.AccountRepository;
 import com.finpay.api.repository.UserRepository;
 import org.springframework.stereotype.Service;
@@ -27,10 +30,11 @@ public class AccountService {
 
         User user = userRepository.findById(request.getUserId())
                 .orElseThrow(() ->
-                        new RuntimeException("User not found"));
+                        new UserNotFoundException(request.getUserId()));
 
         if (accountRepository.findByUserId(user.getId()).isPresent()) {
-            throw new RuntimeException("User already has an account");
+            throw new DuplicateResourceException(
+                    "User already has an account");
         }
 
         Account account = new Account();
@@ -45,21 +49,23 @@ public class AccountService {
 
         return accountRepository.findById(id)
                 .orElseThrow(() ->
-                        new RuntimeException("Account not found"));
+                        new AccountNotFoundException(id));
     }
 
     public Account getAccountByUserId(Long userId) {
 
         return accountRepository.findByUserId(userId)
                 .orElseThrow(() ->
-                        new RuntimeException("Account not found"));
+                        new AccountNotFoundException(userId));
     }
 
     public Account getAccountByNumber(String accountNumber) {
 
         return accountRepository.findByAccountNumber(accountNumber)
                 .orElseThrow(() ->
-                        new RuntimeException("Account not found"));
+                        new AccountNotFoundException(
+                                -1L
+                        ));
     }
 
     private String generateAccountNumber() {

@@ -1,0 +1,201 @@
+package com.finpay.api.service;
+
+import com.finpay.api.entity.Account;
+import com.finpay.api.exception.AccountNotFoundException;
+import com.finpay.api.entity.Transaction;
+import com.finpay.api.entity.TransactionStatus;
+import com.finpay.api.entity.TransactionType;
+import com.finpay.api.repository.AccountRepository;
+import com.finpay.api.repository.TransactionRepository;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import com.finpay.api.exception.TransactionNotFoundException;
+import java.math.BigDecimal;
+import java.time.LocalDateTime;
+import java.util.UUID;
+import java.util.List;
+@Service
+public class TransactionService {
+
+    private final AccountRepository accountRepository;
+    private final TransactionRepository transactionRepository;
+
+    public TransactionService(
+            AccountRepository accountRepository,
+            TransactionRepository transactionRepository) {
+
+        this.accountRepository = accountRepository;
+        this.transactionRepository = transactionRepository;
+    }
+
+    @Transactional
+    public Transaction deposit(
+            Long accountId,
+            BigDecimal amount,
+            String description) {
+
+        if (amount == null || amount.compareTo(BigDecimal.ZERO) <= 0) {
+            throw new IllegalArgumentException(
+                    "Deposit amount must be greater than zero");
+        }
+
+        Account account = accountRepository.findById(accountId)
+                .orElseThrow(() ->
+                        new AccountNotFoundException(accountId));
+
+        account.setBalance(
+                account.getBalance().add(amount)
+        );
+
+        accountRepository.save(account);
+
+        Transaction transaction = new Transaction();
+
+        transaction.setAmount(amount);
+        transaction.setCurrency(account.getCurrency());
+        transaction.setDescription(description);
+        transaction.setReference(generateReference());
+        transaction.setStatus(TransactionStatus.COMPLETED);
+        transaction.setType(TransactionType.DEPOSIT);
+        transaction.setDestinationAccount(account);
+        transaction.setCompletedAt(LocalDateTime.now());
+
+        return transactionRepository.save(transaction);
+    }
+     @Transactional
+public Transaction withdraw(
+        Long accountId,
+        BigDecimal amount,
+        String description) {
+
+    if (amount == null || amount.compareTo(BigDecimal.ZERO) <= 0) {
+        throw new IllegalArgumentException(
+                "Withdrawal amount must be greater than zero");
+    }
+
+    Account account = accountRepository.findById(accountId)
+            .orElseThrow(() ->
+                    new AccountNotFoundException(accountId));
+
+    if (account.getBalance().compareTo(amount) < 0) {
+        throw new IllegalArgumentException(
+                "Insufficient account balance");
+    }
+
+    account.setBalance(
+            account.getBalance().subtract(amount)
+    );
+
+    accountRepository.save(account);
+
+    Transaction transaction = new Transaction();
+
+    transaction.setAmount(amount);
+    transaction.setCurrency(account.getCurrency());
+    transaction.setDescription(description);
+    transaction.setReference(generateReference());
+    transaction.setStatus(TransactionStatus.COMPLETED);
+    transaction.setType(TransactionType.WITHDRAWAL);
+    transaction.setSourceAccount(account);
+    transaction.setCompletedAt(LocalDateTime.now());
+
+    return transactionRepository.save(transaction);
+  } 
+    @Transactional
+    public Transaction transfer(
+            Long sourceAccountId,
+            Long destinationAccountId,
+            BigDecimal amount,
+            String description) {
+
+        if (amount == null || amount.compareTo(BigDecimal.ZERO) <= 0) {
+            throw new IllegalArgumentException(
+                    "Transfer amount must be greater than zero");
+        }
+
+        if (sourceAccountId.equals(destinationAccountId)) {
+            throw new IllegalArgumentException(
+                    "Source and destination accounts must be different");
+        }
+
+        Account sourceAccount = accountRepository.findById(sourceAccountId)
+                .orElseThrow(() ->
+                        new AccountNotFoundException(sourceAccountId));
+
+        Account destinationAccount = accountRepository.findById(destinationAccountId)
+                .orElseThrow(() ->
+                        new AccountNotFoundException(destinationAccountId));
+
+        if (!sourceAccount.getCurrency()
+                .equals(destinationAccount.getCurrency())) {
+
+            throw new IllegalArgumentException(
+                    "Source and destination currencies must match");
+        }
+
+        if (sourceAccount.getBalance().compareTo(amount) < 0) {
+            throw new IllegalArgumentException(
+                    "Insufficient account balance");
+        }
+
+        sourceAccount.setBalance(
+                sourceAccount.getBalance().subtract(amount)
+        );
+
+        destinationAccount.setBalance(
+                destinationAccount.getBalance().add(amount)
+        );
+
+        accountRepository.save(sourceAccount);
+        accountRepository.save(destinationAccount);
+
+        Transaction transaction = new Transaction();
+
+        transaction.setAmount(amount);
+        transaction.setCurrency(sourceAccount.getCurrency());
+        transaction.setDescription(description);
+        transaction.setReference(generateReference());
+        transaction.setStatus(TransactionStatus.COMPLETED);
+        transaction.setType(TransactionType.TRANSFER);
+        transaction.setSourceAccount(sourceAccount);
+        transaction.setDestinationAccount(destinationAccount);
+        transaction.setCompletedAt(LocalDateTime.now());
+
+        return transactionRepository.save(transaction);
+    }
+      @Transactional(readOnly = true)
+      public Transaction getTransactionByReference(String reference) {
+
+      return transactionRepository.findByReference(reference)
+            .orElseThrow(() ->  
+                      new TransactionNotFoundException(reference));
+                   
+}
+@Transactional(readOnly = true)
+public List<Transaction> getTransactionsByAccount(Long accountId) {
+
+    if (!accountRepository.existsById(accountId)) {
+        throw new AccountNotFoundException(accountId);
+    }
+
+    List<Transaction> sourceTransactions =
+            transactionRepository.findBySourceAccountId(accountId);
+
+    List<Transaction> destinationTransactions =
+            transactionRepository.findByDestinationAccountId(accountId);
+
+    sourceTransactions.addAll(destinationTransactions);
+
+    return sourceTransactions;
+}
+
+    private String generateReference() {
+
+        return "TXN-" +
+                UUID.randomUUID()
+                        .toString()
+                        .replace("-", "")
+                        .substring(0, 16)
+                        .toUpperCase();
+    }
+}

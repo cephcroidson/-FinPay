@@ -3,6 +3,7 @@ package com.finpay.api.service;
 import com.finpay.api.dto.RegisterUserRequest;
 import com.finpay.api.entity.User;
 import com.finpay.api.entity.UserStatus;
+import com.finpay.api.exception.DuplicateResourceException;
 import com.finpay.api.repository.UserRepository;
 import org.springframework.stereotype.Service;
 
@@ -18,11 +19,13 @@ public class UserService {
     public User registerUser(RegisterUserRequest request) {
 
         if (userRepository.existsByEmail(request.getEmail())) {
-            throw new RuntimeException("Email already registered");
+            throw new DuplicateResourceException(
+                    "Email already registered");
         }
 
         if (userRepository.existsByPhoneNumber(request.getPhoneNumber())) {
-            throw new RuntimeException("Phone number already registered");
+            throw new DuplicateResourceException(
+                    "Phone number already registered");
         }
 
         User user = new User();
@@ -33,8 +36,8 @@ public class UserService {
         user.setPhoneNumber(request.getPhoneNumber());
 
         // Temporary only.
-        // We will replace this with BCrypt hashing
-        // when authentication is implemented.
+        // BCrypt hashing will be implemented
+        // during the authentication/security stage.
         user.setPassword(request.getPassword());
 
         user.setStatus(UserStatus.ACTIVE);
