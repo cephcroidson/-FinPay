@@ -5,27 +5,35 @@ import com.finpay.api.entity.User;
 import com.finpay.api.entity.UserStatus;
 import com.finpay.api.exception.DuplicateResourceException;
 import com.finpay.api.repository.UserRepository;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @Service
 public class UserService {
 
     private final UserRepository userRepository;
+    private final PasswordEncoder passwordEncoder;
 
-    public UserService(UserRepository userRepository) {
+    public UserService(
+            UserRepository userRepository,
+            PasswordEncoder passwordEncoder) {
+
         this.userRepository = userRepository;
+        this.passwordEncoder = passwordEncoder;
     }
 
     public User registerUser(RegisterUserRequest request) {
 
         if (userRepository.existsByEmail(request.getEmail())) {
             throw new DuplicateResourceException(
-                    "Email already registered");
+                    "Email already registered"
+            );
         }
 
         if (userRepository.existsByPhoneNumber(request.getPhoneNumber())) {
             throw new DuplicateResourceException(
-                    "Phone number already registered");
+                    "Phone number already registered"
+            );
         }
 
         User user = new User();
@@ -35,10 +43,10 @@ public class UserService {
         user.setEmail(request.getEmail());
         user.setPhoneNumber(request.getPhoneNumber());
 
-        // Temporary only.
-        // BCrypt hashing will be implemented
-        // during the authentication/security stage.
-        user.setPassword(request.getPassword());
+        // Hash password before storing it
+        user.setPassword(
+                passwordEncoder.encode(request.getPassword())
+        );
 
         user.setStatus(UserStatus.ACTIVE);
 

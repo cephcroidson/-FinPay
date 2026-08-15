@@ -171,24 +171,19 @@ public Transaction withdraw(
                       new TransactionNotFoundException(reference));
                    
 }
-@Transactional(readOnly = true)
-public List<Transaction> getTransactionsByAccount(Long accountId) {
+   @Transactional(readOnly = true)
+public java.util.List<Transaction> getAccountTransactions(Long accountId) {
 
     if (!accountRepository.existsById(accountId)) {
         throw new AccountNotFoundException(accountId);
     }
 
-    List<Transaction> sourceTransactions =
-            transactionRepository.findBySourceAccountId(accountId);
-
-    List<Transaction> destinationTransactions =
-            transactionRepository.findByDestinationAccountId(accountId);
-
-    sourceTransactions.addAll(destinationTransactions);
-
-    return sourceTransactions;
+    return transactionRepository
+            .findBySourceAccountIdOrDestinationAccountId(
+                    accountId,
+                    accountId
+            );
 }
-
     private String generateReference() {
 
         return "TXN-" +

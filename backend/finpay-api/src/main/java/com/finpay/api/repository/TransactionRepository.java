@@ -15,14 +15,15 @@ public interface TransactionRepository extends JpaRepository<Transaction, Long> 
     List<Transaction> findBySourceAccountId(Long accountId);
 
     List<Transaction> findByDestinationAccountId(Long accountId);
-    List<Transaction> findBySourceAccountIdOrDestinationAccountId(
-        Long sourceAccountId,
-        Long destinationAccountId
-);
 
     List<Transaction> findByType(TransactionType type);
 
     List<Transaction> findByStatus(TransactionStatus status);
 
     boolean existsByReference(String reference);
+
+    List<Transaction> findBySourceAccountIdOrDestinationAccountId(
+            Long sourceAccountId,
+            Long destinationAccountId
+    );
 }

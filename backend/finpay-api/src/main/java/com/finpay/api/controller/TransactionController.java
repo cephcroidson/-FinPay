@@ -1,14 +1,17 @@
 package com.finpay.api.controller;
-import com.finpay.api.dto.TransferRequest;
+
 import com.finpay.api.dto.DepositRequest;
 import com.finpay.api.dto.TransactionResponse;
+import com.finpay.api.dto.TransferRequest;
 import com.finpay.api.dto.WithdrawRequest;
 import com.finpay.api.entity.Transaction;
 import com.finpay.api.service.TransactionService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
- import java.util.List;
+
+import java.util.List;
+
 @RestController
 @RequestMapping("/api/transactions")
 public class TransactionController {
@@ -48,6 +51,7 @@ public class TransactionController {
                 .status(HttpStatus.CREATED)
                 .body(new TransactionResponse(transaction));
     }
+
     @PostMapping("/transfer")
     public ResponseEntity<TransactionResponse> transfer(
             @RequestBody TransferRequest request) {
@@ -63,28 +67,29 @@ public class TransactionController {
                 .status(HttpStatus.CREATED)
                 .body(new TransactionResponse(transaction));
     }
-          @GetMapping("/reference/{reference}")
-public ResponseEntity<TransactionResponse> getTransactionByReference(
-        @PathVariable String reference) {
 
-    Transaction transaction =
-            transactionService.getTransactionByReference(reference);
+    @GetMapping("/reference/{reference}")
+    public ResponseEntity<TransactionResponse> getTransactionByReference(
+            @PathVariable String reference) {
 
-    return ResponseEntity.ok(
-            new TransactionResponse(transaction)
-    );
-}
-@GetMapping("/account/{accountId}")
-public ResponseEntity<List<TransactionResponse>> getTransactionsByAccount(
-        @PathVariable Long accountId) {
+        Transaction transaction =
+                transactionService.getTransactionByReference(reference);
 
-    List<Transaction> transactions =
-            transactionService.getTransactionsByAccount(accountId);
+        return ResponseEntity.ok(
+                new TransactionResponse(transaction)
+        );
+    }
 
-    List<TransactionResponse> response = transactions.stream()
-            .map(TransactionResponse::new)
-            .toList();
+    @GetMapping("/account/{accountId}")
+    public ResponseEntity<List<TransactionResponse>> getAccountTransactions(
+            @PathVariable Long accountId) {
 
-    return ResponseEntity.ok(response);
-}
+        List<TransactionResponse> transactions =
+                transactionService.getAccountTransactions(accountId)
+                        .stream()
+                        .map(TransactionResponse::new)
+                        .toList();
+
+        return ResponseEntity.ok(transactions);
+    }
 }
