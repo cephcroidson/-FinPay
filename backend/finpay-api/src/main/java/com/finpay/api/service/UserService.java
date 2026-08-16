@@ -1,5 +1,5 @@
 package com.finpay.api.service;
-
+import com.finpay.api.exception.UserNotFoundException;
 import com.finpay.api.dto.RegisterUserRequest;
 import com.finpay.api.entity.User;
 import com.finpay.api.entity.UserStatus;
@@ -52,4 +52,10 @@ public class UserService {
 
         return userRepository.save(user);
     }
+public User getUserByEmail(String email) {
+
+    return userRepository.findByEmail(email)
+            .orElseThrow(() ->
+                    new UserNotFoundException(email));
+}
 }

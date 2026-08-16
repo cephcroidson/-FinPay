@@ -8,6 +8,7 @@ import com.finpay.api.entity.Transaction;
 import com.finpay.api.service.TransactionService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -24,12 +25,14 @@ public class TransactionController {
 
     @PostMapping("/deposit")
     public ResponseEntity<TransactionResponse> deposit(
-            @RequestBody DepositRequest request) {
+            @RequestBody DepositRequest request,
+            Authentication authentication) {
 
         Transaction transaction = transactionService.deposit(
                 request.getAccountId(),
                 request.getAmount(),
-                request.getDescription()
+                request.getDescription(),
+                authentication.getName()
         );
 
         return ResponseEntity
@@ -39,12 +42,14 @@ public class TransactionController {
 
     @PostMapping("/withdraw")
     public ResponseEntity<TransactionResponse> withdraw(
-            @RequestBody WithdrawRequest request) {
+            @RequestBody WithdrawRequest request,
+            Authentication authentication) {
 
         Transaction transaction = transactionService.withdraw(
                 request.getAccountId(),
                 request.getAmount(),
-                request.getDescription()
+                request.getDescription(),
+                authentication.getName()
         );
 
         return ResponseEntity
@@ -54,13 +59,15 @@ public class TransactionController {
 
     @PostMapping("/transfer")
     public ResponseEntity<TransactionResponse> transfer(
-            @RequestBody TransferRequest request) {
+            @RequestBody TransferRequest request,
+            Authentication authentication) {
 
         Transaction transaction = transactionService.transfer(
                 request.getSourceAccountId(),
                 request.getDestinationAccountId(),
                 request.getAmount(),
-                request.getDescription()
+                request.getDescription(),
+                authentication.getName()
         );
 
         return ResponseEntity
@@ -70,10 +77,14 @@ public class TransactionController {
 
     @GetMapping("/reference/{reference}")
     public ResponseEntity<TransactionResponse> getTransactionByReference(
-            @PathVariable String reference) {
+            @PathVariable String reference,
+            Authentication authentication) {
 
         Transaction transaction =
-                transactionService.getTransactionByReference(reference);
+                transactionService.getTransactionByReference(
+                        reference,
+                        authentication.getName()
+                );
 
         return ResponseEntity.ok(
                 new TransactionResponse(transaction)
@@ -82,14 +93,19 @@ public class TransactionController {
 
     @GetMapping("/account/{accountId}")
     public ResponseEntity<List<TransactionResponse>> getAccountTransactions(
-            @PathVariable Long accountId) {
+            @PathVariable Long accountId,
+            Authentication authentication) {
 
         List<TransactionResponse> transactions =
-                transactionService.getAccountTransactions(accountId)
-                        .stream()
-                        .map(TransactionResponse::new)
-                        .toList();
+                transactionService.getAccountTransactions(
+                        accountId,
+                        authentication.getName()
+                )
+                .stream()
+                .map(TransactionResponse::new)
+                .toList();
 
         return ResponseEntity.ok(transactions);
     }
 }
+

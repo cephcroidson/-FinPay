@@ -1,5 +1,5 @@
 package com.finpay.api.service;
-
+import com.finpay.api.exception.AccessDeniedException;
 import com.finpay.api.dto.CreateAccountRequest;
 import com.finpay.api.entity.Account;
 import com.finpay.api.entity.User;
@@ -26,46 +26,70 @@ public class AccountService {
         this.userRepository = userRepository;
     }
 
-    public Account createAccount(CreateAccountRequest request) {
+    public Account createAccount(
+            CreateAccountRequest request,
+            String authenticatedEmail) {
 
-        User user = userRepository.findById(request.getUserId())
-                .orElseThrow(() ->
-                        new UserNotFoundException(request.getUserId()));
+        User authenticatedUser = userRepository
+                .findByEmail(authenticatedEmail)
+                 .orElseThrow(() ->
+        new UserNotFoundException(-1L));
 
-        if (accountRepository.findByUserId(user.getId()).isPresent()) {
+        if (accountRepository
+                .findByUserId(authenticatedUser.getId())
+                .isPresent()) {
+
             throw new DuplicateResourceException(
-                    "User already has an account");
+                    "User already has an account"
+            );
         }
 
         Account account = new Account();
 
-        account.setUser(user);
+        account.setUser(authenticatedUser);
         account.setAccountNumber(generateAccountNumber());
 
         return accountRepository.save(account);
     }
 
-    public Account getAccountById(Long id) {
+    public Account getAccountById(
+            Long id,
+            String authenticatedEmail) {
 
-        return accountRepository.findById(id)
+        Account account = accountRepository.findById(id)
                 .orElseThrow(() ->
                         new AccountNotFoundException(id));
+
+        verifyOwnership(account, authenticatedEmail);
+
+        return account;
     }
 
-    public Account getAccountByUserId(Long userId) {
+    public Account getAccountByNumber(
+            String accountNumber,
+            String authenticatedEmail) {
 
-        return accountRepository.findByUserId(userId)
+        Account account = accountRepository
+                .findByAccountNumber(accountNumber)
                 .orElseThrow(() ->
-                        new AccountNotFoundException(userId));
+                        new AccountNotFoundException(-1L));
+
+        verifyOwnership(account, authenticatedEmail);
+
+        return account;
     }
 
-    public Account getAccountByNumber(String accountNumber) {
+    private void verifyOwnership(
+            Account account,
+            String authenticatedEmail) {
 
-        return accountRepository.findByAccountNumber(accountNumber)
-                .orElseThrow(() ->
-                        new AccountNotFoundException(
-                                -1L
-                        ));
+        if (!account.getUser()
+                .getEmail()
+                .equals(authenticatedEmail)) {
+throw new AccessDeniedException(
+        "You are not authorized to access this account"
+);
+        }
     }
 
     private String generateAccountNumber() {

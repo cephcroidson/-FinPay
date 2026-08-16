@@ -60,6 +60,15 @@ public ResponseEntity<Map<String, Object>> handleTransactionNotFound(
             exception.getMessage()
     );
 }
+@ExceptionHandler(AccessDeniedException.class)
+public ResponseEntity<Map<String, Object>> handleAccessDenied(
+        AccessDeniedException exception) {
+
+    return buildResponse(
+            HttpStatus.FORBIDDEN,
+            exception.getMessage()
+    );
+}
     private ResponseEntity<Map<String, Object>> buildResponse(
             HttpStatus status,
             String message) {

@@ -5,6 +5,7 @@ import com.finpay.api.entity.Account;
 import com.finpay.api.service.AccountService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -19,9 +20,13 @@ public class AccountController {
 
     @PostMapping
     public ResponseEntity<Account> createAccount(
-            @RequestBody CreateAccountRequest request) {
+            @RequestBody CreateAccountRequest request,
+            Authentication authentication) {
 
-        Account account = accountService.createAccount(request);
+        Account account = accountService.createAccount(
+                request,
+                authentication.getName()
+        );
 
         return ResponseEntity
                 .status(HttpStatus.CREATED)
@@ -30,28 +35,27 @@ public class AccountController {
 
     @GetMapping("/{id}")
     public ResponseEntity<Account> getAccountById(
-            @PathVariable Long id) {
+            @PathVariable Long id,
+            Authentication authentication) {
 
         return ResponseEntity.ok(
-                accountService.getAccountById(id)
-        );
-    }
-
-    @GetMapping("/user/{userId}")
-    public ResponseEntity<Account> getAccountByUserId(
-            @PathVariable Long userId) {
-
-        return ResponseEntity.ok(
-                accountService.getAccountByUserId(userId)
+                accountService.getAccountById(
+                        id,
+                        authentication.getName()
+                )
         );
     }
 
     @GetMapping("/number/{accountNumber}")
     public ResponseEntity<Account> getAccountByNumber(
-            @PathVariable String accountNumber) {
+            @PathVariable String accountNumber,
+            Authentication authentication) {
 
         return ResponseEntity.ok(
-                accountService.getAccountByNumber(accountNumber)
+                accountService.getAccountByNumber(
+                        accountNumber,
+                        authentication.getName()
+                )
         );
     }
 }

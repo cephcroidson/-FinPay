@@ -1,19 +1,21 @@
 package com.finpay.api.service;
 
 import com.finpay.api.entity.Account;
-import com.finpay.api.exception.AccountNotFoundException;
 import com.finpay.api.entity.Transaction;
 import com.finpay.api.entity.TransactionStatus;
 import com.finpay.api.entity.TransactionType;
+import com.finpay.api.exception.AccountNotFoundException;
+import com.finpay.api.exception.TransactionNotFoundException;
 import com.finpay.api.repository.AccountRepository;
 import com.finpay.api.repository.TransactionRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import com.finpay.api.exception.TransactionNotFoundException;
+
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
-import java.util.UUID;
 import java.util.List;
+import java.util.UUID;
+
 @Service
 public class TransactionService {
 
@@ -28,11 +30,16 @@ public class TransactionService {
         this.transactionRepository = transactionRepository;
     }
 
+    // =========================================================
+    // DEPOSIT
+    // =========================================================
+
     @Transactional
     public Transaction deposit(
             Long accountId,
             BigDecimal amount,
-            String description) {
+            String description,
+            String authenticatedEmail) {
 
         if (amount == null || amount.compareTo(BigDecimal.ZERO) <= 0) {
             throw new IllegalArgumentException(
@@ -42,6 +49,9 @@ public class TransactionService {
         Account account = accountRepository.findById(accountId)
                 .orElseThrow(() ->
                         new AccountNotFoundException(accountId));
+
+        // User must own the account
+        verifyOwnership(account, authenticatedEmail);
 
         account.setBalance(
                 account.getBalance().add(amount)
@@ -62,51 +72,66 @@ public class TransactionService {
 
         return transactionRepository.save(transaction);
     }
-     @Transactional
-public Transaction withdraw(
-        Long accountId,
-        BigDecimal amount,
-        String description) {
 
-    if (amount == null || amount.compareTo(BigDecimal.ZERO) <= 0) {
-        throw new IllegalArgumentException(
-                "Withdrawal amount must be greater than zero");
+    // =========================================================
+    // WITHDRAW
+    // =========================================================
+
+    @Transactional
+    public Transaction withdraw(
+            Long accountId,
+            BigDecimal amount,
+            String description,
+            String authenticatedEmail) {
+
+        if (amount == null || amount.compareTo(BigDecimal.ZERO) <= 0) {
+            throw new IllegalArgumentException(
+                    "Withdrawal amount must be greater than zero");
+        }
+
+        Account account = accountRepository.findById(accountId)
+                .orElseThrow(() ->
+                        new AccountNotFoundException(accountId));
+
+        // User must own the account
+        verifyOwnership(account, authenticatedEmail);
+
+        if (account.getBalance().compareTo(amount) < 0) {
+            throw new IllegalArgumentException(
+                    "Insufficient account balance");
+        }
+
+        account.setBalance(
+                account.getBalance().subtract(amount)
+        );
+
+        accountRepository.save(account);
+
+        Transaction transaction = new Transaction();
+
+        transaction.setAmount(amount);
+        transaction.setCurrency(account.getCurrency());
+        transaction.setDescription(description);
+        transaction.setReference(generateReference());
+        transaction.setStatus(TransactionStatus.COMPLETED);
+        transaction.setType(TransactionType.WITHDRAWAL);
+        transaction.setSourceAccount(account);
+        transaction.setCompletedAt(LocalDateTime.now());
+
+        return transactionRepository.save(transaction);
     }
 
-    Account account = accountRepository.findById(accountId)
-            .orElseThrow(() ->
-                    new AccountNotFoundException(accountId));
+    // =========================================================
+    // TRANSFER
+    // =========================================================
 
-    if (account.getBalance().compareTo(amount) < 0) {
-        throw new IllegalArgumentException(
-                "Insufficient account balance");
-    }
-
-    account.setBalance(
-            account.getBalance().subtract(amount)
-    );
-
-    accountRepository.save(account);
-
-    Transaction transaction = new Transaction();
-
-    transaction.setAmount(amount);
-    transaction.setCurrency(account.getCurrency());
-    transaction.setDescription(description);
-    transaction.setReference(generateReference());
-    transaction.setStatus(TransactionStatus.COMPLETED);
-    transaction.setType(TransactionType.WITHDRAWAL);
-    transaction.setSourceAccount(account);
-    transaction.setCompletedAt(LocalDateTime.now());
-
-    return transactionRepository.save(transaction);
-  } 
     @Transactional
     public Transaction transfer(
             Long sourceAccountId,
             Long destinationAccountId,
             BigDecimal amount,
-            String description) {
+            String description,
+            String authenticatedEmail) {
 
         if (amount == null || amount.compareTo(BigDecimal.ZERO) <= 0) {
             throw new IllegalArgumentException(
@@ -122,9 +147,13 @@ public Transaction withdraw(
                 .orElseThrow(() ->
                         new AccountNotFoundException(sourceAccountId));
 
-        Account destinationAccount = accountRepository.findById(destinationAccountId)
-                .orElseThrow(() ->
-                        new AccountNotFoundException(destinationAccountId));
+        // User must own the account money is coming from
+        verifyOwnership(sourceAccount, authenticatedEmail);
+
+        Account destinationAccount = accountRepository.findById(
+                destinationAccountId
+        ).orElseThrow(() ->
+                new AccountNotFoundException(destinationAccountId));
 
         if (!sourceAccount.getCurrency()
                 .equals(destinationAccount.getCurrency())) {
@@ -163,27 +192,108 @@ public Transaction withdraw(
 
         return transactionRepository.save(transaction);
     }
-      @Transactional(readOnly = true)
-      public Transaction getTransactionByReference(String reference) {
 
-      return transactionRepository.findByReference(reference)
-            .orElseThrow(() ->  
-                      new TransactionNotFoundException(reference));
-                   
-}
-   @Transactional(readOnly = true)
-public java.util.List<Transaction> getAccountTransactions(Long accountId) {
+    // =========================================================
+    // GET TRANSACTION BY REFERENCE
+    // =========================================================
 
-    if (!accountRepository.existsById(accountId)) {
-        throw new AccountNotFoundException(accountId);
+    @Transactional(readOnly = true)
+    public Transaction getTransactionByReference(
+            String reference,
+            String authenticatedEmail) {
+
+        Transaction transaction =
+                transactionRepository.findByReference(reference)
+                        .orElseThrow(() ->
+                                new TransactionNotFoundException(reference));
+
+        verifyTransactionAccess(
+                transaction,
+                authenticatedEmail
+        );
+
+        return transaction;
     }
 
-    return transactionRepository
-            .findBySourceAccountIdOrDestinationAccountId(
-                    accountId,
-                    accountId
+    // =========================================================
+    // GET ACCOUNT TRANSACTIONS
+    // =========================================================
+
+    @Transactional(readOnly = true)
+    public List<Transaction> getAccountTransactions(
+            Long accountId,
+            String authenticatedEmail) {
+
+        Account account = accountRepository.findById(accountId)
+                .orElseThrow(() ->
+                        new AccountNotFoundException(accountId));
+
+        // User must own the account
+        verifyOwnership(account, authenticatedEmail);
+
+        return transactionRepository
+                .findBySourceAccountIdOrDestinationAccountId(
+                        accountId,
+                        accountId
+                );
+    }
+
+    // =========================================================
+    // OWNERSHIP CHECK
+    // =========================================================
+
+    private void verifyOwnership(
+            Account account,
+            String authenticatedEmail) {
+
+        if (!account.getUser()
+                .getEmail()
+                .equals(authenticatedEmail)) {
+
+            // Return 404 instead of revealing another user's account
+            throw new AccountNotFoundException(
+                    account.getId()
             );
-}
+        }
+    }
+
+    // =========================================================
+    // TRANSACTION ACCESS CHECK
+    // =========================================================
+
+    private void verifyTransactionAccess(
+            Transaction transaction,
+            String authenticatedEmail) {
+
+        boolean hasAccess = false;
+
+        if (transaction.getSourceAccount() != null) {
+
+            hasAccess = transaction.getSourceAccount()
+                    .getUser()
+                    .getEmail()
+                    .equals(authenticatedEmail);
+        }
+
+        if (!hasAccess && transaction.getDestinationAccount() != null) {
+
+            hasAccess = transaction.getDestinationAccount()
+                    .getUser()
+                    .getEmail()
+                    .equals(authenticatedEmail);
+        }
+
+        if (!hasAccess) {
+            throw new TransactionNotFoundException(
+                    transaction.getReference()
+            );
+        }
+    }
+
+    // =========================================================
+    // TRANSACTION REFERENCE GENERATOR
+    // =========================================================
+
     private String generateReference() {
 
         return "TXN-" +
