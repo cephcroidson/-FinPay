@@ -1,5 +1,5 @@
 package com.finpay.api.controller;
-
+import jakarta.validation.Valid;
 import com.finpay.api.dto.CreateAccountRequest;
 import com.finpay.api.entity.Account;
 import com.finpay.api.service.AccountService;
@@ -20,7 +20,7 @@ public class AccountController {
 
     @PostMapping
     public ResponseEntity<Account> createAccount(
-            @RequestBody CreateAccountRequest request,
+            @Valid @RequestBody CreateAccountRequest request,
             Authentication authentication) {
 
         Account account = accountService.createAccount(

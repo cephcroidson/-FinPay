@@ -1,5 +1,5 @@
 package com.finpay.api.exception;
-
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -68,6 +68,33 @@ public ResponseEntity<Map<String, Object>> handleAccessDenied(
             HttpStatus.FORBIDDEN,
             exception.getMessage()
     );
+}
+    @ExceptionHandler(MethodArgumentNotValidException.class)
+public ResponseEntity<Map<String, Object>> handleValidationErrors(
+        MethodArgumentNotValidException exception) {
+
+    Map<String, String> errors = new LinkedHashMap<>();
+
+    exception.getBindingResult()
+            .getFieldErrors()
+            .forEach(error ->
+                    errors.put(
+                            error.getField(),
+                            error.getDefaultMessage()
+                    )
+            );
+
+    Map<String, Object> response = new LinkedHashMap<>();
+
+    response.put("timestamp", Instant.now());
+    response.put("status", HttpStatus.BAD_REQUEST.value());
+    response.put("error", "Validation Failed");
+    response.put("message", "Request contains invalid fields");
+    response.put("errors", errors);
+
+    return ResponseEntity
+            .status(HttpStatus.BAD_REQUEST)
+            .body(response);
 }
     private ResponseEntity<Map<String, Object>> buildResponse(
             HttpStatus status,

@@ -1,13 +1,26 @@
 package com.finpay.api.dto;
 
+import jakarta.validation.constraints.DecimalMin;
+import jakarta.validation.constraints.NotNull;
+
 import java.math.BigDecimal;
 
 public class TransferRequest {
 
+    @NotNull(message = "Source account ID is required")
     private Long sourceAccountId;
+
+    @NotNull(message = "Destination account ID is required")
     private Long destinationAccountId;
+
+    @NotNull(message = "Amount is required")
+    @DecimalMin(value = "0.01", message = "Amount must be greater than zero")
     private BigDecimal amount;
+
     private String description;
+
+    public TransferRequest() {
+    }
 
     public Long getSourceAccountId() {
         return sourceAccountId;

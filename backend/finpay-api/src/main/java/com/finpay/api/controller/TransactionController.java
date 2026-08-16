@@ -1,5 +1,5 @@
 package com.finpay.api.controller;
-
+import jakarta.validation.Valid;
 import com.finpay.api.dto.DepositRequest;
 import com.finpay.api.dto.TransactionResponse;
 import com.finpay.api.dto.TransferRequest;
@@ -25,7 +25,7 @@ public class TransactionController {
 
     @PostMapping("/deposit")
     public ResponseEntity<TransactionResponse> deposit(
-            @RequestBody DepositRequest request,
+@Valid @RequestBody DepositRequest request,
             Authentication authentication) {
 
         Transaction transaction = transactionService.deposit(
@@ -42,7 +42,7 @@ public class TransactionController {
 
     @PostMapping("/withdraw")
     public ResponseEntity<TransactionResponse> withdraw(
-            @RequestBody WithdrawRequest request,
+@Valid @RequestBody WithdrawRequest request,
             Authentication authentication) {
 
         Transaction transaction = transactionService.withdraw(
@@ -59,7 +59,7 @@ public class TransactionController {
 
     @PostMapping("/transfer")
     public ResponseEntity<TransactionResponse> transfer(
-            @RequestBody TransferRequest request,
+            @Valid @RequestBody TransferRequest request,
             Authentication authentication) {
 
         Transaction transaction = transactionService.transfer(

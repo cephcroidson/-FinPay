@@ -3,6 +3,7 @@ package com.finpay.api.controller;
 import com.finpay.api.dto.RegisterUserRequest;
 import com.finpay.api.entity.User;
 import com.finpay.api.service.UserService;
+import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -19,7 +20,7 @@ public class UserController {
 
     @PostMapping("/register")
     public ResponseEntity<User> register(
-            @RequestBody RegisterUserRequest request) {
+            @Valid @RequestBody RegisterUserRequest request) {
 
         User user = userService.registerUser(request);
 
