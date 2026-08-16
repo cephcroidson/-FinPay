@@ -1,8 +1,9 @@
 package com.finpay.api.service;
-import com.finpay.api.exception.AccessDeniedException;
+
 import com.finpay.api.dto.CreateAccountRequest;
 import com.finpay.api.entity.Account;
 import com.finpay.api.entity.User;
+import com.finpay.api.exception.AccessDeniedException;
 import com.finpay.api.exception.AccountNotFoundException;
 import com.finpay.api.exception.DuplicateResourceException;
 import com.finpay.api.exception.UserNotFoundException;
@@ -30,13 +31,19 @@ public class AccountService {
             CreateAccountRequest request,
             String authenticatedEmail) {
 
-        User authenticatedUser = userRepository
-                .findByEmail(authenticatedEmail)
-                 .orElseThrow(() ->
-        new UserNotFoundException(-1L));
+        User requestedUser = userRepository
+                .findById(request.getUserId())
+                .orElseThrow(() ->
+                        new UserNotFoundException(request.getUserId()));
+
+        if (!requestedUser.getEmail().equals(authenticatedEmail)) {
+            throw new AccessDeniedException(
+                    "You are not authorized to create an account for this user"
+            );
+        }
 
         if (accountRepository
-                .findByUserId(authenticatedUser.getId())
+                .findByUserId(requestedUser.getId())
                 .isPresent()) {
 
             throw new DuplicateResourceException(
@@ -46,7 +53,7 @@ public class AccountService {
 
         Account account = new Account();
 
-        account.setUser(authenticatedUser);
+        account.setUser(requestedUser);
         account.setAccountNumber(generateAccountNumber());
 
         return accountRepository.save(account);
@@ -86,9 +93,10 @@ public class AccountService {
         if (!account.getUser()
                 .getEmail()
                 .equals(authenticatedEmail)) {
-throw new AccessDeniedException(
-        "You are not authorized to access this account"
-);
+
+            throw new AccessDeniedException(
+                    "You are not authorized to access this account"
+            );
         }
     }
 
