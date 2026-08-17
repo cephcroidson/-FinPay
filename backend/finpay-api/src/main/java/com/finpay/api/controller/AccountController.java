@@ -32,6 +32,16 @@ public class AccountController {
                 .status(HttpStatus.CREATED)
                 .body(account);
     }
+@GetMapping("/me")
+public ResponseEntity<Account> getMyAccount(
+        Authentication authentication) {
+
+    return ResponseEntity.ok(
+            accountService.getMyAccount(
+                    authentication.getName()
+            )
+    );
+}
 
     @GetMapping("/{id}")
     public ResponseEntity<Account> getAccountById(

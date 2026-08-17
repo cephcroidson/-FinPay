@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { getAccount } from "../api/accountApi";
+import { getMyAccount } from "../api/accountApi";
 
 function Accounts() {
     const [account, setAccount] = useState(null);
@@ -9,7 +9,8 @@ function Accounts() {
     useEffect(() => {
         async function loadAccount() {
             try {
-                const data = await getAccount(8);
+                const data = await getMyAccount();
+          
                 setAccount(data);
             } catch (err) {
                 setError(err.message || "Failed to load account");

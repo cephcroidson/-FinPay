@@ -5,10 +5,10 @@ import {
     transfer,
     getAccountTransactions,
 } from "../api/transactionApi";
-
-const ACCOUNT_ID = 8;
+import { getMyAccount } from "../api/accountApi";
 
 function Transactions() {
+    const [account, setAccount] = useState(null);
     const [transactions, setTransactions] = useState([]);
     const [loading, setLoading] = useState(true);
     const [submitting, setSubmitting] = useState(false);
@@ -22,16 +22,20 @@ function Transactions() {
         description: "",
     });
 
-    async function loadTransactions() {
+    async function loadAccountAndTransactions() {
         try {
             setError("");
 
-            const data = await getAccountTransactions(ACCOUNT_ID);
+            const accountData = await getMyAccount();
+            setAccount(accountData);
 
-            setTransactions(data);
+            const transactionData =
+                await getAccountTransactions(accountData.id);
+
+            setTransactions(transactionData);
         } catch (err) {
             setError(
-                err.message || "Failed to load transactions"
+                err.message || "Failed to load account transactions"
             );
         } finally {
             setLoading(false);
@@ -39,7 +43,7 @@ function Transactions() {
     }
 
     useEffect(() => {
-        loadTransactions();
+        loadAccountAndTransactions();
     }, []);
 
     function handleChange(event) {
@@ -79,7 +83,7 @@ function Transactions() {
 
             if (form.type === "DEPOSIT") {
                 result = await deposit(
-                    ACCOUNT_ID,
+                    account.id,
                     amount,
                     form.description
                 );
@@ -87,7 +91,7 @@ function Transactions() {
 
             if (form.type === "WITHDRAW") {
                 result = await withdraw(
-                    ACCOUNT_ID,
+                    account.id,
                     amount,
                     form.description
                 );
@@ -95,7 +99,7 @@ function Transactions() {
 
             if (form.type === "TRANSFER") {
                 result = await transfer(
-                    ACCOUNT_ID,
+                    account.id,
                     Number(form.destinationAccountId),
                     amount,
                     form.description
@@ -113,7 +117,7 @@ function Transactions() {
                 description: "",
             });
 
-            await loadTransactions();
+            await loadAccountAndTransactions();
 
             console.log("Transaction result:", result);
         } catch (err) {
@@ -129,6 +133,16 @@ function Transactions() {
         return (
             <section className="transactions-section">
                 <p>Loading transactions...</p>
+            </section>
+        );
+    }
+
+    if (!account) {
+        return (
+            <section className="transactions-section">
+                <div className="transaction-error">
+                    {error || "No account found."}
+                </div>
             </section>
         );
     }
@@ -265,7 +279,6 @@ function Transactions() {
                             className="transaction-item"
                             key={transaction.id}
                         >
-
                             <div>
                                 <h3>
                                     {transaction.type}
@@ -295,7 +308,6 @@ function Transactions() {
                                 </span>
 
                             </div>
-
                         </div>
                     ))}
 

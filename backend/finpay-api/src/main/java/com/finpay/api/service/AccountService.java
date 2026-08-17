@@ -58,6 +58,18 @@ public class AccountService {
 
         return accountRepository.save(account);
     }
+public Account getMyAccount(String authenticatedEmail) {
+
+    User user = userRepository
+            .findByEmail(authenticatedEmail)
+            .orElseThrow(() ->
+                    new UserNotFoundException(authenticatedEmail));
+
+    return accountRepository
+            .findByUserId(user.getId())
+            .orElseThrow(() ->
+                    new AccountNotFoundException(-1L));
+}
 
     public Account getAccountById(
             Long id,
