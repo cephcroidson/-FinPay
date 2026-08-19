@@ -22,44 +22,63 @@ function Transactions() {
         description: "",
     });
 
-    async function loadAccountAndTransactions() {
+async function loadTransactions(accountId) {
+    try {
+        setError("");
+
+        const data = await getAccountTransactions(accountId);
+
+        setTransactions(data);
+    } catch (err) {
+        setError(
+            err.message || "Failed to load transactions"
+        );
+    } finally {
+        setLoading(false);
+    }
+}
+
+useEffect(() => {
+    async function initializeAccount() {
         try {
             setError("");
 
-            const accountData = await getMyAccount();
-            setAccount(accountData);
+            const data = await getMyAccount();
 
-            const transactionData =
-                await getAccountTransactions(accountData.id);
+            setAccount(data);
 
-            setTransactions(transactionData);
+            await loadTransactions(data.id);
         } catch (err) {
             setError(
-                err.message || "Failed to load account transactions"
+                err.message || "Failed to load account"
             );
-        } finally {
             setLoading(false);
         }
     }
 
-    useEffect(() => {
-        loadAccountAndTransactions();
-    }, []);
+    initializeAccount();
+}, []);
 
-    function handleChange(event) {
-        const { name, value } = event.target;
+function handleChange(event) {
+    const { name, value } = event.target;
 
-        setForm((current) => ({
-            ...current,
-            [name]: value,
-        }));
-    }
+    setForm((previousForm) => ({
+        ...previousForm,
+        [name]: value,
+    }));
+}
+
 
     async function handleSubmit(event) {
         event.preventDefault();
 
         setError("");
         setSuccess("");
+
+        if (!account) {
+            setError("Account information is not available.");
+            return;
+        }
 
         const amount = Number(form.amount);
 
@@ -117,7 +136,7 @@ function Transactions() {
                 description: "",
             });
 
-            await loadAccountAndTransactions();
+            await loadTransactions(account.id);
 
             console.log("Transaction result:", result);
         } catch (err) {
@@ -128,6 +147,7 @@ function Transactions() {
             setSubmitting(false);
         }
     }
+
 
     if (loading) {
         return (
