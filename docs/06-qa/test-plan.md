@@ -192,3 +192,82 @@ Evidence may include:
 - Environment configuration differences.
 - Changes to transaction logic causing regressions.
 - Security configuration changes affecting existing functionality.
+
+---
+
+# 15. Stage 30.2 API QA Execution Results
+
+## Execution Date
+
+2026-08-19
+
+## Environment
+
+- Backend: FinPay Spring Boot API
+- Java: 25
+- Database: PostgreSQL 17.10
+- Database port: 5434
+- API port: 8080
+- Authentication: JWT
+- Password hashing: BCrypt
+
+## Execution Summary
+
+Stage 30.2 API QA execution was completed against the running FinPay
+application.
+
+The following areas were verified:
+
+- JWT authentication
+- Protected endpoint access
+- Account ownership authorization
+- Transaction authorization
+- Deposits
+- Withdrawals
+- Transfers
+- Insufficient balance handling
+- Input validation
+- Invalid account handling
+- Malformed JSON handling
+- Invalid credentials
+- Invalid JWT handling
+- Database transaction persistence
+- Account balance integrity
+
+## Results
+
+| Test Area | Expected | Actual | Result |
+|---|---|---|---|
+| Valid login | 200 | 200 | PASS |
+| Missing authentication | 401 | 401 | PASS |
+| Invalid JWT | 401 | 401 | PASS |
+| Empty Bearer token | 401 | 401 | PASS |
+| Invalid password | 401 | 401 | PASS |
+| Invalid email | 401 | 401 | PASS |
+| Authorized account lookup | 200 | 200 | PASS |
+| Unauthorized account access | 403 | 403 | PASS |
+| Unauthorized source account | 4xx / rejected | 404 | PASS |
+| Valid deposit | 201 | 201 | PASS |
+| Valid withdrawal | 201 | 201 | PASS |
+| Valid transfer | 201 | 201 | PASS |
+| Insufficient balance | 400 | 400 | PASS |
+| Zero amount | 400 | 400 | PASS |
+| Negative amount | 400 | 400 | PASS |
+| Missing amount | 400 | 400 | PASS |
+| Invalid account | 404 | 404 | PASS |
+| Malformed JSON | 400 | 400 | PASS |
+| Database persistence | Transaction recorded | Verified | PASS |
+| Balance integrity | No unexpected changes | Verified | PASS |
+
+## Database Verification
+
+Account 7 was used for authenticated transaction testing.
+
+The account balance was:
+
+```text
+Before transaction tests: 50.0000 KES
+After deposit of 25 KES:  75.0000 KES
+After withdrawal of 10 KES: 65.0000 KES
+After transfer of 5 KES: 60.0000 KES
+Final verified balance: 60.0000 KES
