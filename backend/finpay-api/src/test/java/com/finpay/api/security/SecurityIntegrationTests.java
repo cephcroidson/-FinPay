@@ -127,6 +127,27 @@ class SecurityIntegrationTests {
     }
 
     @Test
+    void inactiveUserCannotAccessProtectedEndpointWithExistingToken()
+            throws Exception {
+
+        String inactiveToken =
+                jwtService.generateToken(userA.getEmail());
+
+        userA.setStatus(UserStatus.SUSPENDED);
+        userRepository.save(userA);
+
+        mockMvc.perform(
+                get("/api/accounts/me")
+                        .header(
+                                "Authorization",
+                                "Bearer " + inactiveToken
+                        )
+                        .accept(MediaType.APPLICATION_JSON)
+        )
+        .andExpect(status().isUnauthorized());
+    }
+
+    @Test
     void authenticatedUserCanAccessOwnAccount() throws Exception {
 
         mockMvc.perform(
