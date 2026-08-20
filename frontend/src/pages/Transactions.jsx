@@ -136,7 +136,10 @@ function handleChange(event) {
                 description: "",
             });
 
-            await loadTransactions(account.id);
+            const updatedAccount = await getMyAccount();
+            setAccount(updatedAccount);
+
+            await loadTransactions(updatedAccount.id);
 
             console.log("Transaction result:", result);
         } catch (err) {

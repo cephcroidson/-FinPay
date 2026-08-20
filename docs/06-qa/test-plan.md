@@ -271,3 +271,72 @@ After deposit of 25 KES:  75.0000 KES
 After withdrawal of 10 KES: 65.0000 KES
 After transfer of 5 KES: 60.0000 KES
 Final verified balance: 60.0000 KES
+```
+
+## Stage 30.3 Frontend QA
+
+Stage 30.3 frontend QA was completed against the running FinPay
+React/Vite frontend and Spring Boot API.
+
+### Frontend Build and Static Checks
+
+- Vite production build completed successfully.
+- Oxlint completed with zero errors.
+- One existing React Fast Refresh warning remains in `AuthContext.jsx`.
+- Frontend development server started successfully on port 5173.
+- Frontend HTTP endpoint returned HTTP 200.
+- Backend API availability was confirmed on port 8080.
+- Frontend API base URL was verified as:
+  `http://localhost:8080/api`
+
+### Functional UI Verification
+
+The following frontend flows were verified:
+
+| Test Area | Expected | Actual | Result |
+|---|---|---|---|
+| Login | Successful authentication | Successful JWT login | PASS |
+| Account loading | Account displayed | Account 7 displayed | PASS |
+| Deposit | Transaction completed | Completed and persisted | PASS |
+| Withdrawal | Transaction completed | Completed and persisted | PASS |
+| Transfer | Transaction completed | Completed and persisted | PASS |
+| Transaction history | Recent transactions displayed | Transactions displayed | PASS |
+| Balance refresh | Updated balance displayed after transaction | Account refreshed successfully | PASS |
+| Error handling | API errors displayed | Error state implemented | PASS |
+
+### UI Transfer Verification
+
+A controlled frontend transfer test was completed using account 7
+as the source and account 6 as the destination.
+
+The resulting transaction was:
+
+- Transaction ID: 42
+- Type: TRANSFER
+- Amount: 1.0000 KES
+- Status: COMPLETED
+- Source account: 7
+- Destination account: 6
+- Database persistence: Verified
+
+Balances after the test:
+
+- Account 7: 64.0000 KES
+- Account 6: 66.0000 KES
+
+### Frontend Balance Refresh Improvement
+
+After a successful transaction, `Transactions.jsx` now re-fetches
+the authenticated account before reloading transaction history.
+
+This ensures the displayed account balance reflects the latest
+database state immediately after deposits, withdrawals, and
+transfers.
+
+### Stage 30.3 Conclusion
+
+Stage 30.3 frontend QA passed. The FinPay frontend successfully
+communicates with the secured backend API, performs authenticated
+financial transactions, displays transaction history, handles
+transaction responses, and refreshes account balances after
+successful transactions.
