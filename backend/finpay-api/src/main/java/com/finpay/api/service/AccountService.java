@@ -10,10 +10,12 @@ import com.finpay.api.exception.UserNotFoundException;
 import com.finpay.api.repository.AccountRepository;
 import com.finpay.api.repository.UserRepository;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.UUID;
 
 @Service
+@Transactional(readOnly = true)
 public class AccountService {
 
     private final AccountRepository accountRepository;
@@ -27,6 +29,7 @@ public class AccountService {
         this.userRepository = userRepository;
     }
 
+    @Transactional
     public Account createAccount(
             CreateAccountRequest request,
             String authenticatedEmail) {

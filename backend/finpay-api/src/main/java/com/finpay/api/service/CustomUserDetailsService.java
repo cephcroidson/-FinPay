@@ -29,6 +29,7 @@ public class CustomUserDetailsService implements UserDetailsService {
                 .withUsername(user.getEmail())
                 .password(user.getPassword())
                 .roles("USER")
+                .disabled(user.getStatus() != com.finpay.api.entity.UserStatus.ACTIVE)
                 .build();
     }
 }
