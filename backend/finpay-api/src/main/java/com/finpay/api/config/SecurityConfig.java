@@ -51,11 +51,11 @@ public class SecurityConfig {
     }
 
     @Bean
-    public AuthenticationManager authenticationManager(
-            AuthenticationConfiguration configuration)
-            throws Exception {
+    public AuthenticationManager authenticationManager() {
 
-        return configuration.getAuthenticationManager();
+        return new org.springframework.security.authentication.ProviderManager(
+                authenticationProvider()
+        );
     }
 @Bean
 public CorsConfigurationSource corsConfigurationSource() {
