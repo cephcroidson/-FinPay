@@ -340,3 +340,100 @@ communicates with the secured backend API, performs authenticated
 financial transactions, displays transaction history, handles
 transaction responses, and refreshes account balances after
 successful transactions.
+
+## Stage 30.4 End-to-End / System Testing
+
+Stage 30.4 end-to-end and system testing was completed against the
+running FinPay React/Vite frontend, Spring Boot API, and PostgreSQL
+database.
+
+### System Availability
+
+| Component | Expected | Actual | Result |
+|---|---|---|---|
+| Git working tree | Clean | Clean | PASS |
+| PostgreSQL | Running | Running | PASS |
+| Backend API | Available and secured | HTTP 401 without authentication | PASS |
+| Frontend | Available | HTTP 200 | PASS |
+| Frontend lint | No errors | 0 errors | PASS |
+| Frontend production build | Successful | Successful | PASS |
+
+### Authentication E2E
+
+JWT authentication was verified using the authorized test account.
+
+- Login returned a valid JWT.
+- Authenticated `/api/accounts/me` returned HTTP 200.
+- Account 7 was correctly associated with the authenticated user.
+
+### Financial Transaction E2E
+
+| Transaction | Expected | Actual | Result |
+|---|---|---|---|
+| Deposit | 201 / COMPLETED | 201 / COMPLETED | PASS |
+| Withdrawal | 201 / COMPLETED | 201 / COMPLETED | PASS |
+| Transfer | 201 / COMPLETED | 201 / COMPLETED | PASS |
+| Transaction history | Available | Available | PASS |
+| Database persistence | Transaction recorded | Verified | PASS |
+| Balance updates | Correct | Verified | PASS |
+
+### Negative E2E Testing
+
+| Scenario | Expected | Actual | Result |
+|---|---|---|---|
+| Insufficient withdrawal | 400 | 400 | PASS |
+| Insufficient transfer | 400 | 400 | PASS |
+| Nonexistent destination account | 404 | 404 | PASS |
+| Zero amount | 400 | 400 | PASS |
+| Negative amount | 400 | 400 | PASS |
+
+No tested negative transaction scenario resulted in an uncontrolled
+HTTP 500 response.
+
+### Authorization Boundary Testing
+
+The authenticated test user attempted to operate on account 6,
+which is not owned by that user.
+
+| Scenario | Expected | Actual | Result |
+|---|---|---|---|
+| Deposit into unauthorized account | Rejected | 404 | PASS |
+| Withdrawal from unauthorized account | Rejected | 404 | PASS |
+| Transfer from unauthorized source | Rejected | 404 | PASS |
+| Unauthorized account history | Rejected | 404 | PASS |
+| Unauthorized balance modification | None | None | PASS |
+
+The rejected authorization requests did not create transactions or
+modify account balances.
+
+### Final System State
+
+After completion of Stage 30.4:
+
+- Account 6 balance: 71.0000 KES
+- Account 7 balance: 59.0000 KES
+- Latest verified transaction: ID 45
+- Transaction 45: TRANSFER, 5.0000 KES
+- Transaction 45 status: COMPLETED
+- Transaction 45 source: Account 7
+- Transaction 45 destination: Account 6
+
+### Frontend Regression
+
+The frontend was linted and built after the E2E tests.
+
+- Oxlint: 0 errors
+- Existing Fast Refresh warning in `AuthContext.jsx`
+- Vite production build: PASS
+
+### Stage 30.4 Conclusion
+
+Stage 30.4 End-to-End / System Testing passed.
+
+The FinPay system successfully completed authenticated
+deposit, withdrawal, transfer, transaction-history, validation,
+negative-case, authorization-boundary, database-persistence, and
+frontend regression testing.
+
+The system is ready to proceed to Stage 30.5 Final Security &
+Production Readiness.
