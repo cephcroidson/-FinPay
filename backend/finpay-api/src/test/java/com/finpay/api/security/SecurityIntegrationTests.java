@@ -214,6 +214,24 @@ class SecurityIntegrationTests {
         )
         .andExpect(status().isUnauthorized());
     }
+@Test
+void jwtForNonexistentUserCannotAccessProtectedEndpoint()
+        throws Exception {
+
+    String tokenForNonexistentUser =
+            jwtService.generateToken("nonexistent@finpay.test");
+
+    mockMvc.perform(
+            get("/api/accounts/me")
+                    .header(
+                            "Authorization",
+                            "Bearer " + tokenForNonexistentUser
+                    )
+                    .accept(MediaType.APPLICATION_JSON)
+    )
+    .andExpect(status().isUnauthorized());
+}
+
 
     @Test
     void jwtWithoutSubjectCannotAccessProtectedEndpoint()
