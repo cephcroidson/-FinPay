@@ -27,6 +27,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.hamcrest.Matchers.containsString;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.header;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @SpringBootTest
@@ -88,6 +89,25 @@ class SecurityIntegrationTests {
         );
 
         tokenA = jwtService.generateToken(userA.getEmail());
+    }
+    @Test
+    void validCredentialsReturnJwtToken() throws Exception {
+
+        String body = """
+                {
+                    "email": "usera@finpay.test",
+                    "password": "TestPassword123!"
+                }
+                """;
+
+        mockMvc.perform(
+                post("/api/auth/login")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(body)
+                        .accept(MediaType.APPLICATION_JSON)
+        )
+        .andExpect(status().isOk())
+        .andExpect(jsonPath("$.token").isNotEmpty());
     }
 
     @Test
