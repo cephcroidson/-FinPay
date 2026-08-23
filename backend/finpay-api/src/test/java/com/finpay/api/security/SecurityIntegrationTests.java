@@ -176,6 +176,28 @@ class SecurityIntegrationTests {
         .andExpect(jsonPath("$.message")
                 .value("Invalid email or password"));
     }
+    @Test
+    void blankCredentialsLoginReturnsUnauthorized() throws Exception {
+
+        String body = """
+                {
+                    "email": "",
+                    "password": ""
+                }
+                """;
+
+        mockMvc.perform(
+                post("/api/auth/login")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(body)
+                        .accept(MediaType.APPLICATION_JSON)
+        )
+        .andExpect(status().isUnauthorized())
+        .andExpect(jsonPath("$.status").value(401))
+        .andExpect(jsonPath("$.error").value("Unauthorized"))
+        .andExpect(jsonPath("$.message")
+                .value("Invalid email or password"));
+    }
 
     @Test
     void missingPasswordLoginReturnsUnauthorized() throws Exception {
