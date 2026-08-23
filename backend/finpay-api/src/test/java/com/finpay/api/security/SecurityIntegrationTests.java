@@ -8,6 +8,7 @@ import com.finpay.api.repository.UserRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.webmvc.test.autoconfigure.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
@@ -15,6 +16,12 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.test.web.servlet.MockMvc;
 
 import java.math.BigDecimal;
+import java.nio.charset.StandardCharsets;
+import java.util.Date;
+import javax.crypto.SecretKey;
+
+import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.security.Keys;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
@@ -38,6 +45,9 @@ class SecurityIntegrationTests {
 
     @Autowired
     private JwtService jwtService;
+
+    @Value("${jwt.secret}")
+    private String jwtSecret;
 
     private User userA;
     private User userB;
@@ -141,6 +151,108 @@ class SecurityIntegrationTests {
                         .header(
                                 "Authorization",
                                 "Bearer " + inactiveToken
+                        )
+                        .accept(MediaType.APPLICATION_JSON)
+        )
+        .andExpect(status().isUnauthorized());
+    }
+
+    @Test
+    void expiredJwtCannotAccessProtectedEndpoint() throws Exception {
+
+        SecretKey key = Keys.hmacShaKeyFor(
+                jwtSecret.getBytes(StandardCharsets.UTF_8)
+        );
+
+        Date now = new Date();
+
+        String expiredToken = Jwts.builder()
+                .subject(userA.getEmail())
+                .issuedAt(new Date(now.getTime() - 120000))
+                .expiration(new Date(now.getTime() - 60000))
+                .signWith(key)
+                .compact();
+
+        mockMvc.perform(
+                get("/api/accounts/me")
+                        .header(
+                                "Authorization",
+                                "Bearer " + expiredToken
+                        )
+                        .accept(MediaType.APPLICATION_JSON)
+        )
+        .andExpect(status().isUnauthorized());
+    }
+
+    @Test
+    void jwtSignedWithWrongSecretCannotAccessProtectedEndpoint()
+            throws Exception {
+
+        SecretKey wrongKey = Keys.hmacShaKeyFor(
+                "ThisIsACompletelyDifferentTestSecretKey1234567890"
+                        .getBytes(StandardCharsets.UTF_8)
+        );
+
+        String tokenWithWrongSignature = Jwts.builder()
+                .subject(userA.getEmail())
+                .issuedAt(new Date())
+                .expiration(
+                        new Date(
+                                System.currentTimeMillis() + 3600000
+                        )
+                )
+                .signWith(wrongKey)
+                .compact();
+
+        mockMvc.perform(
+                get("/api/accounts/me")
+                        .header(
+                                "Authorization",
+                                "Bearer " + tokenWithWrongSignature
+                        )
+                        .accept(MediaType.APPLICATION_JSON)
+        )
+        .andExpect(status().isUnauthorized());
+    }
+
+    @Test
+    void jwtWithoutSubjectCannotAccessProtectedEndpoint()
+            throws Exception {
+
+        SecretKey key = Keys.hmacShaKeyFor(
+                jwtSecret.getBytes(StandardCharsets.UTF_8)
+        );
+
+        String tokenWithoutSubject = Jwts.builder()
+                .issuedAt(new Date())
+                .expiration(
+                        new Date(
+                                System.currentTimeMillis() + 3600000
+                        )
+                )
+                .signWith(key)
+                .compact();
+
+        mockMvc.perform(
+                get("/api/accounts/me")
+                        .header(
+                                "Authorization",
+                                "Bearer " + tokenWithoutSubject
+                        )
+                        .accept(MediaType.APPLICATION_JSON)
+        )
+        .andExpect(status().isUnauthorized());
+    }
+
+    @Test
+    void emptyBearerTokenCannotAccessProtectedEndpoint()
+            throws Exception {
+
+        mockMvc.perform(
+                get("/api/accounts/me")
+                        .header(
+                                "Authorization",
+                                "Bearer "
                         )
                         .accept(MediaType.APPLICATION_JSON)
         )
