@@ -198,7 +198,24 @@ class SecurityIntegrationTests {
         .andExpect(jsonPath("$.message")
                 .value("Invalid email or password"));
     }
+ 
+    @Test
+    void malformedJsonLoginRequestReturnsBadRequest() throws Exception {
 
+        String body = """
+                {
+                    "email": "usera@finpay.test",
+                    "password": "TestPassword123!"
+                """;
+
+        mockMvc.perform(
+                post("/api/auth/login")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(body)
+                        .accept(MediaType.APPLICATION_JSON)
+        )
+        .andExpect(status().isBadRequest());
+    }
     @Test
     void missingPasswordLoginReturnsUnauthorized() throws Exception {
 
