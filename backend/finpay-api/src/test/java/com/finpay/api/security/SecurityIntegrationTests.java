@@ -111,6 +111,21 @@ class SecurityIntegrationTests {
     }
 
     @Test
+    void unsupportedAuthorizationSchemeCannotAccessProtectedEndpoint()
+            throws Exception {
+
+        mockMvc.perform(
+                get("/api/accounts/me")
+                        .header(
+                                "Authorization",
+                                "Basic dXNlcjpwYXNz"
+                        )
+                        .accept(MediaType.APPLICATION_JSON)
+        )
+        .andExpect(status().isUnauthorized());
+    }
+
+    @Test
     void protectedEndpointWithInvalidTokenReturns401() throws Exception {
 
         mockMvc.perform(
