@@ -97,6 +97,28 @@ public CorsConfigurationSource corsConfigurationSource() {
                 .configurationSource(corsConfigurationSource())
         )
 
+        .headers(headers -> headers
+                .contentTypeOptions(contentTypeOptions -> {})
+                .frameOptions(frameOptions -> frameOptions
+                        .deny()
+                )
+                .contentSecurityPolicy(csp -> csp
+                        .policyDirectives(
+                                "default-src 'none'; " +
+                                "frame-ancestors 'none'; " +
+                                "base-uri 'none'; " +
+                                "form-action 'none'"
+                        )
+                )
+                .referrerPolicy(referrer -> referrer
+                        .policy(
+                                org.springframework.security.web.header.writers
+                                        .ReferrerPolicyHeaderWriter.ReferrerPolicy
+                                        .NO_REFERRER
+                        )
+                )
+        )
+
                 .sessionManagement(session -> session
                         .sessionCreationPolicy(
                                 SessionCreationPolicy.STATELESS

@@ -25,6 +25,8 @@ import io.jsonwebtoken.security.Keys;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.hamcrest.Matchers.containsString;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.header;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @SpringBootTest
@@ -443,4 +445,35 @@ void jwtForNonexistentUserCannotAccessProtectedEndpoint()
 
         return accountRepository.save(account);
     }
+
+    @Test
+    void protectedEndpointReturnsSecurityHeaders() throws Exception {
+
+        mockMvc.perform(
+                get("/api/accounts/me")
+                        .header(
+                                "Authorization",
+                                "Bearer " + tokenA
+                        )
+                        .accept(MediaType.APPLICATION_JSON)
+        )
+        .andExpect(status().isOk())
+        .andExpect(header().string(
+                "X-Content-Type-Options",
+                "nosniff"
+        ))
+        .andExpect(header().string(
+                "X-Frame-Options",
+                "DENY"
+        ))
+        .andExpect(header().string(
+                "Content-Security-Policy",
+                containsString("default-src 'none'")
+        ))
+        .andExpect(header().string(
+                "Referrer-Policy",
+                "no-referrer"
+        ));
+    }
+
 }
