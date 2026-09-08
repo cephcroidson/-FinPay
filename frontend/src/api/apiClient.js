@@ -18,6 +18,10 @@ async function apiRequest(endpoint, options = {}) {
     });
 
     if (!response.ok) {
+        if (response.status === 401 && token) {
+            window.dispatchEvent(new Event("finpay:unauthorized"));
+        }
+
         let errorMessage = `Request failed with status ${response.status}`;
 
         try {

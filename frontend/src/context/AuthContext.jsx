@@ -39,7 +39,26 @@ export function AuthProvider({ children }) {
 
         if (!storedToken) {
             setToken(null);
+            setUserEmail(null);
         }
+    }, []);
+
+    useEffect(() => {
+        function handleUnauthorized() {
+            logout();
+        }
+
+        window.addEventListener(
+            "finpay:unauthorized",
+            handleUnauthorized
+        );
+
+        return () => {
+            window.removeEventListener(
+                "finpay:unauthorized",
+                handleUnauthorized
+            );
+        };
     }, []);
 
     const value = {
