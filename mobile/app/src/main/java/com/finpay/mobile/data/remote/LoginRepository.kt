@@ -1,5 +1,6 @@
 package com.finpay.mobile.data.remote
 
+import com.finpay.mobile.data.model.AccountResponse
 import com.finpay.mobile.data.model.LoginRequest
 import com.finpay.mobile.data.model.LoginResponse
 import com.finpay.mobile.data.security.TokenStorage
@@ -24,6 +25,10 @@ class LoginRepository(
         tokenStorage.saveToken(response.token)
 
         return response
+    }
+
+    suspend fun getMyAccount(): AccountResponse {
+        return api.getMyAccount()
     }
 
     fun getToken(): String? {

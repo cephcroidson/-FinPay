@@ -6,6 +6,7 @@ import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -14,6 +15,8 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.widthIn
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
@@ -42,7 +45,7 @@ class MainActivity : ComponentActivity() {
 
         setContent {
             FinPayMobileTheme {
-                FinPayLoginScreen(
+                FinPayApp(
                     viewModelFactory = LoginViewModelFactory(this)
                 )
             }
@@ -51,18 +54,35 @@ class MainActivity : ComponentActivity() {
 }
 
 @Composable
-fun FinPayLoginScreen(
+fun FinPayApp(
     viewModelFactory: LoginViewModelFactory
 ) {
     val loginViewModel: LoginViewModel = viewModel(
         factory = viewModelFactory
     )
 
+    val uiState by loginViewModel.uiState.collectAsState()
+
+    if (uiState.isLoggedIn && uiState.account != null) {
+        FinPayDashboard(
+            account = uiState.account!!
+        )
+    } else {
+        FinPayLoginScreen(
+            viewModel = loginViewModel
+        )
+    }
+}
+
+@Composable
+fun FinPayLoginScreen(
+    viewModel: LoginViewModel
+) {
     var email by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
     var passwordVisible by remember { mutableStateOf(false) }
 
-    val uiState by loginViewModel.uiState.collectAsState()
+    val uiState by viewModel.uiState.collectAsState()
 
     Surface(
         modifier = Modifier.fillMaxSize(),
@@ -97,7 +117,7 @@ fun FinPayLoginScreen(
                 value = email,
                 onValueChange = {
                     email = it
-                    loginViewModel.clearError()
+                    viewModel.clearError()
                 },
                 modifier = Modifier.fillMaxWidth(),
                 singleLine = true,
@@ -116,7 +136,7 @@ fun FinPayLoginScreen(
                 value = password,
                 onValueChange = {
                     password = it
-                    loginViewModel.clearError()
+                    viewModel.clearError()
                 },
                 modifier = Modifier.fillMaxWidth(),
                 singleLine = true,
@@ -165,7 +185,7 @@ fun FinPayLoginScreen(
 
             Button(
                 onClick = {
-                    loginViewModel.login(
+                    viewModel.login(
                         email = email.trim(),
                         password = password
                     )
@@ -206,16 +226,129 @@ fun FinPayLoginScreen(
                     text = "Don't have an account? Register"
                 )
             }
+        }
+    }
+}
 
-            if (uiState.isLoggedIn) {
-                Spacer(modifier = Modifier.height(16.dp))
+@Composable
+fun FinPayDashboard(
+    account: com.finpay.mobile.data.model.AccountResponse
+) {
+    Surface(
+        modifier = Modifier.fillMaxSize(),
+        color = MaterialTheme.colorScheme.background
+    ) {
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(24.dp)
+                .widthIn(max = 600.dp),
+            horizontalAlignment = Alignment.Start
+        ) {
+            Text(
+                text = "FinPay",
+                fontSize = 32.sp,
+                fontWeight = FontWeight.Bold,
+                color = MaterialTheme.colorScheme.primary
+            )
 
-                Text(
-                    text = "Login successful",
-                    color = MaterialTheme.colorScheme.primary,
-                    fontWeight = FontWeight.Bold
+            Spacer(modifier = Modifier.height(4.dp))
+
+            Text(
+                text = "Dashboard",
+                fontSize = 18.sp,
+                color = MaterialTheme.colorScheme.onBackground
+            )
+
+            Spacer(modifier = Modifier.height(28.dp))
+
+            Card(
+                modifier = Modifier.fillMaxWidth(),
+                colors = CardDefaults.cardColors(
+                    containerColor = MaterialTheme.colorScheme.primary
                 )
+            ) {
+                Column(
+                    modifier = Modifier.padding(24.dp)
+                ) {
+                    Text(
+                        text = "Available Balance",
+                        fontSize = 15.sp,
+                        color = MaterialTheme.colorScheme.onPrimary
+                    )
+
+                    Spacer(modifier = Modifier.height(8.dp))
+
+                    Text(
+                        text = "${account.currency} ${"%.2f".format(account.balance)}",
+                        fontSize = 32.sp,
+                        fontWeight = FontWeight.Bold,
+                        color = MaterialTheme.colorScheme.onPrimary
+                    )
+                }
             }
+
+            Spacer(modifier = Modifier.height(24.dp))
+
+            Text(
+                text = "Account details",
+                fontSize = 20.sp,
+                fontWeight = FontWeight.Bold
+            )
+
+            Spacer(modifier = Modifier.height(16.dp))
+
+            AccountDetailRow(
+                label = "Account number",
+                value = account.accountNumber
+            )
+
+            Spacer(modifier = Modifier.height(12.dp))
+
+            AccountDetailRow(
+                label = "Currency",
+                value = account.currency
+            )
+
+            Spacer(modifier = Modifier.height(12.dp))
+
+            AccountDetailRow(
+                label = "Status",
+                value = account.status
+            )
+        }
+    }
+}
+
+@Composable
+fun AccountDetailRow(
+    label: String,
+    value: String
+) {
+    Card(
+        modifier = Modifier.fillMaxWidth(),
+        colors = CardDefaults.cardColors(
+            containerColor = MaterialTheme.colorScheme.surfaceVariant
+        )
+    ) {
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(16.dp),
+            horizontalArrangement = Arrangement.SpaceBetween,
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            Text(
+                text = label,
+                fontWeight = FontWeight.Medium,
+                color = MaterialTheme.colorScheme.onSurfaceVariant
+            )
+
+            Text(
+                text = value,
+                fontWeight = FontWeight.Bold,
+                color = MaterialTheme.colorScheme.onSurfaceVariant
+            )
         }
     }
 }

@@ -1,8 +1,10 @@
 package com.finpay.mobile.data.remote
 
+import com.finpay.mobile.data.model.AccountResponse
 import com.finpay.mobile.data.model.LoginRequest
 import com.finpay.mobile.data.model.LoginResponse
 import retrofit2.http.Body
+import retrofit2.http.GET
 import retrofit2.http.POST
 
 interface FinPayApi {
@@ -11,4 +13,7 @@ interface FinPayApi {
     suspend fun login(
         @Body request: LoginRequest
     ): LoginResponse
+
+    @GET("api/accounts/me")
+    suspend fun getMyAccount(): AccountResponse
 }
