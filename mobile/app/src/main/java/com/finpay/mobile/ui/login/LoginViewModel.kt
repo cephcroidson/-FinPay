@@ -2,6 +2,7 @@ package com.finpay.mobile.ui.login
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.finpay.mobile.data.model.AccountResponse
 import com.finpay.mobile.data.remote.LoginRepository
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -13,6 +14,7 @@ import java.io.IOException
 data class LoginUiState(
     val isLoading: Boolean = false,
     val isLoggedIn: Boolean = false,
+    val account: AccountResponse? = null,
     val errorMessage: String? = null
 )
 
@@ -24,6 +26,7 @@ class LoginViewModel(
     val uiState: StateFlow<LoginUiState> = _uiState.asStateFlow()
 
     fun login(email: String, password: String) {
+
         if (email.isBlank() || password.isBlank()) {
             _uiState.value = LoginUiState(
                 errorMessage = "Email and password are required."
@@ -32,13 +35,18 @@ class LoginViewModel(
         }
 
         viewModelScope.launch {
-            _uiState.value = LoginUiState(isLoading = true)
+            _uiState.value = LoginUiState(
+                isLoading = true
+            )
 
             try {
                 repository.login(email, password)
 
+                val account = repository.getMyAccount()
+
                 _uiState.value = LoginUiState(
-                    isLoggedIn = true
+                    isLoggedIn = true,
+                    account = account
                 )
 
             } catch (exception: HttpException) {
