@@ -3,6 +3,7 @@ package com.finpay.mobile.data.remote
 import com.finpay.mobile.data.model.AccountResponse
 import com.finpay.mobile.data.model.LoginRequest
 import com.finpay.mobile.data.model.LoginResponse
+import com.finpay.mobile.data.model.TransactionResponse
 import com.finpay.mobile.data.security.TokenStorage
 
 class LoginRepository(
@@ -29,6 +30,12 @@ class LoginRepository(
 
     suspend fun getMyAccount(): AccountResponse {
         return api.getMyAccount()
+    }
+
+    suspend fun getAccountTransactions(
+        accountId: Long
+    ): List<TransactionResponse> {
+        return api.getAccountTransactions(accountId)
     }
 
     fun getToken(): String? {

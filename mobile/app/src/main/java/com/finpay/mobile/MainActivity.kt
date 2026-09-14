@@ -5,6 +5,8 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -65,7 +67,8 @@ fun FinPayApp(
 
     if (uiState.isLoggedIn && uiState.account != null) {
         FinPayDashboard(
-            account = uiState.account!!
+            account = uiState.account!!,
+            viewModel = loginViewModel
         )
     } else {
         FinPayLoginScreen(
@@ -232,8 +235,15 @@ fun FinPayLoginScreen(
 
 @Composable
 fun FinPayDashboard(
-    account: com.finpay.mobile.data.model.AccountResponse
+    account: com.finpay.mobile.data.model.AccountResponse,
+    viewModel: LoginViewModel
 ) {
+    LaunchedEffect(account.id) {
+        viewModel.loadTransactions(account.id)
+    }
+
+    val uiState by viewModel.uiState.collectAsState()
+
     Surface(
         modifier = Modifier.fillMaxSize(),
         color = MaterialTheme.colorScheme.background
@@ -241,6 +251,7 @@ fun FinPayDashboard(
         Column(
             modifier = Modifier
                 .fillMaxSize()
+                .verticalScroll(rememberScrollState())
                 .padding(24.dp)
                 .widthIn(max = 600.dp),
             horizontalAlignment = Alignment.Start
@@ -315,6 +326,115 @@ fun FinPayDashboard(
             AccountDetailRow(
                 label = "Status",
                 value = account.status
+            )
+
+            Spacer(modifier = Modifier.height(32.dp))
+
+            Text(
+                text = "Transaction History",
+                fontSize = 20.sp,
+                fontWeight = FontWeight.Bold
+            )
+
+            Spacer(modifier = Modifier.height(16.dp))
+
+            when {
+                uiState.isTransactionsLoading -> {
+                    CircularProgressIndicator(
+                        modifier = Modifier.align(Alignment.CenterHorizontally)
+                    )
+                }
+
+                uiState.transactionError != null -> {
+                    Text(
+                        text = uiState.transactionError!!,
+                        color = MaterialTheme.colorScheme.error,
+                        fontSize = 14.sp
+                    )
+                }
+
+                uiState.transactions.isEmpty() -> {
+                    Card(
+                        modifier = Modifier.fillMaxWidth(),
+                        colors = CardDefaults.cardColors(
+                            containerColor = MaterialTheme.colorScheme.surfaceVariant
+                        )
+                    ) {
+                        Text(
+                            text = "No transactions yet.",
+                            modifier = Modifier.padding(16.dp),
+                            color = MaterialTheme.colorScheme.onSurfaceVariant
+                        )
+                    }
+                }
+
+                else -> {
+                    uiState.transactions.forEach { transaction ->
+                        TransactionCard(transaction = transaction)
+
+                        Spacer(modifier = Modifier.height(12.dp))
+                    }
+                }
+            }
+        }
+    }
+}
+
+@Composable
+fun TransactionCard(
+    transaction: com.finpay.mobile.data.model.TransactionResponse
+) {
+    Card(
+        modifier = Modifier.fillMaxWidth(),
+        colors = CardDefaults.cardColors(
+            containerColor = MaterialTheme.colorScheme.surfaceVariant
+        )
+    ) {
+        Column(
+            modifier = Modifier.padding(16.dp)
+        ) {
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.SpaceBetween,
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Text(
+                    text = transaction.type,
+                    fontWeight = FontWeight.Bold,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant
+                )
+
+                Text(
+                    text = "${transaction.currency} ${"%.2f".format(transaction.amount)}",
+                    fontWeight = FontWeight.Bold,
+                    color = MaterialTheme.colorScheme.primary
+                )
+            }
+
+            Spacer(modifier = Modifier.height(8.dp))
+
+            transaction.description?.takeIf { it.isNotBlank() }?.let {
+                Text(
+                    text = it,
+                    fontSize = 14.sp,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant
+                )
+
+                Spacer(modifier = Modifier.height(6.dp))
+            }
+
+            Text(
+                text = "Status: ${transaction.status}",
+                fontSize = 13.sp,
+                color = MaterialTheme.colorScheme.onSurfaceVariant
+            )
+
+            Spacer(modifier = Modifier.height(4.dp))
+
+            Text(
+                text = "Reference: ${transaction.reference}",
+                fontSize = 12.sp,
+                color = MaterialTheme.colorScheme.onSurfaceVariant
             )
         }
     }
