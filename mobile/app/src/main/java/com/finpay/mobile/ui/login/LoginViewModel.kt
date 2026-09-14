@@ -3,6 +3,7 @@ package com.finpay.mobile.ui.login
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.finpay.mobile.data.model.AccountResponse
+import com.finpay.mobile.data.model.TransactionResponse
 import com.finpay.mobile.data.remote.LoginRepository
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -15,6 +16,9 @@ data class LoginUiState(
     val isLoading: Boolean = false,
     val isLoggedIn: Boolean = false,
     val account: AccountResponse? = null,
+    val transactions: List<TransactionResponse> = emptyList(),
+    val isTransactionsLoading: Boolean = false,
+    val transactionError: String? = null,
     val errorMessage: String? = null
 )
 
@@ -66,6 +70,46 @@ class LoginViewModel(
             } catch (exception: Exception) {
                 _uiState.value = LoginUiState(
                     errorMessage = "Something went wrong. Please try again."
+                )
+            }
+        }
+    }
+
+    fun loadTransactions(accountId: Long) {
+        viewModelScope.launch {
+            _uiState.value = _uiState.value.copy(
+                isTransactionsLoading = true,
+                transactionError = null
+            )
+
+            try {
+                val transactions = repository.getAccountTransactions(accountId)
+
+                _uiState.value = _uiState.value.copy(
+                    transactions = transactions,
+                    isTransactionsLoading = false
+                )
+
+            } catch (exception: HttpException) {
+                _uiState.value = _uiState.value.copy(
+                    isTransactionsLoading = false,
+                    transactionError = if (exception.code() == 401) {
+                        "Session expired. Please sign in again."
+                    } else {
+                        "Unable to load transactions."
+                    }
+                )
+
+            } catch (exception: IOException) {
+                _uiState.value = _uiState.value.copy(
+                    isTransactionsLoading = false,
+                    transactionError = "Unable to connect to FinPay."
+                )
+
+            } catch (exception: Exception) {
+                _uiState.value = _uiState.value.copy(
+                    isTransactionsLoading = false,
+                    transactionError = "Something went wrong while loading transactions."
                 )
             }
         }
