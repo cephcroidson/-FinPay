@@ -1,11 +1,22 @@
+import type { ApiError } from "../types/api";
+
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
-async function apiRequest(endpoint, options = {}) {
+interface ApiRequestOptions extends RequestInit {
+    headers?: HeadersInit;
+}
+
+async function apiRequest<T>(
+    endpoint: string,
+    options: ApiRequestOptions = {}
+): Promise<T | null> {
     const token = localStorage.getItem("finpay_token");
 
-    const headers = {
+    const headers: Record<string, string> = {
         "Content-Type": "application/json",
-        ...(options.headers || {}),
+        ...(options.headers
+            ? Object.fromEntries(new Headers(options.headers).entries())
+            : {}),
     };
 
     if (token) {
@@ -26,13 +37,20 @@ async function apiRequest(endpoint, options = {}) {
 
         try {
             const errorData = await response.json();
-            errorMessage = errorData.message || errorMessage;
+
+            if (
+                errorData &&
+                typeof errorData.message === "string"
+            ) {
+                errorMessage = errorData.message;
+            }
         } catch {
             // Response may not contain JSON
         }
 
-        const error = new Error(errorMessage);
+        const error: ApiError = new Error(errorMessage) as ApiError;
         error.status = response.status;
+
         throw error;
     }
 
@@ -40,7 +58,7 @@ async function apiRequest(endpoint, options = {}) {
         return null;
     }
 
-    return response.json();
+    return response.json() as Promise<T>;
 }
 
 export default apiRequest;

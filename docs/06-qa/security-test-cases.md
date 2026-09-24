@@ -63,4 +63,4 @@ Each test case contains:
 
 ```text
 Email: authorization.test@finpay.test
-Password:  <TEST_PASSWORD>
+Password: <TEST_PASSWORD>

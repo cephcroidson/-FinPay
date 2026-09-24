@@ -1,32 +1,57 @@
-import { createContext, useContext, useEffect, useState } from "react";
+import {
+    createContext,
+    useContext,
+    useEffect,
+    useState,
+    type ReactNode,
+} from "react";
 import { login as loginRequest } from "../api/authApi";
 
-const AuthContext = createContext(null);
+interface AuthContextValue {
+    token: string | null;
+    userEmail: string | null;
+    isAuthenticated: boolean;
+    login: (email: string, password: string) => Promise<void>;
+    logout: () => void;
+}
 
-export function AuthProvider({ children }) {
-    const [token, setToken] = useState(
+interface AuthProviderProps {
+    children: ReactNode;
+}
+
+const AuthContext = createContext<AuthContextValue | null>(null);
+
+export function AuthProvider({
+    children,
+}: AuthProviderProps) {
+    const [token, setToken] = useState<string | null>(
         () => localStorage.getItem("finpay_token")
     );
 
-    const [userEmail, setUserEmail] = useState(
+    const [userEmail, setUserEmail] = useState<string | null>(
         () => localStorage.getItem("finpay_user_email")
     );
 
     const isAuthenticated = Boolean(token);
 
-    async function login(email, password) {
+    async function login(
+        email: string,
+        password: string
+    ): Promise<void> {
         const data = await loginRequest(email, password);
+
+        if (!data?.token) {
+            throw new Error("Authentication response did not contain a token.");
+        }
 
         localStorage.setItem("finpay_token", data.token);
         localStorage.setItem("finpay_user_email", email);
 
         setToken(data.token);
         setUserEmail(email);
-
-        return data;
     }
 
-    function logout() {
+    function logout(): void {
         localStorage.removeItem("finpay_token");
         localStorage.removeItem("finpay_user_email");
 
@@ -44,7 +69,7 @@ export function AuthProvider({ children }) {
     }, []);
 
     useEffect(() => {
-        function handleUnauthorized() {
+        function handleUnauthorized(): void {
             logout();
         }
 
@@ -61,7 +86,7 @@ export function AuthProvider({ children }) {
         };
     }, []);
 
-    const value = {
+    const value: AuthContextValue = {
         token,
         userEmail,
         isAuthenticated,
@@ -76,11 +101,13 @@ export function AuthProvider({ children }) {
     );
 }
 
-export function useAuth() {
+export function useAuth(): AuthContextValue {
     const context = useContext(AuthContext);
 
     if (!context) {
-        throw new Error("useAuth must be used inside AuthProvider");
+        throw new Error(
+            "useAuth must be used inside AuthProvider"
+        );
     }
 
     return context;
