@@ -11,6 +11,34 @@ services:
       - "5434:5432"
     volumes:
       - finpay_postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U finpay -d finpay"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - finpay-network
+
+  api:
+    image: cephus256/finpay-api:latest
+    container_name: finpay-api
+    restart: unless-stopped
+    depends_on:
+      postgres:
+        condition: service_healthy
+    environment:
+      DB_URL: jdbc:postgresql://postgres:5432/finpay
+      DB_USERNAME: finpay
+      DB_PASSWORD: ${DB_PASSWORD}
+      JWT_SECRET: ${JWT_SECRET}
+    ports:
+      - "8080:8080"
+    networks:
+      - finpay-network
 
 volumes:
   finpay_postgres_data:
+
+networks:
+  finpay-network:
+    driver: bridge
