@@ -1,10 +1,7 @@
 package com.finpay.api.config;
-import org.springframework.web.cors.CorsConfiguration;
-import org.springframework.web.cors.CorsConfigurationSource;
-import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
+
 import java.util.List;
-import com.finpay.api.security.JwtAuthenticationFilter;
-import com.finpay.api.service.CustomUserDetailsService;
+
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpStatus;
@@ -19,6 +16,12 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.HttpStatusEntryPoint;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.CorsConfigurationSource;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
+
+import com.finpay.api.security.JwtAuthenticationFilter;
+import com.finpay.api.service.CustomUserDetailsService;
 
 @Configuration
 public class SecurityConfig {
@@ -41,7 +44,6 @@ public class SecurityConfig {
 
     @Bean
     public DaoAuthenticationProvider authenticationProvider() {
-
         DaoAuthenticationProvider provider =
                 new DaoAuthenticationProvider(userDetailsService);
 
@@ -52,72 +54,72 @@ public class SecurityConfig {
 
     @Bean
     public AuthenticationManager authenticationManager() {
-
         return new org.springframework.security.authentication.ProviderManager(
                 authenticationProvider()
         );
     }
-@Bean
-public CorsConfigurationSource corsConfigurationSource() {
 
-    CorsConfiguration configuration = new CorsConfiguration();
+    @Bean
+    public CorsConfigurationSource corsConfigurationSource() {
+        CorsConfiguration configuration = new CorsConfiguration();
 
-    configuration.setAllowedOrigins(
-            List.of("http://localhost:5173")
-    );
+        configuration.setAllowedOrigins(
+                List.of("http://localhost:5173")
+        );
 
-    configuration.setAllowedMethods(
-            List.of("GET", "POST", "PUT", "DELETE", "OPTIONS")
-    );
+        configuration.setAllowedMethods(
+                List.of("GET", "POST", "PUT", "DELETE", "OPTIONS")
+        );
 
-    configuration.setAllowedHeaders(
-            List.of("*")
-    );
+        configuration.setAllowedHeaders(
+                List.of("*")
+        );
 
-    configuration.setAllowCredentials(true);
+        configuration.setAllowCredentials(true);
 
-    UrlBasedCorsConfigurationSource source =
-            new UrlBasedCorsConfigurationSource();
+        UrlBasedCorsConfigurationSource source =
+                new UrlBasedCorsConfigurationSource();
 
-    source.registerCorsConfiguration(
-            "/**",
-            configuration
-    );
+        source.registerCorsConfiguration(
+                "/**",
+                configuration
+        );
 
-    return source;
-}
+        return source;
+    }
 
     @Bean
     public SecurityFilterChain securityFilterChain(
             HttpSecurity http) throws Exception {
-       http
-        .csrf(AbstractHttpConfigurer::disable)
 
-        .cors(cors -> cors
-                .configurationSource(corsConfigurationSource())
-        )
+        http
+                .csrf(AbstractHttpConfigurer::disable)
 
-        .headers(headers -> headers
-                .contentTypeOptions(contentTypeOptions -> {})
-                .frameOptions(frameOptions -> frameOptions
-                        .deny()
+                .cors(cors -> cors
+                        .configurationSource(corsConfigurationSource())
                 )
-                .contentSecurityPolicy(csp -> csp
-                        .policyDirectives(
-                                "default-src 'none'; " +
-                                "frame-ancestors 'none'; " +
-                                "base-uri 'none'; " +
-                                "form-action 'none'"
+
+                .headers(headers -> headers
+                        .contentTypeOptions(contentTypeOptions -> {})
+                        .frameOptions(frameOptions -> frameOptions
+                                .deny()
+                        )
+                        .contentSecurityPolicy(csp -> csp
+                                .policyDirectives(
+                                        "default-src 'none'; " +
+                                        "frame-ancestors 'none'; " +
+                                        "base-uri 'none'; " +
+                                        "form-action 'none'"
+                                )
+                        )
+                        .referrerPolicy(referrer -> referrer
+                                .policy(
+                                        org.springframework.security.web.header.writers
+                                                .ReferrerPolicyHeaderWriter.ReferrerPolicy
+                                                .NO_REFERRER
+                                )
                         )
                 )
-                .referrerPolicy(referrer -> referrer
-                        .policy(
-                                org.springframework.security.web.header.writers
-                                        .ReferrerPolicyHeaderWriter.ReferrerPolicy
-                                        .NO_REFERRER
-                        )
-                )
-        )
 
                 .sessionManagement(session -> session
                         .sessionCreationPolicy(
@@ -139,6 +141,10 @@ public CorsConfigurationSource corsConfigurationSource() {
                         .requestMatchers("/error").permitAll()
                         .requestMatchers("/api/users/register").permitAll()
                         .requestMatchers("/api/auth/**").permitAll()
+
+                        // Temporary Daraja OAuth integration test
+                        .requestMatchers("/api/mpesa/test/oauth").permitAll()
+
                         .anyRequest().authenticated()
                 )
 
