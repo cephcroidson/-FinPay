@@ -142,8 +142,8 @@ public class SecurityConfig {
                         .requestMatchers("/api/users/register").permitAll()
                         .requestMatchers("/api/auth/**").permitAll()
 
-                        // Temporary Daraja OAuth integration test
-                        .requestMatchers("/api/mpesa/test/oauth").permitAll()
+                        // M-Pesa callback is called by Safaricom without a FinPay JWT
+                        .requestMatchers("/api/mpesa/callback").permitAll()
 
                         .anyRequest().authenticated()
                 )

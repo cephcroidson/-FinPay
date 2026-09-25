@@ -30,7 +30,9 @@ public class UserService {
             );
         }
 
-        if (userRepository.existsByPhoneNumber(request.getPhoneNumber())) {
+        String normalizedPhone = normalizePhoneNumber(request.getPhoneNumber());
+
+        if (userRepository.existsByPhoneNumber(normalizedPhone)) {
             throw new DuplicateResourceException(
                     "Phone number already registered"
             );
@@ -41,7 +43,7 @@ public class UserService {
         user.setFirstName(request.getFirstName());
         user.setLastName(request.getLastName());
         user.setEmail(request.getEmail());
-        user.setPhoneNumber(request.getPhoneNumber());
+        user.setPhoneNumber(normalizedPhone);
 
         // Hash password before storing it
         user.setPassword(
@@ -58,4 +60,16 @@ public User getUserByEmail(String email) {
             .orElseThrow(() ->
                     new UserNotFoundException(email));
 }
+
+    private String normalizePhoneNumber(String phoneNumber) {
+        if (phoneNumber.startsWith("+254")) {
+            return phoneNumber.substring(1);
+        }
+
+        if (phoneNumber.startsWith("0")) {
+            return "254" + phoneNumber.substring(1);
+        }
+
+        throw new IllegalArgumentException("Invalid Kenyan phone number");
+    }
 }

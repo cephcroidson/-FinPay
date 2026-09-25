@@ -19,7 +19,7 @@ public class RegisterUserRequest {
 
     @NotBlank(message = "Phone number is required")
     @Pattern(
-            regexp = "^(07|01)[0-9]{8}$",
+            regexp = "^(?:0[17][0-9]{8}|\\+254[17][0-9]{8})$",
             message = "Phone number must be a valid Kenyan number"
     )
     private String phoneNumber;
