@@ -1,36 +1,14 @@
 services:
-  postgres:
-    image: postgres:17
-    container_name: finpay-postgres
-    restart: unless-stopped
-    environment:
-      POSTGRES_DB: finpay
-      POSTGRES_USER: finpay
-      POSTGRES_PASSWORD: ${DB_PASSWORD}
-    ports:
-      - "5434:5432"
-    volumes:
-      - finpay_postgres_data:/var/lib/postgresql/data
-    healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U finpay -d finpay"]
-      interval: 10s
-      timeout: 5s
-      retries: 5
-    networks:
-      - finpay-network
-
   api:
     image: cephus256/finpay-api:latest
     container_name: finpay-api
     restart: unless-stopped
-    depends_on:
-      postgres:
-        condition: service_healthy
     environment:
-      DB_URL: jdbc:postgresql://postgres:5432/finpay
-      DB_USERNAME: finpay
+      DB_URL: ${DB_URL}
+      DB_USERNAME: ${DB_USERNAME}
       DB_PASSWORD: ${DB_PASSWORD}
       JWT_SECRET: ${JWT_SECRET}
+      FINPAY_MODE: ${FINPAY_MODE}
       MPESA_BASE_URL: ${MPESA_BASE_URL}
       MPESA_CONSUMER_KEY: ${MPESA_CONSUMER_KEY}
       MPESA_CONSUMER_SECRET: ${MPESA_CONSUMER_SECRET}
@@ -41,9 +19,6 @@ services:
       - "8080:8080"
     networks:
       - finpay-network
-
-volumes:
-  finpay_postgres_data:
 
 networks:
   finpay-network:
