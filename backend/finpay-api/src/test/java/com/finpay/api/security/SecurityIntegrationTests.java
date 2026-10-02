@@ -5,6 +5,7 @@ import com.finpay.api.entity.User;
 import com.finpay.api.entity.UserStatus;
 import com.finpay.api.repository.AccountRepository;
 import com.finpay.api.repository.UserRepository;
+import com.finpay.api.repository.TransactionRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,6 +44,9 @@ class SecurityIntegrationTests {
     private UserRepository userRepository;
 
     @Autowired
+    private TransactionRepository transactionRepository;
+
+    @Autowired
     private AccountRepository accountRepository;
 
     @Autowired
@@ -65,6 +69,7 @@ class SecurityIntegrationTests {
     @BeforeEach
     void setUp() {
 
+        transactionRepository.deleteAll();
         accountRepository.deleteAll();
         userRepository.deleteAll();
 
