@@ -8,35 +8,26 @@ import jakarta.validation.constraints.Size;
 public class RegisterUserRequest {
 
     @NotBlank(message = "First name is required")
+    @Size(max = 100, message = "First name is too long")
     private String firstName;
 
     @NotBlank(message = "Last name is required")
+    @Size(max = 100, message = "Last name is too long")
     private String lastName;
 
     @NotBlank(message = "Email is required")
-    @Email(message = "Invalid email address")
+    @Email(message = "Enter a valid email address")
+    @Size(max = 255, message = "Email is too long")
     private String email;
 
     @NotBlank(message = "Phone number is required")
     @Pattern(
-            regexp = "^(?:0[17][0-9]{8}|\\+254[17][0-9]{8})$",
-            message = "Phone number must be a valid Kenyan number"
+        regexp = "^(\\+254|0|254)7\\d{8}$",
+        message = "Enter a valid Kenyan phone number"
     )
     private String phoneNumber;
 
-    @NotBlank(message = "Password is required")
-    @Size(
-            min = 8,
-            message = "Password must be at least 8 characters"
-    )
-    @Pattern(
-            regexp = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&]).+$",
-            message = "Password must contain uppercase, lowercase, number and special character"
-    )
-    private String password;
-
-    public RegisterUserRequest() {
-    }
+    public RegisterUserRequest() {}
 
     public String getFirstName() {
         return firstName;
@@ -68,13 +59,5 @@ public class RegisterUserRequest {
 
     public void setPhoneNumber(String phoneNumber) {
         this.phoneNumber = phoneNumber;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
     }
 }

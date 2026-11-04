@@ -4,18 +4,20 @@ const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
 interface ApiRequestOptions extends RequestInit {
     headers?: HeadersInit;
+    auth?: boolean;
 }
 
 async function apiRequest<T>(
     endpoint: string,
     options: ApiRequestOptions = {}
 ): Promise<T | null> {
-    const token = localStorage.getItem("finpay_token");
+    const { auth = true, ...requestOptions } = options;
+    const token = auth ? localStorage.getItem("finpay_token") : null;
 
     const headers: Record<string, string> = {
         "Content-Type": "application/json",
-        ...(options.headers
-            ? Object.fromEntries(new Headers(options.headers).entries())
+        ...(requestOptions.headers
+            ? Object.fromEntries(new Headers(requestOptions.headers).entries())
             : {}),
     };
 
@@ -24,7 +26,7 @@ async function apiRequest<T>(
     }
 
     const response = await fetch(`${API_BASE_URL}${endpoint}`, {
-        ...options,
+        ...requestOptions,
         headers,
     });
 

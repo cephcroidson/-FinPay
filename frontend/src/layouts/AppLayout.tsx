@@ -1,3 +1,4 @@
+import BrandLogo from "../components/BrandLogo";
 import {
     Bell,
     ChevronDown,
@@ -127,28 +128,7 @@ function AppLayout() {
                 }`}
             >
                 <div className="flex h-20 items-center justify-between border-b border-slate-200 px-6 dark:border-slate-800/80">
-                    <NavLink
-                        to="/dashboard"
-                        onClick={closeMobileMenu}
-                        className="flex items-center gap-3"
-                    >
-                        <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-[#d4af37] shadow-lg shadow-[#d4af37]/20">
-                            <CreditCard
-                                size={21}
-                                className="text-[#07111f]"
-                            />
-                        </div>
-
-                        <div>
-                            <div className="text-lg font-bold tracking-tight text-slate-950 dark:text-white">
-                                FinPay
-                            </div>
-
-                            <div className="text-[10px] font-semibold uppercase tracking-[0.2em] text-slate-400">
-                                Payments
-                            </div>
-                        </div>
-                    </NavLink>
+                    <BrandLogo onClick={closeMobileMenu} />
 
                     <button
                         type="button"
