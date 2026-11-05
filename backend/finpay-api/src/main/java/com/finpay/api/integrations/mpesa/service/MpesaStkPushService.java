@@ -59,6 +59,8 @@ public class MpesaStkPushService {
             MpesaStkPushRequest request,
             String authenticatedEmail) {
 
+        validateConfiguration();
+
         Account account = accountRepository
                 .findById(request.getAccountId())
                 .orElseThrow(() ->
@@ -183,6 +185,22 @@ public class MpesaStkPushService {
         return toResponse(
                 payment,
                 stkResponse);
+    }
+
+    private void validateConfiguration() {
+        if (isBlank(mpesaProperties.getConsumerKey())
+                || isBlank(mpesaProperties.getConsumerSecret())
+                || isBlank(mpesaProperties.getShortcode())
+                || isBlank(mpesaProperties.getPasskey())
+                || isBlank(mpesaProperties.getCallbackUrl())) {
+
+            throw new IllegalStateException(
+                    "M-Pesa sandbox integration is not configured");
+        }
+    }
+
+    private boolean isBlank(String value) {
+        return value == null || value.isBlank();
     }
 
     private String generatePassword(String timestamp) {

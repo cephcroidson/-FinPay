@@ -1,8 +1,27 @@
-FROM eclipse-temurin:25-jdk
+# ============================================================
+# FinPay API - Multi-stage Docker build
+# ============================================================
+
+# Stage 1: Build
+FROM eclipse-temurin:25-jdk AS builder
 
 WORKDIR /app
 
-COPY target/*.jar app.jar
+COPY .mvn/ .mvn/
+COPY mvnw pom.xml ./
+
+RUN chmod +x mvnw
+
+COPY src/ src/
+
+RUN ./mvnw -B clean package -DskipTests
+
+# Stage 2: Runtime
+FROM eclipse-temurin:25-jre
+
+WORKDIR /app
+
+COPY --from=builder /app/target/finpay-api-0.0.1-SNAPSHOT.jar app.jar
 
 EXPOSE 8080
 
