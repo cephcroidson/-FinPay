@@ -69,7 +69,7 @@ To provide a secure, accessible and extensible digital financial platform that s
 
 These items require separate business, regulatory, provider and technical assessment before commitment.
 
-### 6.3 Out of scope for an initial academic MVP unless separately approved
+### 6.3 Out of scope for the initial product release unless separately approved
 
 - Acting as a bank or deposit-taking institution.
 - Issuing credit or lending.
@@ -111,7 +111,7 @@ Do not assign numerical targets without a baseline, capacity plan and business a
 
 ## 10. Constraints
 
-The project is developed within an academic/capstone context and has finite time and resources. Live payment processing, regulatory permissions, provider onboarding, penetration testing and production operations may require external approvals and services beyond the project team's direct control.
+The initial product is being developed within defined project resources, delivery timelines and technical constraints. Live payment processing, regulatory permissions, provider onboarding, independent penetration testing and production operations may require external approvals, specialist services and additional implementation work. These dependencies must be addressed before any production financial release.
 
 ## 11. High-level delivery phases
 

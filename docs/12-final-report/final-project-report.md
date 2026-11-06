@@ -58,7 +58,7 @@ Summarise what was achieved, what remains, and recommended next steps. Avoid cla
 
 ## 11. References
 
-List official technical documentation, provider documentation, legislation/regulatory guidance, standards and academic references actually consulted. Use one consistent citation style required by the institution.
+List the official technical documentation, payment-provider documentation, applicable legislation and regulatory guidance, industry standards and other authoritative sources actually consulted. Apply a consistent professional referencing style throughout the report.
 
 ## 12. Appendices
 

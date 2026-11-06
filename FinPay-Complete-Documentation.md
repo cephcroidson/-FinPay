@@ -1,21 +1,25 @@
-# FinPay: Complete Project Documentation
+# FINPAY — COMPLETE PROJECT DOCUMENTATION
 
-_Generated 2026-11-06_
+Product and System Documentation
 
+**Document set:** Product, Business and Technical Documentation
+**Version:** 1.0
+**Document status:** Controlled Project Baseline
+**Classification:** Project Documentation
 
 
 ---
 
-<!-- source: README.md -->
+# DOCUMENT: README.md
 
-## FinPay — Complete Project Documentation
+# FinPay — Complete Project Documentation
 
 **Project:** FinPay
 **Document pack:** Target-state product and system specification
 **Version:** 1.0
-**Audience:** Tracom Academy assessors, product stakeholders, business analysts, developers, QA, operations and future maintainers.
+**Intended audience:** Product stakeholders, business analysts, software engineers, QA professionals, security teams, operations personnel and future maintainers.
 
-### 1. Documentation purpose
+## 1. Documentation purpose
 
 This pack defines the intended FinPay product: what it is meant to solve, who it serves, how it should behave, and how it should be designed, built, tested, secured and operated. It is a forward-looking specification and development baseline, not a declaration that every capability is already implemented.
 
@@ -28,13 +32,13 @@ The documents use these labels:
 
 Existing QA execution reports in `docs/06-qa` and `docs/qa` are retained as historical project evidence. They should not be interpreted as proof that every target-state requirement in this pack has been delivered.
 
-### 2. Product summary
+## 2. Product summary
 
 FinPay is a proposed digital financial services platform designed to provide customers with a secure and convenient way to register, access a digital account, manage funds, initiate payments, transfer money, and review transaction activity. The intended initial market is Kenya, with a design that can be extended to additional markets, currencies and payment rails.
 
 The platform is intended to combine a responsive web application, an Android mobile application, a secure backend API, a relational data store, and integrations with external payment providers. M-Pesa is a priority local payment channel. The architecture should allow future integration with banks, card processors, international payment service providers and ISO 8583-based payment networks where commercially and technically appropriate.
 
-### 3. Documentation map
+## 3. Documentation map
 
 | Area | Document |
 |---|---|
@@ -50,10 +54,10 @@ The platform is intended to combine a responsive web application, an Android mob
 | Environments, delivery and operations | `docs/09-devops-operations/devops-and-operations.md` |
 | Project delivery and risk controls | `docs/10-project-management/project-management-plan.md` |
 | End-user and support procedures | `docs/11-user-guides/user-and-support-guide.md` |
-| Academic and technical report structure | `docs/12-final-report/final-project-report.md` |
+| Project completion and technical report | `docs/12-final-report/final-project-report.md` |
 | Shared glossary | `docs/glossary.md` |
 
-### 4. Proposed technology direction
+## 4. Proposed technology direction
 
 - Backend: Java and Spring Boot REST API.
 - Web: React, TypeScript, Vite and Tailwind CSS.
@@ -65,7 +69,7 @@ The platform is intended to combine a responsive web application, an Android mob
 
 Technology versions and provider products must be confirmed against the actual build configuration at implementation time.
 
-### 5. Guiding principles
+## 5. Guiding principles
 
 1. The backend is authoritative for balances, transaction state, account ownership and payment outcomes.
 2. Every financial movement must be traceable and auditable.
@@ -78,18 +82,18 @@ Technology versions and provider products must be confirmed against the actual b
 9. Requirements, design, implementation and test evidence must remain traceable.
 10. Security and regulatory obligations must be validated with qualified providers and relevant authorities before any live financial service launch.
 
-### 6. Status and change control
+## 6. Status and change control
 
 This pack describes the intended target state. When implementation decisions change, update the relevant design document and record significant architectural changes as Architecture Decision Records (ADRs). Do not silently change financial rules, API contracts, security assumptions or data definitions.
 
 
 ---
 
-<!-- source: docs/00-project-foundation/project-charter.md -->
+# DOCUMENT: docs/00-project-foundation/project-charter.md
 
-## FinPay Project Charter
+# FinPay Project Charter
 
-### 1. Project identity
+## 1. Project identity
 
 **Name:** FinPay  
 **Category:** Digital financial services / fintech platform  
@@ -97,23 +101,23 @@ This pack describes the intended target state. When implementation decisions cha
 **Primary interfaces:** Responsive web application and Android mobile application  
 **Primary users:** Individual customers, operations/support personnel and system administrators.
 
-### 2. Executive summary
+## 2. Executive summary
 
 FinPay is intended to provide a unified digital platform through which customers can securely onboard, access a digital account, fund it through supported payment channels, transfer funds, make withdrawals or payouts where supported, and monitor their financial activity. The platform aims to make common digital financial interactions convenient, transparent and accessible while maintaining strong controls over identity, authentication, authorisation, transaction integrity and auditability.
 
 The first product release is intended to establish the core customer and account lifecycle, local payment integration, transaction history, operational visibility and a foundation for future payment-channel expansion.
 
-### 3. Problem statement
+## 3. Problem statement
 
 Customers often interact with financial services through fragmented channels and inconsistent user experiences. Funding, transfers, transaction tracking and customer support may be spread across separate applications or processes. Users need a clear view of their account activity and understandable transaction outcomes. FinPay is intended to address this by bringing core account and payment interactions into one consistent digital experience.
 
 This statement describes the product opportunity; it is not a claim that all existing financial platforms share the same deficiencies.
 
-### 4. Vision
+## 4. Vision
 
 To provide a secure, accessible and extensible digital financial platform that simplifies everyday money movement and gives customers clear visibility and control over their financial activity.
 
-### 5. Objectives
+## 5. Objectives
 
 - Provide a straightforward customer registration and onboarding experience.
 - Establish secure customer authentication and account access.
@@ -126,9 +130,9 @@ To provide a secure, accessible and extensible digital financial platform that s
 - Maintain a reliable financial record and reconciliation process.
 - Establish a modular architecture that can accommodate additional currencies, payment providers and markets.
 
-### 6. Scope
+## 6. Scope
 
-#### 6.1 Intended in-scope capabilities
+### 6.1 Intended in-scope capabilities
 
 - Customer registration and onboarding.
 - Email and/or phone verification.
@@ -146,7 +150,7 @@ To provide a secure, accessible and extensible digital financial platform that s
 - Web and Android customer experiences.
 - Security, QA, DevOps and operational readiness.
 
-#### 6.2 Future or conditional scope
+### 6.2 Future or conditional scope
 
 - Multiple currencies and cross-border transfers.
 - Bank transfers and card acquiring.
@@ -158,7 +162,7 @@ To provide a secure, accessible and extensible digital financial platform that s
 
 These items require separate business, regulatory, provider and technical assessment before commitment.
 
-#### 6.3 Out of scope for an initial academic MVP unless separately approved
+### 6.3 Out of scope for the initial product release unless separately approved
 
 - Acting as a bank or deposit-taking institution.
 - Issuing credit or lending.
@@ -166,7 +170,7 @@ These items require separate business, regulatory, provider and technical assess
 - Guaranteed real-world settlement without a contracted and tested provider.
 - Production financial services before licensing, compliance, security and provider approvals are satisfied.
 
-### 7. Stakeholders and responsibilities
+## 7. Stakeholders and responsibilities
 
 | Stakeholder | Interest / responsibility |
 |---|---|
@@ -183,13 +187,13 @@ These items require separate business, regulatory, provider and technical assess
 | Customers | Use the platform and provide feedback through approved channels |
 | External providers | Payment execution, identity/communications services and settlement reporting |
 
-### 8. Success measures
+## 8. Success measures
 
 Targets should be agreed before release and measured using evidence. Candidate measures include onboarding completion rate, successful payment completion rate, transfer success rate, transaction-status accuracy, support resolution time, application availability, API latency, reconciliation variance, security defect closure and customer satisfaction.
 
 Do not assign numerical targets without a baseline, capacity plan and business approval.
 
-### 9. Assumptions and dependencies
+## 9. Assumptions and dependencies
 
 - FinPay will use a regulated and appropriately authorised provider for payment execution.
 - Provider sandbox access, credentials, callback configuration and documentation will be available.
@@ -198,11 +202,11 @@ Do not assign numerical targets without a baseline, capacity plan and business a
 - Legal, compliance and operational requirements will be reviewed before live launch.
 - External provider uptime, limits, fees and settlement timelines affect service behaviour.
 
-### 10. Constraints
+## 10. Constraints
 
-The project is developed within an academic/capstone context and has finite time and resources. Live payment processing, regulatory permissions, provider onboarding, penetration testing and production operations may require external approvals and services beyond the project team's direct control.
+The initial product is being developed within defined project resources, delivery timelines and technical constraints. Live payment processing, regulatory permissions, provider onboarding, independent penetration testing and production operations may require external approvals, specialist services and additional implementation work. These dependencies must be addressed before any production financial release.
 
-### 11. High-level delivery phases
+## 11. High-level delivery phases
 
 1. Product definition and business analysis.
 2. UX research, journeys and interface design.
@@ -218,15 +222,15 @@ The project is developed within an academic/capstone context and has finite time
 
 ---
 
-<!-- source: docs/01-business-analysis/business-requirements.md -->
+# DOCUMENT: docs/01-business-analysis/business-requirements.md
 
-## FinPay Business Analysis and Requirements
+# FinPay Business Analysis and Requirements
 
-### 1. Purpose
+## 1. Purpose
 
 This document defines the intended business capabilities and functional/non-functional requirements for FinPay. Requirements are target-state requirements until implementation and acceptance evidence are recorded.
 
-### 2. Business goals
+## 2. Business goals
 
 - Simplify access to everyday digital financial services.
 - Provide transparent and traceable money movement.
@@ -234,7 +238,7 @@ This document defines the intended business capabilities and functional/non-func
 - Provide consistent experiences across web and Android.
 - Establish a foundation for additional payment providers and markets.
 
-### 3. Actors
+## 3. Actors
 
 - **Customer:** registers, authenticates, views account information, funds an account, transfers funds, requests payouts and views transaction records.
 - **Support agent:** investigates customer issues using restricted, audited access.
@@ -243,7 +247,7 @@ This document defines the intended business capabilities and functional/non-func
 - **Payment provider:** processes external payment requests and sends asynchronous status notifications.
 - **Notification provider:** delivers approved email, SMS or push messages.
 
-### 4. Functional requirements
+## 4. Functional requirements
 
 | ID | Requirement |
 |---|---|
@@ -270,7 +274,7 @@ This document defines the intended business capabilities and functional/non-func
 | FR-021 | The system shall support customer support workflows for disputed, delayed or failed transactions. |
 | FR-022 | The system shall support configurable transaction limits and risk controls. |
 
-### 5. Non-functional requirements
+## 5. Non-functional requirements
 
 | ID | Quality attribute | Requirement |
 |---|---|---|
@@ -289,7 +293,7 @@ This document defines the intended business capabilities and functional/non-func
 
 Numerical service-level objectives must be approved and supported by measured capacity and operational evidence.
 
-### 6. Core business rules
+## 6. Core business rules
 
 1. A customer may access only their own profile, account and transaction information unless an explicitly authorised staff role permits otherwise.
 2. A customer must complete the required onboarding checks before account capabilities are activated.
@@ -304,9 +308,9 @@ Numerical service-level objectives must be approved and supported by measured ca
 11. Staff actions must be authorised, attributable and audited.
 12. Customer-facing statuses must not imply settlement when only initiation or acceptance has occurred.
 
-### 7. Key use cases
+## 7. Key use cases
 
-#### UC-01 — Customer onboarding
+### UC-01 — Customer onboarding
 
 **Primary actor:** Customer  
 **Preconditions:** Customer has access to a valid contact channel.  
@@ -314,7 +318,7 @@ Numerical service-level objectives must be approved and supported by measured ca
 **Alternative flows:** Duplicate contact, invalid challenge, expired challenge, retry limit reached, provider delivery failure, identity review required.  
 **Postcondition:** Customer profile and account are in the appropriate lifecycle state.
 
-#### UC-02 — Fund account using M-Pesa
+### UC-02 — Fund account using M-Pesa
 
 **Primary actor:** Customer  
 **Preconditions:** Customer is authenticated, account is eligible and provider integration is available.  
@@ -322,7 +326,7 @@ Numerical service-level objectives must be approved and supported by measured ca
 **Alternative flows:** Rejected prompt, timeout, cancelled request, callback delay, invalid callback, duplicate callback, amount mismatch or reconciliation exception.  
 **Postcondition:** Payment and account ledger reflect the verified outcome.
 
-#### UC-03 — Internal transfer
+### UC-03 — Internal transfer
 
 **Primary actor:** Customer  
 **Preconditions:** Customer is authenticated and source account is eligible.  
@@ -330,30 +334,30 @@ Numerical service-level objectives must be approved and supported by measured ca
 **Alternative flows:** Invalid recipient, insufficient funds, account restriction, PIN lockout, duplicate request, concurrent debit conflict or posting failure.  
 **Postcondition:** Both sides of the transfer are consistent or neither side is posted.
 
-#### UC-04 — Withdrawal or payout
+### UC-04 — Withdrawal or payout
 
 **Primary actor:** Customer  
 **Preconditions:** A payout provider and customer eligibility are configured.  
 **Main flow:** Select destination/channel → enter amount → review fees and net payout → authenticate action → validate balance and limits → create pending payout → submit to provider → process asynchronous outcome → post completion or failure/reversal → notify customer.  
 **Alternative flows:** Provider unavailable, rejection, timeout, pending result, returned payout or reconciliation mismatch.
 
-#### UC-05 — Transaction investigation
+### UC-05 — Transaction investigation
 
 **Primary actor:** Support/operations user  
 **Preconditions:** Staff user has appropriate role and case-related access.  
 **Main flow:** Search by reference → verify customer and permissions → inspect lifecycle and provider events → compare ledger and provider records → record findings → initiate approved resolution workflow.  
 **Postcondition:** Case activity is recorded and any financial adjustment follows maker-checker controls.
 
-### 8. Acceptance principles
+## 8. Acceptance principles
 
 A requirement is accepted only when its acceptance criteria are met, the relevant tests have passed, defects are resolved or formally accepted, and evidence is linked. A written requirement alone does not prove delivery.
 
 
 ---
 
-<!-- source: docs/01-business-analysis/requirements-traceability-matrix.md -->
+# DOCUMENT: docs/01-business-analysis/requirements-traceability-matrix.md
 
-## FinPay Requirements Traceability Matrix (RTM)
+# FinPay Requirements Traceability Matrix (RTM)
 
 **Document version:** 1.1  
 **Document status:** Target-state baseline  
@@ -373,7 +377,7 @@ A requirement is accepted only when its acceptance criteria are met, the relevan
 - `../06-qa/uat.md`
 - `../06-qa/coverage-gap-register.md`
 
-### 1. Purpose
+## 1. Purpose
 
 This matrix traces FinPay business and non-functional requirements
 to design artefacts and verification scenarios.
@@ -385,7 +389,7 @@ A requirement can be documented while its implementation or testing
 is still pending. Design references and planned test cases do not
 constitute implementation or acceptance evidence.
 
-### 2. Status Definitions
+## 2. Status Definitions
 
 | Status | Meaning |
 |---|---|
@@ -400,7 +404,7 @@ Status changes require evidence and review. A PASS in a narrow
 historical test does not automatically mark the entire requirement
 as Tested or Accepted.
 
-### 3. Functional Requirements Traceability
+## 3. Functional Requirements Traceability
 
 | ID | Requirement | Design reference | Verification references | Current status |
 |---|---|---|---|---|
@@ -427,7 +431,7 @@ as Tested or Accepted.
 | FR-021 | Customer support workflows | `../11-user-guides/user-and-support-guide.md` | UAT-028; support case lifecycle and access tests to be added | Planned |
 | FR-022 | Configurable transaction limits and risk controls | `../05-payment-system/payment-system.md`; `../07-security/security-and-compliance.md` | SEC-PAY-003–004; SEC-PIN-003; limit boundary and risk-rule tests to be added | Planned |
 
-#### Functional traceability notes
+### Functional traceability notes
 
 1. Existing master test cases and API cases cover selected development
    workflows. Their historical results do not establish full target-state
@@ -442,7 +446,7 @@ as Tested or Accepted.
 6. Requirements remain Planned until implementation and evidence are
    reviewed.
 
-### 4. Non-Functional Requirements Traceability
+## 4. Non-Functional Requirements Traceability
 
 | ID | Requirement | Verification references | Additional evidence required | Current status |
 |---|---|---|---|---|
@@ -459,7 +463,7 @@ as Tested or Accepted.
 | NFR-011 | Recoverability | PERF-010; INT-012 | Backup restoration, recovery objectives and data consistency tests | Planned |
 | NFR-012 | Auditability | SEC-DATA-001; INT-016–017; UAT-035 | Audit completeness, access review, retention and tamper-resistance evidence | Planned |
 
-### 5. Test Suite Reference Catalogue
+## 5. Test Suite Reference Catalogue
 
 | Suite | Identifier range | Purpose |
 |---|---|---|
@@ -480,7 +484,7 @@ as Tested or Accepted.
 
 A test ID is a reference to a scenario, not proof that it has passed.
 
-### 6. Evidence Register
+## 6. Evidence Register
 
 Evidence should be maintained with:
 
@@ -502,7 +506,7 @@ Historical execution evidence remains in the relevant QA documents.
 New tests remain Not Executed or Planned until actual execution is
 recorded.
 
-### 7. Coverage Gap Management
+## 7. Coverage Gap Management
 
 The QA coverage gap register is maintained at:
 
@@ -514,7 +518,7 @@ dependencies and closure evidence.
 A requirement must not be marked Tested or Accepted solely because
 a design document or test case exists.
 
-### 8. Change Control
+## 8. Change Control
 
 Changes to requirements must be reflected in:
 
@@ -527,7 +531,7 @@ Changes to requirements must be reflected in:
 
 Changes to status must include evidence and reviewer details.
 
-### 9. Overall Traceability Status
+## 9. Overall Traceability Status
 
 **Target-state requirement coverage:** Documented.
 
@@ -542,15 +546,15 @@ Changes to status must include evidence and reviewer details.
 
 ---
 
-<!-- source: docs/02-product-design/product-specification.md -->
+# DOCUMENT: docs/02-product-design/product-specification.md
 
-## FinPay Product Specification and UX Blueprint
+# FinPay Product Specification and UX Blueprint
 
-### 1. Product experience
+## 1. Product experience
 
 FinPay should feel secure, clear and dependable. Customers should understand where their money is, what action they are taking, what fees apply, and whether a transaction is pending, successful or unsuccessful.
 
-### 2. Customer roles and needs
+## 2. Customer roles and needs
 
 | Persona | Needs |
 |---|---|
@@ -560,9 +564,9 @@ FinPay should feel secure, clear and dependable. Customers should understand whe
 | Support user | Searchable references, accurate timelines and controlled case access |
 | Operations user | Payment queues, reconciliation exceptions and audit trails |
 
-### 3. Information architecture
+## 3. Information architecture
 
-#### Customer web/mobile navigation
+### Customer web/mobile navigation
 
 - Home / Dashboard
 - My Account
@@ -577,7 +581,7 @@ FinPay should feel secure, clear and dependable. Customers should understand whe
 - Settings
 - Sign out
 
-#### Staff console
+### Staff console
 
 - Operations dashboard
 - Customers
@@ -592,7 +596,7 @@ FinPay should feel secure, clear and dependable. Customers should understand whe
 
 Staff functions must be separated from customer-facing functions and protected by dedicated roles and stronger authentication.
 
-### 4. Key screens
+## 4. Key screens
 
 1. Welcome / landing screen.
 2. Registration.
@@ -615,7 +619,7 @@ Staff functions must be separated from customer-facing functions and protected b
 19. Staff operations dashboard.
 20. Payment investigation and reconciliation detail.
 
-### 5. UX rules
+## 5. UX rules
 
 - Use plain language and avoid unexplained financial jargon.
 - Show currency and amount consistently.
@@ -630,13 +634,13 @@ Staff functions must be separated from customer-facing functions and protected b
 - Confirm destructive or security-sensitive changes.
 - Do not use colour alone to communicate transaction status.
 
-### 6. Visual design direction
+## 6. Visual design direction
 
 The intended visual identity uses a professional fintech style with navy as the primary foundation, gold as a restrained accent and neutral backgrounds for readability. The suggested proportion is approximately 60% navy/dark foundation, 30% neutral surfaces and 10% gold accent. These proportions are a design direction, not a rigid rule for every screen.
 
 Typography should be legible and consistent. Cards should be used to group related information, not to obscure hierarchy. Motion should be subtle and must not delay financial feedback.
 
-### 7. Customer journey — onboarding
+## 7. Customer journey — onboarding
 
 ```mermaid
 flowchart TD
@@ -659,7 +663,7 @@ flowchart TD
  O --> P[Dashboard]
 ```
 
-### 8. Customer journey — payment funding
+## 8. Customer journey — payment funding
 
 ```mermaid
 sequenceDiagram
@@ -684,7 +688,7 @@ sequenceDiagram
  API-->>C: Send notification / receipt
 ```
 
-### 9. Error and recovery experience
+## 9. Error and recovery experience
 
 | Situation | Customer message principle |
 |---|---|
@@ -696,24 +700,24 @@ sequenceDiagram
 | PIN locked | Explain lock duration or recovery route without exposing security internals |
 | Account restricted | Give a support route; do not disclose sensitive risk signals |
 
-### 10. Design deliverables
+## 10. Design deliverables
 
 The design phase should produce user flows, low-fidelity wireframes, high-fidelity mockups, reusable components, responsive breakpoints, accessibility review, clickable prototype and design handoff specifications.
 
 
 ---
 
-<!-- source: docs/03-system-architecture/system-architecture.md -->
+# DOCUMENT: docs/03-system-architecture/system-architecture.md
 
-## FinPay Target System Architecture
+# FinPay Target System Architecture
 
-### 1. Architecture overview
+## 1. Architecture overview
 
 FinPay is intended to begin as a modular monolith: one deployable backend application organised into clear business modules. This avoids premature distributed-system complexity while preserving boundaries that can later be extracted if scale, team structure or operational requirements justify it.
 
 The backend is the authoritative owner of account state, payment instructions, transaction status, financial posting and authorisation decisions. Web and mobile clients consume documented APIs and must not directly mutate financial records.
 
-### 2. Context diagram
+## 2. Context diagram
 
 ```mermaid
 flowchart LR
@@ -731,7 +735,7 @@ flowchart LR
  API --> OBS[Logs, Metrics and Alerts]
 ```
 
-### 3. Logical backend modules
+## 3. Logical backend modules
 
 | Module | Responsibility |
 |---|---|
@@ -749,7 +753,7 @@ flowchart LR
 | Support and Operations | Case handling, exception queues, approved adjustments and reporting |
 | Audit | Security, privileged-action and financial-event audit trail |
 
-### 4. Component diagram
+## 4. Component diagram
 
 ```mermaid
 flowchart TB
@@ -797,7 +801,7 @@ flowchart TB
  AUD --> DB
 ```
 
-### 5. Deployment view
+## 5. Deployment view
 
 ```mermaid
 flowchart TB
@@ -828,7 +832,7 @@ flowchart TB
  API --> Monitor
 ```
 
-### 6. Architecture principles
+## 6. Architecture principles
 
 - Modular monolith first; split services only when justified.
 - Stateless API instances where possible.
@@ -841,34 +845,34 @@ flowchart TB
 - Database migrations are versioned and reviewed.
 - Observability must correlate customer requests, internal transactions and provider references.
 
-### 7. Financial consistency model
+## 7. Financial consistency model
 
 A production-grade target should use a double-entry ledger. The account balance shown to the customer is a derived or reconciled projection of posted ledger entries, not an independently editable value. Each financial operation should create a balanced set of entries within one database transaction, with unique posting identifiers and idempotency protection.
 
 Pending provider activity must not be treated as settled money. External payment state and internal ledger state must be correlated but remain separately identifiable.
 
-### 8. Scalability and resilience
+## 8. Scalability and resilience
 
 Scale stateless API instances horizontally behind a load balancer. Use database connection pooling, indexed queries, bounded workloads and background workers for asynchronous tasks. Introduce queues only where they provide a clear reliability or throughput benefit. Define tested database backup, point-in-time recovery, restore, health checks and graceful shutdown procedures.
 
 Capacity objectives, including any target for concurrent users or transaction throughput, must be validated through realistic load tests and infrastructure sizing.
 
-### 9. Architecture decision records
+## 9. Architecture decision records
 
 Create an ADR for decisions that materially affect the system, including modular monolith selection, database hosting, ledger model, authentication strategy, payment provider abstraction, idempotency, deployment topology, event/queue strategy and any later move to microservices.
 
 
 ---
 
-<!-- source: docs/04-data-design/data-model.md -->
+# DOCUMENT: docs/04-data-design/data-model.md
 
-## FinPay Data Model and Data Dictionary
+# FinPay Data Model and Data Dictionary
 
-### 1. Data design principles
+## 1. Data design principles
 
 The data model must preserve ownership, integrity, traceability and privacy. Monetary values must use fixed-precision decimal types, never floating-point types. All financial records must have stable identifiers and references. Sensitive values such as password hashes, PIN hashes, access tokens and provider secrets must never be exposed through ordinary API responses.
 
-### 2. Conceptual entity relationship diagram
+## 2. Conceptual entity relationship diagram
 
 ```mermaid
 erDiagram
@@ -889,7 +893,7 @@ erDiagram
  CUSTOMER ||--o{ AUDIT_EVENT : actor
 ```
 
-### 3. Core entities
+## 3. Core entities
 
 | Entity | Purpose | Key fields (conceptual) |
 |---|---|---|
@@ -909,7 +913,7 @@ erDiagram
 
 This is a target conceptual model. Final physical schema, normalisation, indexes, constraints and migration scripts must be designed and reviewed before implementation.
 
-### 4. Ledger design
+## 4. Ledger design
 
 A double-entry ledger records every posted financial movement as balanced debit and credit entries. For each transaction and currency:
 
@@ -919,7 +923,7 @@ A transfer between two customer accounts should debit the sender's liability/acc
 
 Ledger entries should be append-only. Corrections should use linked reversal or adjustment transactions, not deletion or mutation of posted entries.
 
-### 5. Data constraints
+## 5. Data constraints
 
 - Unique customer public identifier.
 - Unique normalised email and phone where business rules require uniqueness.
@@ -934,7 +938,7 @@ Ledger entries should be append-only. Corrections should use linked reversal or 
 - Restrict updates/deletes to financial records after posting.
 - Use UTC timestamps internally and render local time consistently to customers.
 
-### 6. Data classification
+## 6. Data classification
 
 | Classification | Examples | Controls |
 |---|---|---|
@@ -943,26 +947,26 @@ Ledger entries should be append-only. Corrections should use linked reversal or 
 | Confidential | Customer profile, account and transaction data | Encryption, least privilege, audit |
 | Restricted | Password/PIN hashes, tokens, identity evidence, provider secrets | Strong access restriction, secure storage, masking and strict retention |
 
-### 7. Retention and deletion
+## 7. Retention and deletion
 
 Retention periods must be established through legal, regulatory, contractual and operational review. Financial records may be subject to mandatory retention requirements. Customer privacy requests must be handled without unlawfully deleting records that must be retained. Define archival, anonymisation, backup expiry and legal-hold procedures.
 
-### 8. Data dictionary conventions
+## 8. Data dictionary conventions
 
 For each physical column, document: name, type, nullability, default, primary/foreign/unique constraints, allowed values, meaning, sensitivity, source of truth and retention rule. Keep the dictionary aligned with migrations.
 
 
 ---
 
-<!-- source: docs/05-payment-system/payment-system.md -->
+# DOCUMENT: docs/05-payment-system/payment-system.md
 
-## FinPay Payment System and Financial Processing
+# FinPay Payment System and Financial Processing
 
-### 1. Purpose
+## 1. Purpose
 
 This document defines the intended financial processing model for account funding, internal transfers, withdrawals/payouts, provider callbacks, reconciliation, refunds and future payment-network integrations.
 
-### 2. Payment domain concepts
+## 2. Payment domain concepts
 
 - **Transaction:** the business instruction initiated by a customer or authorised system.
 - **Payment:** the external provider interaction used to move money.
@@ -973,7 +977,7 @@ This document defines the intended financial processing model for account fundin
 
 These concepts must not be treated as interchangeable.
 
-### 3. Transaction lifecycle
+## 3. Transaction lifecycle
 
 ```mermaid
 stateDiagram-v2
@@ -994,7 +998,7 @@ stateDiagram-v2
 
 A provider's acknowledgement that a request was received is not proof that funds moved. Completion requires a verified provider result and successful internal posting.
 
-### 4. Account funding with M-Pesa
+## 4. Account funding with M-Pesa
 
 Target workflow:
 1. Authenticate customer and verify account ownership and eligibility.
@@ -1012,21 +1016,21 @@ Target workflow:
 13. Notify customer and make a receipt available.
 14. Reconcile provider records and settlement reports.
 
-### 5. Internal transfers
+## 5. Internal transfers
 
 A transfer must be atomic. The system must validate source ownership, recipient eligibility, account status, currency, available balance, limits, risk checks and transaction authorisation. It must then post balanced ledger entries in a single database transaction. If any posting fails, the entire operation must roll back.
 
 Concurrent transfer requests must not permit overspending. Use appropriate database locking or optimistic concurrency/version checks, unique idempotency keys and retry-safe transaction boundaries.
 
-### 6. Withdrawals and payouts
+## 6. Withdrawals and payouts
 
 A payout should be represented as a pending instruction until the external provider confirms the outcome. The platform must handle accepted, pending, rejected, timed-out, returned and reversed outcomes. A timeout is not automatically a failure: query or reconcile the provider before allowing a duplicate payout.
 
-### 7. Fees, limits and FX
+## 7. Fees, limits and FX
 
 Fees and limits should be configurable, versioned and disclosed before confirmation. Record the fee calculation and applicable policy version with the transaction. For foreign exchange, retain the quoted rate, quote identifier, quote expiry, source currency, target currency, source amount, target amount, fees and final execution rate. Do not promise live FX until a provider and pricing source are contracted and tested.
 
-### 8. Idempotency and duplicate prevention
+## 8. Idempotency and duplicate prevention
 
 - Require an idempotency key for retryable financial initiation endpoints.
 - Persist the key, customer, operation, request fingerprint and resulting resource.
@@ -1036,7 +1040,7 @@ Fees and limits should be configurable, versioned and disclosed before confirmat
 - Make callback processing safe under retries and concurrent delivery.
 - Keep a durable provider-event record for investigation.
 
-### 9. Reconciliation
+## 9. Reconciliation
 
 Reconciliation should compare:
 - FinPay payment and transaction records.
@@ -1046,15 +1050,15 @@ Reconciliation should compare:
 
 Exceptions include missing provider records, missing internal records, amount mismatch, duplicate reference, delayed settlement, unexpected reversal and unmatched fee. Every exception should have an owner, status, evidence and resolution record.
 
-### 10. Refunds and reversals
+## 10. Refunds and reversals
 
 Refunds and reversals must be separate linked operations with reason codes, authorisation, provider reference and audit trail. A completed transaction must not be silently changed to failed. Use compensating ledger entries and maintain the original transaction history.
 
-### 11. ISO 8583 and future payment rails
+## 11. ISO 8583 and future payment rails
 
 ISO 8583 is a message standard used in card/payment transaction environments. Any FinPay ISO 8583 capability should be designed as a separate integration adapter with explicit message profiles, field mappings, network management, security, timeouts, reversals, duplicate detection, reconciliation and certification requirements. ISO 8583 support is a future integration direction unless a specific network, host specification and certification environment are available.
 
-### 12. Financial controls
+## 12. Financial controls
 
 - Maker-checker approval for privileged financial adjustments.
 - Segregation of duties between initiation and approval.
@@ -1068,15 +1072,15 @@ ISO 8583 is a message standard used in card/payment transaction environments. An
 
 ---
 
-<!-- source: docs/06-api/api-specification.md -->
+# DOCUMENT: docs/06-api/api-specification.md
 
-## FinPay API Specification
+# FinPay API Specification
 
-### 1. API principles
+## 1. API principles
 
 The FinPay backend exposes a versioned REST API over HTTPS. The API is the controlled interface for web, Android and authorised staff clients. Financial business rules must be enforced server-side.
 
-### 2. Standards
+## 2. Standards
 
 - Base path: `/api/v1` for the target versioned contract.
 - JSON request and response bodies.
@@ -1092,7 +1096,7 @@ The FinPay backend exposes a versioned REST API over HTTPS. The API is the contr
 
 The `/api/v1` prefix is a target contract convention. Existing unversioned routes may require a migration or compatibility plan.
 
-### 3. Proposed endpoint catalogue
+## 3. Proposed endpoint catalogue
 
 | Method | Endpoint | Purpose | Access |
 |---|---|---|---|
@@ -1122,7 +1126,7 @@ The `/api/v1` prefix is a target contract convention. Existing unversioned route
 
 This is a proposed target catalogue, not a claim that all endpoints currently exist.
 
-### 4. Example transfer request
+## 4. Example transfer request
 
 ```http
 POST /api/v1/transfers
@@ -1146,7 +1150,7 @@ Content-Type: application/json
 
 The PIN should be sent only over TLS, excluded from logs and handled under a strict secret-handling policy. A future design may use a dedicated challenge or device-bound authorisation mechanism instead of sending a reusable PIN in a general request body.
 
-### 5. Example accepted response
+## 5. Example accepted response
 
 ```json
 {
@@ -1161,7 +1165,7 @@ The PIN should be sent only over TLS, excluded from logs and handled under a str
 
 A transfer may return `COMPLETED` only when the financial posting has succeeded. The exact response status code and body must be fixed in the OpenAPI contract.
 
-### 6. Standard error shape
+## 6. Standard error shape
 
 ```json
 {
@@ -1182,7 +1186,7 @@ A transfer may return `COMPLETED` only when the financial posting has succeeded.
 
 Do not expose stack traces, SQL details, secrets, internal hostnames or sensitive risk rules.
 
-### 7. API security requirements
+## 7. API security requirements
 
 - TLS for all non-local traffic.
 - Strict input validation and output shaping.
@@ -1196,31 +1200,31 @@ Do not expose stack traces, SQL details, secrets, internal hostnames or sensitiv
 - Provider callback authentication and replay protection.
 - OpenAPI documentation reviewed alongside implementation.
 
-### 8. API contract management
+## 8. API contract management
 
 Maintain an OpenAPI specification as the contract source. Version breaking changes, define deprecation windows, provide examples and validate the contract in CI. Generate or verify client models where practical.
 
 
 ---
 
-<!-- source: docs/06-qa/api-test-cases.md -->
+# DOCUMENT: docs/06-qa/api-test-cases.md
 
-## FinPay API Test Cases
+# FinPay API Test Cases
 
-### 1. Purpose
+## 1. Purpose
 
 This document defines API-level test cases for the FinPay payment platform.
 
 Testing covers authentication, authorization, account management, transactions,
 validation, security, error handling, and database consistency.
 
-### 2. API Base URL
+## 2. API Base URL
 
     http://localhost:8080/api
 
-### 3. Authentication Test Cases
+## 3. Authentication Test Cases
 
-#### API-TC-001 — Valid Login
+### API-TC-001 — Valid Login
 
 **Method:** POST
 **Endpoint:** `/auth/login`
@@ -1242,7 +1246,7 @@ validation, security, error handling, and database consistency.
 
 **Status:** PASS
 
-#### API-TC-002 — Invalid Password
+### API-TC-002 — Invalid Password
 
 **Method:** POST
 **Endpoint:** `/auth/login`
@@ -1254,7 +1258,7 @@ validation, security, error handling, and database consistency.
 
 **Status:** PASS
 
-#### API-TC-003 — Invalid Email
+### API-TC-003 — Invalid Email
 
 **Method:** POST
 **Endpoint:** `/auth/login`
@@ -1265,7 +1269,7 @@ validation, security, error handling, and database consistency.
 
 **Status:** PASS
 
-#### API-TC-004 — Missing Credentials
+### API-TC-004 — Missing Credentials
 
 **Method:** POST
 **Endpoint:** `/auth/login`
@@ -1276,9 +1280,9 @@ validation, security, error handling, and database consistency.
 
 **Status:** PASS
 
-### 4. Account API Test Cases
+## 4. Account API Test Cases
 
-#### API-TC-005 — Create Account
+### API-TC-005 — Create Account
 
 **Method:** POST
 **Endpoint:** `/accounts`
@@ -1291,7 +1295,7 @@ validation, security, error handling, and database consistency.
 
 **Status:** PASS
 
-#### API-TC-006 — Retrieve Own Account
+### API-TC-006 — Retrieve Own Account
 
 **Method:** GET
 **Endpoint:** `/accounts/{id}`
@@ -1302,7 +1306,7 @@ validation, security, error handling, and database consistency.
 
 **Status:** PASS
 
-#### API-TC-007 — Unauthorized Account Access
+### API-TC-007 — Unauthorized Account Access
 
 **Method:** GET
 **Endpoint:** `/accounts/{id}`
@@ -1313,9 +1317,9 @@ validation, security, error handling, and database consistency.
 
 **Status:** PASS
 
-### 5. Deposit API Test Cases
+## 5. Deposit API Test Cases
 
-#### API-TC-008 — Successful Deposit
+### API-TC-008 — Successful Deposit
 
 **Method:** POST
 **Endpoint:** `/transactions/deposit`
@@ -1329,7 +1333,7 @@ validation, security, error handling, and database consistency.
 
 **Status:** PASS
 
-#### API-TC-009 — Zero Deposit
+### API-TC-009 — Zero Deposit
 
 **Method:** POST
 **Endpoint:** `/transactions/deposit`
@@ -1341,7 +1345,7 @@ validation, security, error handling, and database consistency.
 
 **Status:** PASS
 
-#### API-TC-010 — Negative Deposit
+### API-TC-010 — Negative Deposit
 
 **Method:** POST
 **Endpoint:** `/transactions/deposit`
@@ -1352,9 +1356,9 @@ validation, security, error handling, and database consistency.
 
 **Status:** PASS
 
-### 6. Withdrawal API Test Cases
+## 6. Withdrawal API Test Cases
 
-#### API-TC-011 — Successful Withdrawal
+### API-TC-011 — Successful Withdrawal
 
 **Method:** POST
 **Endpoint:** `/transactions/withdraw`
@@ -1367,7 +1371,7 @@ validation, security, error handling, and database consistency.
 
 **Status:** PASS
 
-#### API-TC-012 — Insufficient Balance
+### API-TC-012 — Insufficient Balance
 
 **Method:** POST
 **Endpoint:** `/transactions/withdraw`
@@ -1379,7 +1383,7 @@ validation, security, error handling, and database consistency.
 
 **Status:** PASS
 
-#### API-TC-013 — Unauthorized Withdrawal
+### API-TC-013 — Unauthorized Withdrawal
 
 **Method:** POST
 **Endpoint:** `/transactions/withdraw`
@@ -1390,9 +1394,9 @@ validation, security, error handling, and database consistency.
 
 **Status:** PASS
 
-### 7. Transfer API Test Cases
+## 7. Transfer API Test Cases
 
-#### API-TC-014 — Successful Transfer
+### API-TC-014 — Successful Transfer
 
 **Method:** POST
 **Endpoint:** `/transactions/transfer`
@@ -1405,7 +1409,7 @@ validation, security, error handling, and database consistency.
 
 **Status:** PASS
 
-#### API-TC-015 — Insufficient Transfer Balance
+### API-TC-015 — Insufficient Transfer Balance
 
 **Method:** POST
 **Endpoint:** `/transactions/transfer`
@@ -1417,7 +1421,7 @@ validation, security, error handling, and database consistency.
 
 **Status:** PASS
 
-#### API-TC-016 — Non-existent Destination Account
+### API-TC-016 — Non-existent Destination Account
 
 **Method:** POST
 **Endpoint:** `/transactions/transfer`
@@ -1428,9 +1432,9 @@ validation, security, error handling, and database consistency.
 
 **Status:** PASS
 
-### 8. Transaction History
+## 8. Transaction History
 
-#### API-TC-017 — Retrieve Account Transactions
+### API-TC-017 — Retrieve Account Transactions
 
 **Method:** GET
 **Endpoint:** `/transactions/account/{accountId}`
@@ -1441,7 +1445,7 @@ validation, security, error handling, and database consistency.
 
 **Status:** PASS
 
-#### API-TC-018 — Unauthorized Transaction History
+### API-TC-018 — Unauthorized Transaction History
 
 **Method:** GET
 **Endpoint:** `/transactions/account/{accountId}`
@@ -1451,9 +1455,9 @@ validation, security, error handling, and database consistency.
 
 **Status:** PASS
 
-### 9. JWT Security
+## 9. JWT Security
 
-#### API-TC-019 — Missing JWT
+### API-TC-019 — Missing JWT
 
 **Expected Result:**
 - Protected endpoint rejects the request.
@@ -1461,7 +1465,7 @@ validation, security, error handling, and database consistency.
 
 **Status:** PASS
 
-#### API-TC-020 — Invalid JWT
+### API-TC-020 — Invalid JWT
 
 **Expected Result:**
 - Protected endpoint rejects the request.
@@ -1469,7 +1473,7 @@ validation, security, error handling, and database consistency.
 
 **Status:** PASS
 
-#### API-TC-021 — Valid JWT
+### API-TC-021 — Valid JWT
 
 **Expected Result:**
 - Protected endpoint accepts the request.
@@ -1477,7 +1481,7 @@ validation, security, error handling, and database consistency.
 
 **Status:** PASS
 
-### 10. Database Verification
+## 10. Database Verification
 
 The FinPay transactions table contains:
 
@@ -1512,7 +1516,7 @@ Account relationships use:
 
 Both reference accounts(id).
 
-#### Transaction Verification
+### Transaction Verification
 
     SELECT id,
            source_account_id,
@@ -1526,7 +1530,7 @@ Both reference accounts(id).
     ORDER BY id DESC
     LIMIT 10;
 
-#### Account Balance Verification
+### Account Balance Verification
 
     SELECT id,
            balance,
@@ -1535,7 +1539,7 @@ Both reference accounts(id).
     FROM accounts
     ORDER BY id;
 
-#### Password Storage Verification
+### Password Storage Verification
 
     SELECT id,
            email,
@@ -1548,7 +1552,7 @@ Newly created users must have BCrypt password hashes beginning with:
 
 Plain-text passwords must not be stored.
 
-### 11. API Test Summary
+## 11. API Test Summary
 
 | Category | Result |
 |---|---|
@@ -1564,7 +1568,7 @@ Plain-text passwords must not be stored.
 | Database Verification | PASS |
 | Error Handling | PASS |
 
-### 12. Exit Criteria
+## 12. Exit Criteria
 
 API testing is considered complete when:
 
@@ -1580,7 +1584,7 @@ API testing is considered complete when:
 - Passwords are stored using BCrypt.
 - git diff --check reports no errors.
 
-### 13. Current API Evidence
+## 13. Current API Evidence
 
 A successful login was verified against the running FinPay API:
 
@@ -1596,11 +1600,11 @@ This confirms the authentication flow is currently operational.
 
 ---
 
-<!-- source: docs/06-qa/coverage-gap-register.md -->
+# DOCUMENT: docs/06-qa/coverage-gap-register.md
 
-## FinPay QA Coverage Gap Register
+# FinPay QA Coverage Gap Register
 
-### 1. Purpose
+## 1. Purpose
 
 This register identifies requirements and quality areas where test
 coverage is missing, incomplete, planned or awaiting execution.
@@ -1608,7 +1612,7 @@ coverage is missing, incomplete, planned or awaiting execution.
 It complements the Requirements Traceability Matrix (RTM). It does
 not replace test cases or execution evidence.
 
-### 2. Status Definitions
+## 2. Status Definitions
 
 - OPEN: required coverage is missing or incomplete.
 - PLANNED: a test scenario has been documented but not executed.
@@ -1616,7 +1620,7 @@ not replace test cases or execution evidence.
 - BLOCKED: verification depends on an unresolved prerequisite.
 - CLOSED: required coverage and evidence have been reviewed.
 
-### 3. Coverage Gaps
+## 3. Coverage Gaps
 
 | Gap ID | Area | Current coverage | Required action | Priority | Status |
 |---|---|---|---|---|---|
@@ -1639,7 +1643,7 @@ not replace test cases or execution evidence.
 | GAP-017 | Audit and support | UAT-028 and UAT-035 documented | Define support-case lifecycle, audit event requirements and access tests | High | PLANNED |
 | GAP-018 | Production security readiness | Security cases documented but full execution not evidenced | Complete security assessment, remediate findings and obtain review approval | Critical | PLANNED |
 
-### 4. Release-Critical Open Areas
+## 4. Release-Critical Open Areas
 
 The following areas must be addressed before any production financial
 release that depends on them:
@@ -1656,7 +1660,7 @@ release that depends on them:
 
 The exact release gate depends on the approved release scope.
 
-### 5. Evidence and Closure Rules
+## 5. Evidence and Closure Rules
 
 A gap may be marked CLOSED only when:
 
@@ -1669,7 +1673,7 @@ A gap may be marked CLOSED only when:
 
 A planned test case alone is not sufficient evidence to close a gap.
 
-### 6. Review
+## 6. Review
 
 This register should be reviewed at each QA milestone and before
 release approval.
@@ -1679,16 +1683,16 @@ release approval.
 
 ---
 
-<!-- source: docs/06-qa/defect-management.md -->
+# DOCUMENT: docs/06-qa/defect-management.md
 
-## FinPay Defect Management
+# FinPay Defect Management
 
-### 1. Purpose
+## 1. Purpose
 
 This document defines the process for identifying, recording, prioritizing,
 tracking, resolving, and verifying defects in the FinPay payment platform.
 
-### 2. Defect Severity
+## 2. Defect Severity
 
 | Severity | Description |
 |---|---|
@@ -1697,7 +1701,7 @@ tracking, resolving, and verifying defects in the FinPay payment platform.
 | Medium | Affects functionality but has an available workaround |
 | Low | Minor issue with limited functional impact |
 
-### 3. Defect Priority
+## 3. Defect Priority
 
 | Priority | Description |
 |---|---|
@@ -1706,7 +1710,7 @@ tracking, resolving, and verifying defects in the FinPay payment platform.
 | P3 | Normal priority |
 | P4 | Low priority or future improvement |
 
-### 4. Defect Lifecycle
+## 4. Defect Lifecycle
 
 1. Identify defect.
 2. Record defect.
@@ -1718,7 +1722,7 @@ tracking, resolving, and verifying defects in the FinPay payment platform.
 8. Perform regression testing.
 9. Close the defect.
 
-### 5. Defect Information
+## 5. Defect Information
 
 Each defect should contain:
 
@@ -1736,7 +1740,7 @@ Each defect should contain:
 - Status
 - Resolution
 
-### 6. Defect Statuses
+## 6. Defect Statuses
 
 - New
 - Confirmed
@@ -1749,12 +1753,12 @@ Each defect should contain:
 - Deferred
 - Rejected
 
-### 7. Release Rule
+## 7. Release Rule
 
 Critical and High severity defects should be resolved and verified before
 production release unless formally accepted as release risks.
 
-### 8. Evidence
+## 8. Evidence
 
 Defect evidence may include:
 
@@ -1770,16 +1774,16 @@ Sensitive credentials, passwords, and JWT tokens must not be included.
 
 ---
 
-<!-- source: docs/06-qa/entry-exit-criteria.md -->
+# DOCUMENT: docs/06-qa/entry-exit-criteria.md
 
-## FinPay QA Entry and Exit Criteria
+# FinPay QA Entry and Exit Criteria
 
-### 1. Purpose
+## 1. Purpose
 
 This document defines the conditions required to begin testing and the
 conditions required to complete QA activities for FinPay.
 
-### 2. Entry Criteria
+## 2. Entry Criteria
 
 Testing may begin when:
 
@@ -1794,14 +1798,14 @@ Testing may begin when:
 - Test cases are prepared.
 - Required dependencies are available.
 
-### 3. Functional Testing Entry Criteria
+## 3. Functional Testing Entry Criteria
 
 - Relevant features are deployed to the test environment.
 - Test data is available.
 - Test cases have been reviewed.
 - Known blocking defects have been identified.
 
-### 4. Security Testing Entry Criteria
+## 4. Security Testing Entry Criteria
 
 - Authentication is operational.
 - JWT configuration is available.
@@ -1809,7 +1813,7 @@ Testing may begin when:
 - Test users are available.
 - Security-sensitive configuration is identified.
 
-### 5. Exit Criteria
+## 5. Exit Criteria
 
 QA may be considered complete when:
 
@@ -1826,12 +1830,12 @@ QA may be considered complete when:
 - Test evidence has been collected.
 - `git diff --check` reports no errors.
 
-### 6. Release Readiness
+## 6. Release Readiness
 
 FinPay is considered QA-ready for release when the exit criteria are satisfied
 and the responsible stakeholders approve the release.
 
-### 7. Exceptions
+## 7. Exceptions
 
 Any exception to the exit criteria must be documented together with:
 
@@ -1844,11 +1848,11 @@ Any exception to the exit criteria must be documented together with:
 
 ---
 
-<!-- source: docs/06-qa/integration-test-cases.md -->
+# DOCUMENT: docs/06-qa/integration-test-cases.md
 
-## FinPay Integration Test Cases
+# FinPay Integration Test Cases
 
-### 1. Purpose
+## 1. Purpose
 
 This document defines integration tests for interactions between FinPay
 application components, persistence, payment providers, client
@@ -1858,7 +1862,7 @@ It distinguishes historical execution evidence from target-state tests.
 A defined test case is not proof that the integration has been implemented
 or successfully tested.
 
-### 2. Integration Scope
+## 2. Integration Scope
 
 The suite covers:
 
@@ -1875,7 +1879,7 @@ The suite covers:
 Provider integrations must use approved sandbox environments unless
 a separately authorised test environment is documented.
 
-### 3. Test Environment
+## 3. Test Environment
 
 Record the following for each execution:
 
@@ -1893,7 +1897,7 @@ Record the following for each execution:
 Do not include real credentials, passwords, OTPs, PINs, JWTs or provider
 secrets in test evidence.
 
-### 4. Test Case Format and Status
+## 4. Test Case Format and Status
 
 Each test records its integration area, scenario, preconditions, steps,
 expected result and execution status.
@@ -1907,9 +1911,9 @@ expected result and execution status.
 Historical results are retained only where the original record supports
 them. Target-state cases must not be marked PASS without evidence.
 
-### 5. Historical Database Integration Tests
+## 5. Historical Database Integration Tests
 
-#### INT-001 — Backend connects to PostgreSQL
+### INT-001 — Backend connects to PostgreSQL
 
 **Integration Area:** Spring Boot application / PostgreSQL
 
@@ -1924,7 +1928,7 @@ them. Target-state cases must not be marked PASS without evidence.
 
 **Evidence:** Historical QA record.
 
-#### INT-002 — User repository retrieves database user
+### INT-002 — User repository retrieves database user
 
 **Integration Area:** UserRepository / PostgreSQL
 
@@ -1939,7 +1943,7 @@ them. Target-state cases must not be marked PASS without evidence.
 
 **Evidence:** Historical QA record.
 
-#### INT-003 — Account repository retrieves account
+### INT-003 — Account repository retrieves account
 
 **Integration Area:** AccountRepository / PostgreSQL
 
@@ -1953,9 +1957,9 @@ them. Target-state cases must not be marked PASS without evidence.
 
 **Evidence:** Historical QA record.
 
-### 6. Historical Authentication Integration Test
+## 6. Historical Authentication Integration Test
 
-#### INT-004 — Login integrates with database user
+### INT-004 — Login integrates with database user
 
 **Integration Area:** AuthController / AuthenticationProvider / PostgreSQL
 
@@ -1976,12 +1980,12 @@ them. Target-state cases must not be marked PASS without evidence.
 **Note:** The earlier document contained an incomplete test-data block.
 No PASS result is inferred from that incomplete record.
 
-### 7. Target-State Application Integration Tests
+## 7. Target-State Application Integration Tests
 
 The following cases are planned. They require implementation and
 execution evidence before they can be treated as completed tests.
 
-#### INT-005 — User registration persists customer data
+### INT-005 — User registration persists customer data
 
 **Integration Area:** Registration API / User service / UserRepository / PostgreSQL
 
@@ -2007,7 +2011,7 @@ execution evidence before they can be treated as completed tests.
 
 **Status:** Not Executed
 
-#### INT-006 — Authentication integrates with token issuance
+### INT-006 — Authentication integrates with token issuance
 
 **Integration Area:** Authentication service / UserRepository / JWT service
 
@@ -2029,7 +2033,7 @@ execution evidence before they can be treated as completed tests.
 
 **Status:** Not Executed
 
-#### INT-007 — Account service integrates with customer identity
+### INT-007 — Account service integrates with customer identity
 
 **Integration Area:** Account service / User service / AccountRepository
 
@@ -2051,7 +2055,7 @@ execution evidence before they can be treated as completed tests.
 
 **Status:** Not Executed
 
-#### INT-008 — Internal transfer integrates with ledger posting
+### INT-008 — Internal transfer integrates with ledger posting
 
 **Integration Area:** Transaction service / Ledger / Account service / PostgreSQL
 
@@ -2074,7 +2078,7 @@ execution evidence before they can be treated as completed tests.
 
 **Status:** Not Executed
 
-#### INT-009 — M-Pesa funding request integrates with payment provider
+### INT-009 — M-Pesa funding request integrates with payment provider
 
 **Integration Area:** Payment orchestration / M-Pesa sandbox adapter
 
@@ -2097,7 +2101,7 @@ execution evidence before they can be treated as completed tests.
 
 **Status:** Not Executed
 
-#### INT-010 — Successful provider callback updates payment state
+### INT-010 — Successful provider callback updates payment state
 
 **Integration Area:** M-Pesa callback endpoint / Payment service / Transaction service
 
@@ -2120,7 +2124,7 @@ execution evidence before they can be treated as completed tests.
 
 **Status:** Not Executed
 
-#### INT-011 — Duplicate provider callback does not duplicate financial posting
+### INT-011 — Duplicate provider callback does not duplicate financial posting
 
 **Integration Area:** Callback handler / Idempotency control / Ledger
 
@@ -2142,7 +2146,7 @@ execution evidence before they can be treated as completed tests.
 
 **Status:** Not Executed
 
-#### INT-012 — Failed or timed-out provider request is handled safely
+### INT-012 — Failed or timed-out provider request is handled safely
 
 **Integration Area:** Payment adapter / Payment service / Reconciliation
 
@@ -2165,7 +2169,7 @@ execution evidence before they can be treated as completed tests.
 
 **Status:** Not Executed
 
-#### INT-013 — Web client integrates with backend API
+### INT-013 — Web client integrates with backend API
 
 **Integration Area:** React web application / Spring Boot API
 
@@ -2188,7 +2192,7 @@ execution evidence before they can be treated as completed tests.
 
 **Status:** Not Executed
 
-#### INT-014 — Android client integrates with backend API
+### INT-014 — Android client integrates with backend API
 
 **Integration Area:** Kotlin Android application / Retrofit or configured HTTP client / Spring Boot API
 
@@ -2212,7 +2216,7 @@ execution evidence before they can be treated as completed tests.
 
 **Status:** Not Executed
 
-#### INT-015 — Notification service integrates with transaction events
+### INT-015 — Notification service integrates with transaction events
 
 **Integration Area:** Transaction events / Notification service / Email or SMS provider
 
@@ -2235,7 +2239,7 @@ execution evidence before they can be treated as completed tests.
 
 **Status:** Not Executed
 
-#### INT-016 — Reconciliation service integrates with provider records
+### INT-016 — Reconciliation service integrates with provider records
 
 **Integration Area:** Payment records / Provider statement or sandbox report / Reconciliation service
 
@@ -2257,7 +2261,7 @@ execution evidence before they can be treated as completed tests.
 
 **Status:** Not Executed
 
-#### INT-017 — Staff access integrates with role and audit controls
+### INT-017 — Staff access integrates with role and audit controls
 
 **Integration Area:** Staff authentication / Role-based access control / Audit service
 
@@ -2279,7 +2283,7 @@ execution evidence before they can be treated as completed tests.
 
 **Status:** Not Executed
 
-#### INT-018 — Background processing integrates with retry and failure handling
+### INT-018 — Background processing integrates with retry and failure handling
 
 **Integration Area:** Background job or event processor / Database / External service adapter
 
@@ -2302,7 +2306,7 @@ execution evidence before they can be treated as completed tests.
 
 **Status:** Not Executed
 
-### 8. Integration Execution Summary
+## 8. Integration Execution Summary
 
 | Test Case ID | Area | Historical / Current Status |
 |---|---|---|
@@ -2320,7 +2324,7 @@ execution evidence before they can be treated as completed tests.
 
 **Target-state cases not executed:** 14
 
-### 9. Integration Exit Criteria
+## 9. Integration Exit Criteria
 
 Integration verification is complete for a release scope only when:
 
@@ -2338,11 +2342,11 @@ A planned integration case is not evidence of implementation or successful execu
 
 ---
 
-<!-- source: docs/06-qa/performance-test-cases.md -->
+# DOCUMENT: docs/06-qa/performance-test-cases.md
 
-## FinPay Performance Test Cases
+# FinPay Performance Test Cases
 
-### 1. Purpose
+## 1. Purpose
 
 This document defines the performance testing programme for FinPay.
 
@@ -2354,7 +2358,7 @@ Testing applies to the intended FinPay web, Android and backend platform.
 A performance target is a measurable objective, not evidence of achieved
 performance.
 
-### 2. Performance Testing Scope
+## 2. Performance Testing Scope
 
 - Authentication response time
 - Account and balance API response time
@@ -2371,7 +2375,7 @@ performance.
 - Recovery following excessive load
 - Data integrity under concurrency
 
-### 3. Performance Objectives
+## 3. Performance Objectives
 
 The following are initial development-environment targets.
 
@@ -2400,9 +2404,9 @@ Where practical, record:
 
 Targets must be reviewed after baseline measurements.
 
-### 4. Test Environment
+## 4. Test Environment
 
-#### 4.1 Intended Technology Environment
+### 4.1 Intended Technology Environment
 
 **Backend**
 
@@ -2438,7 +2442,7 @@ Targets must be reviewed after baseline measurements.
 - Monitoring and application logs
 - Approved performance-testing tools
 
-#### 4.2 Environment Requirements
+### 4.2 Environment Requirements
 
 Performance tests should document:
 
@@ -2457,7 +2461,7 @@ Performance tests should document:
 Development, staging and production performance results must not be
 presented as interchangeable.
 
-### 5. Performance Test Case Format
+## 5. Performance Test Case Format
 
 Each test case must record:
 
@@ -2472,9 +2476,9 @@ Each test case must record:
 - Status
 - Evidence reference
 
-### 6. Test Cases
+## 6. Test Cases
 
-#### PERF-001 — Authentication Response Time
+### PERF-001 — Authentication Response Time
 
 **Objective:** Measure authentication API response time.
 
@@ -2507,7 +2511,7 @@ Each test case must record:
 
 **Status:** Not Executed.
 
-#### PERF-002 — Account API Response Time
+### PERF-002 — Account API Response Time
 
 **Objective:** Measure account retrieval performance.
 
@@ -2534,7 +2538,7 @@ Each test case must record:
 
 **Status:** Not Executed.
 
-#### PERF-003 — Transaction API Response Time
+### PERF-003 — Transaction API Response Time
 
 **Objective:** Measure transaction creation and retrieval performance.
 
@@ -2562,7 +2566,7 @@ Each test case must record:
 
 **Status:** Not Executed.
 
-#### PERF-004 — Concurrent Customer Load
+### PERF-004 — Concurrent Customer Load
 
 **Objective:** Evaluate system behaviour when multiple customers use FinPay
 at the same time.
@@ -2590,7 +2594,7 @@ at the same time.
 
 **Status:** Not Executed.
 
-#### PERF-005 — Concurrent Transaction Processing
+### PERF-005 — Concurrent Transaction Processing
 
 **Objective:** Verify transaction processing under concurrent financial
 requests.
@@ -2619,7 +2623,7 @@ requests.
 
 **Status:** Not Executed.
 
-#### PERF-006 — Database Query Performance
+### PERF-006 — Database Query Performance
 
 **Objective:** Evaluate database response and resource utilization.
 
@@ -2647,7 +2651,7 @@ requests.
 
 **Status:** Not Executed.
 
-#### PERF-007 — Error Rate Under Normal Load
+### PERF-007 — Error Rate Under Normal Load
 
 **Objective:** Measure failed requests during expected development workloads.
 
@@ -2669,7 +2673,7 @@ requests.
 
 **Status:** Not Executed.
 
-#### PERF-008 — Payment Processing Performance
+### PERF-008 — Payment Processing Performance
 
 **Objective:** Evaluate payment initiation and callback handling.
 
@@ -2697,7 +2701,7 @@ requests.
 
 **Status:** Not Executed.
 
-#### PERF-009 — Frontend Production Build
+### PERF-009 — Frontend Production Build
 
 **Objective:** Verify frontend build reliability and measure build time.
 
@@ -2718,7 +2722,7 @@ requests.
 
 **Status:** Not Executed.
 
-#### PERF-010 — Recovery After Load
+### PERF-010 — Recovery After Load
 
 **Objective:** Verify system recovery following a controlled load test.
 
@@ -2741,7 +2745,7 @@ requests.
 
 **Status:** Not Executed.
 
-#### PERF-011 — Stress Testing
+### PERF-011 — Stress Testing
 
 **Objective:** Identify the operating limits and failure behaviour of the
 platform.
@@ -2764,7 +2768,7 @@ platform.
 
 **Status:** Not Executed.
 
-#### PERF-012 — Endurance Testing
+### PERF-012 — Endurance Testing
 
 **Objective:** Evaluate stability during sustained activity.
 
@@ -2785,7 +2789,7 @@ platform.
 
 **Status:** Not Executed.
 
-### 7. Capacity Planning
+## 7. Capacity Planning
 
 FinPay is intended to support future growth beyond its initial development
 workload.
@@ -2814,7 +2818,7 @@ workflows. These are different capacity measures.
 No 100,000-user or transaction-capacity claim may be made without a
 documented workload model and repeatable test evidence.
 
-### 8. Test Execution Record
+## 8. Test Execution Record
 
 | Test Case ID | Performance Area | Status | Evidence |
 |---|---|---|---|
@@ -2831,7 +2835,7 @@ documented workload model and repeatable test evidence.
 | PERF-011 | Stress testing | Not Executed | Pending |
 | PERF-012 | Endurance testing | Not Executed | Pending |
 
-### 9. Performance Test Exit Criteria
+## 9. Performance Test Exit Criteria
 
 Performance testing is considered complete when:
 
@@ -2844,7 +2848,7 @@ Performance testing is considered complete when:
 - Recovery behaviour is verified.
 - Evidence and test reports are retained.
 
-### 10. Reporting Requirements
+## 10. Reporting Requirements
 
 The final performance report should include:
 
@@ -2873,11 +2877,11 @@ service-level agreements.
 
 ---
 
-<!-- source: docs/06-qa/qa-strategy.md -->
+# DOCUMENT: docs/06-qa/qa-strategy.md
 
-## FinPay Quality Assurance Strategy
+# FinPay Quality Assurance Strategy
 
-### 1. Purpose
+## 1. Purpose
 
 This document defines the quality assurance strategy for FinPay, a
 multi-client financial technology platform with web, Android, backend,
@@ -2887,7 +2891,7 @@ The strategy covers the current implementation baseline and the wider
 target-state product. It distinguishes planned coverage from executed
 and accepted results.
 
-### 2. QA Objectives
+## 2. QA Objectives
 
 - Verify business and functional requirements.
 - Verify authentication, authorisation and customer privacy.
@@ -2900,9 +2904,9 @@ and accepted results.
 - Identify and track defects before release.
 - Prevent regressions after changes.
 
-### 3. Testing Scope
+## 3. Testing Scope
 
-#### Current implementation baseline
+### Current implementation baseline
 
 The existing evidence covers selected customer registration and
 authentication, JWT-protected API access, account retrieval, deposits,
@@ -2912,7 +2916,7 @@ persistence and selected frontend workflows.
 Historical execution records are retained in the QA documents.
 They do not establish that every target-state feature is implemented.
 
-#### Target-state product scope
+### Target-state product scope
 
 - Customer onboarding and contact verification
 - Password authentication and session controls
@@ -2933,24 +2937,24 @@ Advanced capabilities such as card processing, ISO 8583, cross-border
 payments and additional currencies require separate scope approval and
 provider, regulatory and security assessment.
 
-### 4. Testing Levels
+## 4. Testing Levels
 
-#### Unit testing
+### Unit testing
 Tests individual classes, functions and business rules independently.
 
-#### Integration testing
+### Integration testing
 Tests interactions between modules, repositories, databases,
 security components, client applications and external providers.
 
-#### System testing
+### System testing
 Tests complete FinPay workflows across the relevant application
 components.
 
-#### User acceptance testing
+### User acceptance testing
 Validates business workflows against approved requirements and
 acceptance criteria.
 
-### 5. Testing Types
+## 5. Testing Types
 
 | Type | Purpose |
 |---|---|
@@ -2966,7 +2970,7 @@ acceptance criteria.
 | Recovery | Validate backup restoration and service recovery |
 | UAT | Obtain business/user acceptance for the release scope |
 
-### 6. Test Environments
+## 6. Test Environments
 
 | Environment | Purpose | Data |
 |---|---|---|
@@ -2979,7 +2983,7 @@ acceptance criteria.
 Production data must not be copied into lower environments without
 documented authorisation and appropriate protection.
 
-### 7. Test Data and Financial Safety
+## 7. Test Data and Financial Safety
 
 - Use synthetic customer identities and test phone numbers.
 - Use provider sandbox credentials for payment integration tests.
@@ -2990,7 +2994,7 @@ documented authorisation and appropriate protection.
 - Verify ledger entries and account projections for financial tests.
 - Do not use real customer financial information in test evidence.
 
-### 8. Test Case and Defect Statuses
+## 8. Test Case and Defect Statuses
 
 Test execution statuses:
 
@@ -3007,7 +3011,7 @@ New → Assigned → In Progress → Fixed → Retest → Closed
 
 A failed retest returns the defect to Reopened.
 
-### 9. Entry Criteria
+## 9. Entry Criteria
 
 - Requirements and acceptance criteria are available.
 - Relevant functionality is implemented in the target environment.
@@ -3017,7 +3021,7 @@ A failed retest returns the defect to Reopened.
 - Test cases and expected results are reviewed.
 - Environment configuration is documented.
 
-### 10. Exit Criteria
+## 10. Exit Criteria
 
 - Release-scope test cases have been executed.
 - Critical defects are resolved.
@@ -3031,7 +3035,7 @@ A failed retest returns the defect to Reopened.
 - Outstanding risks, exclusions and known defects are documented.
 - Required operational and recovery evidence is available.
 
-### 11. Quality Gates
+## 11. Quality Gates
 
 The following are **release acceptance criteria**, not assertions
 that all tests have already passed.
@@ -3052,7 +3056,7 @@ that all tests have already passed.
 
 A quality gate is not PASS until its required evidence has been reviewed.
 
-### 12. Performance and Capacity
+## 12. Performance and Capacity
 
 Performance tests must measure response time, throughput, concurrency,
 error rates, resource use and recovery behaviour.
@@ -3064,7 +3068,7 @@ Any capacity statement, including a target of 100,000 users, sessions
 or transaction flows, must define the measurement and be supported by
 repeatable load-test evidence.
 
-### 13. Security and Financial Integrity
+## 13. Security and Financial Integrity
 
 Testing must cover:
 
@@ -3084,7 +3088,7 @@ A successful API response alone is not proof of financial settlement.
 Provider outcomes, internal payment state and ledger posting must be
 verified separately.
 
-### 14. QA Evidence
+## 14. QA Evidence
 
 Evidence may include:
 
@@ -3103,7 +3107,7 @@ Evidence may include:
 Each evidence record should identify the test ID, environment,
 execution date, result and reviewer where applicable.
 
-### 15. Documentation and Traceability
+## 15. Documentation and Traceability
 
 The QA documentation set includes:
 
@@ -3124,7 +3128,7 @@ The requirements traceability matrix links business requirements
 to design artefacts and test cases. The coverage gap register records
 missing or incomplete verification.
 
-### 16. Release Governance
+## 16. Release Governance
 
 FinPay must not be represented as production-ready solely because
 selected development tests pass.
@@ -3143,7 +3147,7 @@ Live financial operations require, as applicable:
 The QA lead or designated reviewer reports test evidence and risks.
 The authorised project or business owner makes the release decision.
 
-### 17. Current QA Baseline
+## 17. Current QA Baseline
 
 Historical records in the test plan document selected API, frontend
 and system testing performed during development.
@@ -3161,11 +3165,11 @@ integrations, performance requirements or UAT have passed.
 
 ---
 
-<!-- source: docs/06-qa/regression-test-cases.md -->
+# DOCUMENT: docs/06-qa/regression-test-cases.md
 
-## FinPay Regression Test Cases
+# FinPay Regression Test Cases
 
-### 1. Purpose
+## 1. Purpose
 
 This document defines regression test cases for the FinPay payment platform.
 
@@ -3173,7 +3177,7 @@ Regression testing verifies that new changes, bug fixes, security changes,
 API changes, database changes, and frontend changes do not break previously
 working functionality.
 
-### 2. Regression Scope
+## 2. Regression Scope
 
 Regression testing covers:
 
@@ -3195,7 +3199,7 @@ Regression testing covers:
 - Frontend build
 - Integration between application components
 
-### 3. Regression Test Environment
+## 3. Regression Test Environment
 
 **Backend:**
 
@@ -3207,11 +3211,11 @@ Maven
 
 ---
 
-<!-- source: docs/06-qa/security-test-cases.md -->
+# DOCUMENT: docs/06-qa/security-test-cases.md
 
-## FinPay Security Test Cases
+# FinPay Security Test Cases
 
-### 1. Purpose
+## 1. Purpose
 
 This document defines the security test cases for the FinPay financial
 platform.
@@ -3224,7 +3228,7 @@ threats.
 These cases describe the intended security verification programme.
 A documented test case is not evidence that the test has passed.
 
-### 2. Security Testing Scope
+## 2. Security Testing Scope
 
 Security testing covers:
 
@@ -3247,7 +3251,7 @@ Security testing covers:
 - Database and infrastructure security
 - Dependency and configuration security
 
-### 3. Test Case Format
+## 3. Test Case Format
 
 Each test case records:
 
@@ -3263,7 +3267,7 @@ Each test case records:
 - Severity
 - Evidence reference
 
-### 4. Status Definitions
+## 4. Status Definitions
 
 | Status | Meaning |
 |---|---|
@@ -3283,9 +3287,9 @@ Severity:
 
 ---
 
-### 5. Authentication Security
+## 5. Authentication Security
 
-#### SEC-AUTH-001 — Valid Login
+### SEC-AUTH-001 — Valid Login
 
 **Scenario:** Verify authentication using valid credentials.
 
@@ -3314,7 +3318,7 @@ Severity:
 
 **Severity:** High.
 
-#### SEC-AUTH-002 — Invalid Password
+### SEC-AUTH-002 — Invalid Password
 
 **Scenario:** Verify that an incorrect password is rejected.
 
@@ -3339,7 +3343,7 @@ Severity:
 
 **Severity:** High.
 
-#### SEC-AUTH-003 — Unknown Account Login
+### SEC-AUTH-003 — Unknown Account Login
 
 **Scenario:** Verify login attempts using an unregistered email address.
 
@@ -3361,7 +3365,7 @@ Severity:
 
 **Severity:** Medium.
 
-#### SEC-AUTH-004 — Expired JWT
+### SEC-AUTH-004 — Expired JWT
 
 **Scenario:** Verify that expired authentication tokens are rejected.
 
@@ -3384,7 +3388,7 @@ Severity:
 
 **Severity:** High.
 
-#### SEC-AUTH-005 — Tampered JWT
+### SEC-AUTH-005 — Tampered JWT
 
 **Scenario:** Verify that a modified or incorrectly signed JWT is rejected.
 
@@ -3406,7 +3410,7 @@ Severity:
 
 **Severity:** Critical.
 
-#### SEC-AUTH-006 — Password Hash Protection
+### SEC-AUTH-006 — Password Hash Protection
 
 **Scenario:** Verify that customer passwords are not stored in plaintext.
 
@@ -3430,7 +3434,7 @@ Severity:
 
 **Severity:** Critical.
 
-#### SEC-AUTH-007 — Authentication Rate Limiting
+### SEC-AUTH-007 — Authentication Rate Limiting
 
 **Scenario:** Verify protection against repeated authentication attempts.
 
@@ -3454,9 +3458,9 @@ Severity:
 
 ---
 
-### 6. Authorization and Access Control
+## 6. Authorization and Access Control
 
-#### SEC-ACCESS-001 — Cross-Customer Account Access
+### SEC-ACCESS-001 — Cross-Customer Account Access
 
 **Scenario:** Verify that one customer cannot access another customer's
 account information.
@@ -3481,7 +3485,7 @@ account information.
 
 **Severity:** Critical.
 
-#### SEC-ACCESS-002 — Customer Privilege Escalation
+### SEC-ACCESS-002 — Customer Privilege Escalation
 
 **Scenario:** Verify that a customer cannot grant themselves staff or
 administrative privileges.
@@ -3504,7 +3508,7 @@ administrative privileges.
 
 **Severity:** Critical.
 
-#### SEC-ACCESS-003 — Staff Role Separation
+### SEC-ACCESS-003 — Staff Role Separation
 
 **Scenario:** Verify that staff permissions follow assigned roles.
 
@@ -3526,7 +3530,7 @@ administrative privileges.
 
 **Severity:** Critical.
 
-#### SEC-ACCESS-004 — Object-Level API Authorization
+### SEC-ACCESS-004 — Object-Level API Authorization
 
 **Scenario:** Verify authorization on customer-owned resources.
 
@@ -3551,9 +3555,9 @@ administrative privileges.
 
 ---
 
-### 7. Input and Application Security
+## 7. Input and Application Security
 
-#### SEC-INPUT-001 — SQL Injection Protection
+### SEC-INPUT-001 — SQL Injection Protection
 
 **Scenario:** Verify that malicious SQL input cannot alter database queries.
 
@@ -3575,7 +3579,7 @@ administrative privileges.
 
 **Severity:** Critical.
 
-#### SEC-INPUT-002 — Cross-Site Scripting Protection
+### SEC-INPUT-002 — Cross-Site Scripting Protection
 
 **Scenario:** Verify protection against stored and reflected XSS.
 
@@ -3596,7 +3600,7 @@ administrative privileges.
 
 **Severity:** High.
 
-#### SEC-INPUT-003 — Server-Side Validation
+### SEC-INPUT-003 — Server-Side Validation
 
 **Scenario:** Verify that invalid financial input cannot bypass validation.
 
@@ -3620,9 +3624,9 @@ administrative privileges.
 
 ---
 
-### 8. Payment and Financial Security
+## 8. Payment and Financial Security
 
-#### SEC-PAY-001 — Unverified Payment Callback
+### SEC-PAY-001 — Unverified Payment Callback
 
 **Scenario:** Verify that an unauthenticated or invalid payment callback
 cannot credit a customer account.
@@ -3647,7 +3651,7 @@ cannot credit a customer account.
 
 **Severity:** Critical.
 
-#### SEC-PAY-002 — Duplicate Payment Callback
+### SEC-PAY-002 — Duplicate Payment Callback
 
 **Scenario:** Verify idempotent handling of repeated payment notifications.
 
@@ -3669,7 +3673,7 @@ cannot credit a customer account.
 
 **Severity:** Critical.
 
-#### SEC-PAY-003 — Payment Amount and Currency Validation
+### SEC-PAY-003 — Payment Amount and Currency Validation
 
 **Scenario:** Verify that callback amounts and currencies are validated.
 
@@ -3691,7 +3695,7 @@ cannot credit a customer account.
 
 **Severity:** Critical.
 
-#### SEC-PAY-004 — Concurrent Transaction Integrity
+### SEC-PAY-004 — Concurrent Transaction Integrity
 
 **Scenario:** Verify that concurrent requests cannot cause unauthorized
 financial changes.
@@ -3716,9 +3720,9 @@ financial changes.
 
 ---
 
-### 9. Sensitive Data and Session Security
+## 9. Sensitive Data and Session Security
 
-#### SEC-DATA-001 — Sensitive Information in Logs
+### SEC-DATA-001 — Sensitive Information in Logs
 
 **Scenario:** Verify that sensitive information is excluded from logs.
 
@@ -3740,7 +3744,7 @@ financial changes.
 
 **Severity:** High.
 
-#### SEC-DATA-002 — Sensitive Information in API Responses
+### SEC-DATA-002 — Sensitive Information in API Responses
 
 **Scenario:** Verify that protected fields are not exposed through APIs.
 
@@ -3761,7 +3765,7 @@ financial changes.
 
 **Severity:** Critical.
 
-#### SEC-DATA-003 — Transport Encryption
+### SEC-DATA-003 — Transport Encryption
 
 **Scenario:** Verify secure communication between clients and backend services.
 
@@ -3785,9 +3789,9 @@ financial changes.
 
 ---
 
-### 10. Mobile and Web Security
+## 10. Mobile and Web Security
 
-#### SEC-CLIENT-001 — Mobile Credential Storage
+### SEC-CLIENT-001 — Mobile Credential Storage
 
 **Scenario:** Verify secure handling of authentication credentials in Android.
 
@@ -3809,7 +3813,7 @@ financial changes.
 
 **Severity:** High.
 
-#### SEC-CLIENT-002 — Web Session Protection
+### SEC-CLIENT-002 — Web Session Protection
 
 **Scenario:** Verify browser-side authentication and session protections.
 
@@ -3834,9 +3838,9 @@ financial changes.
 
 ---
 
-### 11. Infrastructure and Configuration Security
+## 11. Infrastructure and Configuration Security
 
-#### SEC-INFRA-001 — Secret Management
+### SEC-INFRA-001 — Secret Management
 
 **Scenario:** Verify that deployment secrets are not committed to source
 control.
@@ -3859,7 +3863,7 @@ control.
 
 **Severity:** Critical.
 
-#### SEC-INFRA-002 — Security Headers
+### SEC-INFRA-002 — Security Headers
 
 **Scenario:** Verify security headers on web responses.
 
@@ -3880,7 +3884,7 @@ control.
 
 **Severity:** Medium.
 
-#### SEC-INFRA-003 — Dependency Vulnerability Review
+### SEC-INFRA-003 — Dependency Vulnerability Review
 
 **Scenario:** Verify that application dependencies are reviewed for known
 vulnerabilities.
@@ -3905,13 +3909,13 @@ vulnerabilities.
 
 ---
 
-### 12. Additional Target-State Security Tests
+## 12. Additional Target-State Security Tests
 
 The following cases extend the existing security suite to cover OTP
 verification and transaction PIN controls. They are planned tests and
 must not be interpreted as completed execution evidence.
 
-#### SEC-OTP-001 — OTP verification accepts a valid, unexpired code
+### SEC-OTP-001 — OTP verification accepts a valid, unexpired code
 
 **Category:** Identity verification
 
@@ -3940,7 +3944,7 @@ must not be interpreted as completed execution evidence.
 
 **Severity:** High
 
-#### SEC-OTP-002 — Expired and incorrect OTP values are rejected
+### SEC-OTP-002 — Expired and incorrect OTP values are rejected
 
 **Category:** Identity verification
 
@@ -3964,7 +3968,7 @@ must not be interpreted as completed execution evidence.
 
 **Severity:** High
 
-#### SEC-OTP-003 — OTP request and verification attempts are rate limited
+### SEC-OTP-003 — OTP request and verification attempts are rate limited
 
 **Category:** Abuse prevention
 
@@ -3988,7 +3992,7 @@ must not be interpreted as completed execution evidence.
 
 **Severity:** High
 
-#### SEC-PIN-001 — Transaction PIN is stored using secure hashing
+### SEC-PIN-001 — Transaction PIN is stored using secure hashing
 
 **Category:** Transaction authorisation
 
@@ -4015,7 +4019,7 @@ must not be interpreted as completed execution evidence.
 
 **Severity:** Critical
 
-#### SEC-PIN-002 — Incorrect transaction PIN is rejected
+### SEC-PIN-002 — Incorrect transaction PIN is rejected
 
 **Category:** Transaction authorisation
 
@@ -4039,7 +4043,7 @@ must not be interpreted as completed execution evidence.
 
 **Severity:** Critical
 
-#### SEC-PIN-003 — Repeated incorrect PIN attempts trigger configured lockout
+### SEC-PIN-003 — Repeated incorrect PIN attempts trigger configured lockout
 
 **Category:** Transaction authorisation / Abuse prevention
 
@@ -4064,7 +4068,7 @@ must not be interpreted as completed execution evidence.
 
 **Severity:** Critical
 
-#### SEC-PIN-004 — PIN reset requires verified identity and secure recovery
+### SEC-PIN-004 — PIN reset requires verified identity and secure recovery
 
 **Category:** Transaction authorisation / Account recovery
 
@@ -4090,7 +4094,7 @@ must not be interpreted as completed execution evidence.
 
 **Severity:** Critical
 
-### 13. Security Test Execution Record
+## 13. Security Test Execution Record
 
 The original 26 security cases and the seven additional OTP/PIN cases
 are defined below. All cases in this expanded suite remain Not Executed
@@ -4109,7 +4113,7 @@ unless an execution record with evidence is added.
 | SEC-PIN-001 to SEC-PIN-004 | Transaction PIN and recovery | 4 | Not Executed | Pending |
 | **Total** | **All security categories** | **33** | **Not Executed** | **Pending** |
 
-### 14. Security Exit Criteria
+## 14. Security Exit Criteria
 
 Security verification is complete only when:
 
@@ -4123,7 +4127,7 @@ Security verification is complete only when:
 - Security evidence is retained.
 - Regression testing confirms that security fixes do not break core flows.
 
-### 15. Security Release Considerations
+## 15. Security Release Considerations
 
 Passing these test cases does not independently establish regulatory
 compliance or production approval.
@@ -4135,14 +4139,13 @@ No test case should be marked Pass without execution evidence.
 
 ---
 
-
 ---
 
-<!-- source: docs/06-qa/test-cases.md -->
+# DOCUMENT: docs/06-qa/test-cases.md
 
-## FinPay Master Test Cases
+# FinPay Master Test Cases
 
-### 1. Document Information
+## 1. Document Information
 
 | Item | Details |
 |---|---|
@@ -4154,7 +4157,7 @@ No test case should be marked Pass without execution evidence.
 
 ---
 
-### 2. Test Case Format
+## 2. Test Case Format
 
 Each test case contains:
 
@@ -4172,9 +4175,9 @@ Each test case contains:
 
 ---
 
-## 3. Authentication Test Cases
+# 3. Authentication Test Cases
 
-### AUTH-001 — Successful Login
+## AUTH-001 — Successful Login
 
 | Field | Details |
 |---|---|
@@ -4191,7 +4194,7 @@ Each test case contains:
 
 ---
 
-### AUTH-002 — Invalid Password
+## AUTH-002 — Invalid Password
 
 | Field | Details |
 |---|---|
@@ -4208,7 +4211,7 @@ Each test case contains:
 
 ---
 
-### AUTH-003 — Invalid Email
+## AUTH-003 — Invalid Email
 
 | Field | Details |
 |---|---|
@@ -4225,7 +4228,7 @@ Each test case contains:
 
 ---
 
-### AUTH-004 — Missing Email
+## AUTH-004 — Missing Email
 
 | Field | Details |
 |---|---|
@@ -4242,7 +4245,7 @@ Each test case contains:
 
 ---
 
-### AUTH-005 — Missing Password
+## AUTH-005 — Missing Password
 
 | Field | Details |
 |---|---|
@@ -4259,7 +4262,7 @@ Each test case contains:
 
 ---
 
-### AUTH-006 — JWT Required for Protected Endpoint
+## AUTH-006 — JWT Required for Protected Endpoint
 
 | Field | Details |
 |---|---|
@@ -4276,7 +4279,7 @@ Each test case contains:
 
 ---
 
-### AUTH-007 — Invalid JWT
+## AUTH-007 — Invalid JWT
 
 | Field | Details |
 |---|---|
@@ -4293,9 +4296,9 @@ Each test case contains:
 
 ---
 
-## 4. User Registration Test Cases
+# 4. User Registration Test Cases
 
-### USER-001 — Successful Registration
+## USER-001 — Successful Registration
 
 | Field | Details |
 |---|---|
@@ -4312,7 +4315,7 @@ Each test case contains:
 
 ---
 
-### USER-002 — Duplicate Email
+## USER-002 — Duplicate Email
 
 | Field | Details |
 |---|---|
@@ -4329,7 +4332,7 @@ Each test case contains:
 
 ---
 
-### USER-003 — Duplicate Phone Number
+## USER-003 — Duplicate Phone Number
 
 | Field | Details |
 |---|---|
@@ -4346,7 +4349,7 @@ Each test case contains:
 
 ---
 
-### USER-004 — Invalid Email
+## USER-004 — Invalid Email
 
 | Field | Details |
 |---|---|
@@ -4363,9 +4366,9 @@ Each test case contains:
 
 ---
 
-## 5. Account Management Test Cases
+# 5. Account Management Test Cases
 
-### ACC-001 — Create Account
+## ACC-001 — Create Account
 
 | Field | Details |
 |---|---|
@@ -4382,7 +4385,7 @@ Each test case contains:
 
 ---
 
-### ACC-002 — Retrieve Own Account
+## ACC-002 — Retrieve Own Account
 
 | Field | Details |
 |---|---|
@@ -4399,7 +4402,7 @@ Each test case contains:
 
 ---
 
-### ACC-003 — Access Another User's Account
+## ACC-003 — Access Another User's Account
 
 | Field | Details |
 |---|---|
@@ -4416,7 +4419,7 @@ Each test case contains:
 
 ---
 
-### ACC-004 — Verify Initial Balance
+## ACC-004 — Verify Initial Balance
 
 | Field | Details |
 |---|---|
@@ -4433,9 +4436,9 @@ Each test case contains:
 
 ---
 
-## 6. Deposit Test Cases
+# 6. Deposit Test Cases
 
-### TXN-001 — Successful Deposit
+## TXN-001 — Successful Deposit
 
 | Field | Details |
 |---|---|
@@ -4452,7 +4455,7 @@ Each test case contains:
 
 ---
 
-### TXN-002 — Zero Deposit
+## TXN-002 — Zero Deposit
 
 | Field | Details |
 |---|---|
@@ -4469,7 +4472,7 @@ Each test case contains:
 
 ---
 
-### TXN-003 — Negative Deposit
+## TXN-003 — Negative Deposit
 
 | Field | Details |
 |---|---|
@@ -4486,7 +4489,7 @@ Each test case contains:
 
 ---
 
-### TXN-004 — Unauthorized Deposit
+## TXN-004 — Unauthorized Deposit
 
 | Field | Details |
 |---|---|
@@ -4503,9 +4506,9 @@ Each test case contains:
 
 ---
 
-## 7. Withdrawal Test Cases
+# 7. Withdrawal Test Cases
 
-### TXN-005 — Successful Withdrawal
+## TXN-005 — Successful Withdrawal
 
 | Field | Details |
 |---|---|
@@ -4522,7 +4525,7 @@ Each test case contains:
 
 ---
 
-### TXN-006 — Insufficient Balance
+## TXN-006 — Insufficient Balance
 
 | Field | Details |
 |---|---|
@@ -4539,7 +4542,7 @@ Each test case contains:
 
 ---
 
-### TXN-007 — Negative Withdrawal
+## TXN-007 — Negative Withdrawal
 
 | Field | Details |
 |---|---|
@@ -4556,9 +4559,9 @@ Each test case contains:
 
 ---
 
-## 8. Transfer Test Cases
+# 8. Transfer Test Cases
 
-### TXN-008 — Successful Transfer
+## TXN-008 — Successful Transfer
 
 | Field | Details |
 |---|---|
@@ -4575,7 +4578,7 @@ Each test case contains:
 
 ---
 
-### TXN-009 — Transfer to Non-existent Account
+## TXN-009 — Transfer to Non-existent Account
 
 | Field | Details |
 |---|---|
@@ -4592,7 +4595,7 @@ Each test case contains:
 
 ---
 
-### TXN-010 — Transfer with Insufficient Balance
+## TXN-010 — Transfer with Insufficient Balance
 
 | Field | Details |
 |---|---|
@@ -4609,7 +4612,7 @@ Each test case contains:
 
 ---
 
-### TXN-011 — Transfer to Same Account
+## TXN-011 — Transfer to Same Account
 
 | Field | Details |
 |---|---|
@@ -4626,9 +4629,9 @@ Each test case contains:
 
 ---
 
-## 9. Transaction History Test Cases
+# 9. Transaction History Test Cases
 
-### TXN-012 — Retrieve Transaction History
+## TXN-012 — Retrieve Transaction History
 
 | Field | Details |
 |---|---|
@@ -4645,7 +4648,7 @@ Each test case contains:
 
 ---
 
-### TXN-013 — Transaction History Authorization
+## TXN-013 — Transaction History Authorization
 
 | Field | Details |
 |---|---|
@@ -4662,9 +4665,9 @@ Each test case contains:
 
 ---
 
-## 10. Validation Test Cases
+# 10. Validation Test Cases
 
-### VAL-001 — Missing Required Field
+## VAL-001 — Missing Required Field
 
 | Field | Details |
 |---|---|
@@ -4681,7 +4684,7 @@ Each test case contains:
 
 ---
 
-### VAL-002 — Invalid Amount Format
+## VAL-002 — Invalid Amount Format
 
 | Field | Details |
 |---|---|
@@ -4698,7 +4701,7 @@ Each test case contains:
 
 ---
 
-### VAL-003 — Invalid Account ID
+## VAL-003 — Invalid Account ID
 
 | Field | Details |
 |---|---|
@@ -4715,9 +4718,9 @@ Each test case contains:
 
 ---
 
-## 11. API Error Handling Test Cases
+# 11. API Error Handling Test Cases
 
-### API-001 — Unauthorized Request
+## API-001 — Unauthorized Request
 
 | Field | Details |
 |---|---|
@@ -4734,7 +4737,7 @@ Each test case contains:
 
 ---
 
-### API-002 — Forbidden Request
+## API-002 — Forbidden Request
 
 | Field | Details |
 |---|---|
@@ -4751,7 +4754,7 @@ Each test case contains:
 
 ---
 
-### API-003 — Resource Not Found
+## API-003 — Resource Not Found
 
 | Field | Details |
 |---|---|
@@ -4768,9 +4771,9 @@ Each test case contains:
 
 ---
 
-## 12. Database Consistency Test Cases
+# 12. Database Consistency Test Cases
 
-### DB-001 — Deposit Balance Consistency
+## DB-001 — Deposit Balance Consistency
 
 | Field | Details |
 |---|---|
@@ -4787,7 +4790,7 @@ Each test case contains:
 
 ---
 
-### DB-002 — Withdrawal Balance Consistency
+## DB-002 — Withdrawal Balance Consistency
 
 | Field | Details |
 |---|---|
@@ -4804,7 +4807,7 @@ Each test case contains:
 
 ---
 
-### DB-003 — Failed Transaction Consistency
+## DB-003 — Failed Transaction Consistency
 
 | Field | Details |
 |---|---|
@@ -4821,9 +4824,9 @@ Each test case contains:
 
 ---
 
-## 13. Security Test Cases
+# 13. Security Test Cases
 
-### SEC-001 — Password Not Stored in Plain Text
+## SEC-001 — Password Not Stored in Plain Text
 
 | Field | Details |
 |---|---|
@@ -4840,7 +4843,7 @@ Each test case contains:
 
 ---
 
-### SEC-002 — SQL Injection Attempt
+## SEC-002 — SQL Injection Attempt
 
 | Field | Details |
 |---|---|
@@ -4857,7 +4860,7 @@ Each test case contains:
 
 ---
 
-### SEC-003 — Cross-Account Authorization
+## SEC-003 — Cross-Account Authorization
 
 | Field | Details |
 |---|---|
@@ -4874,7 +4877,7 @@ Each test case contains:
 
 ---
 
-### SEC-004 — Tampered JWT
+## SEC-004 — Tampered JWT
 
 | Field | Details |
 |---|---|
@@ -4891,9 +4894,9 @@ Each test case contains:
 
 ---
 
-## 14. Regression Test Cases
+# 14. Regression Test Cases
 
-### REG-001 — Authentication Regression
+## REG-001 — Authentication Regression
 
 | Field | Details |
 |---|---|
@@ -4910,7 +4913,7 @@ Each test case contains:
 
 ---
 
-### REG-002 — Transaction Regression
+## REG-002 — Transaction Regression
 
 | Field | Details |
 |---|---|
@@ -4927,7 +4930,7 @@ Each test case contains:
 
 ---
 
-### REG-003 — Frontend Regression
+## REG-003 — Frontend Regression
 
 | Field | Details |
 |---|---|
@@ -4944,7 +4947,7 @@ Each test case contains:
 
 ---
 
-## 15. Test Execution Status
+# 15. Test Execution Status
 
 The following status values will be used:
 
@@ -4958,7 +4961,7 @@ The following status values will be used:
 
 ---
 
-## 16. Test Completion
+# 16. Test Completion
 
 The master test cases will be considered complete when:
 
@@ -4973,7 +4976,7 @@ The master test cases will be considered complete when:
 
 ---
 
-## 17. Test Evidence
+# 17. Test Evidence
 
 Evidence may include:
 
@@ -4991,15 +4994,15 @@ Sensitive credentials and authentication tokens must not be committed to the rep
 
 ---
 
-<!-- source: docs/06-qa/test-plan.md -->
+# DOCUMENT: docs/06-qa/test-plan.md
 
-## FinPay QA Test Plan
+# FinPay QA Test Plan
 
-### 1. Purpose
+## 1. Purpose
 
 This test plan defines the testing activities required to verify the functionality, security, reliability, and quality of the FinPay payment platform.
 
-### 2. Test Objectives
+## 2. Test Objectives
 
 - Verify functional requirements.
 - Verify API behavior.
@@ -5011,9 +5014,9 @@ This test plan defines the testing activities required to verify the functionali
 - Identify and track defects.
 - Prevent regressions after changes.
 
-### 3. Features Under Test
+## 3. Features Under Test
 
-#### Authentication
+### Authentication
 - User login
 - Valid credentials
 - Invalid credentials
@@ -5021,20 +5024,20 @@ This test plan defines the testing activities required to verify the functionali
 - JWT validation
 - Unauthorized requests
 
-#### User Management
+### User Management
 - User registration
 - Input validation
 - Password validation
 - Duplicate email handling
 
-#### Account Management
+### Account Management
 - Account creation
 - Account ownership
 - Account authorization
 - Account balance retrieval
 - Account status validation
 
-#### Transactions
+### Transactions
 - Deposits
 - Withdrawals
 - Transfers
@@ -5044,7 +5047,7 @@ This test plan defines the testing activities required to verify the functionali
 - Transaction references
 - Transaction ownership
 
-#### Security
+### Security
 - Password hashing
 - JWT authentication
 - Authorization
@@ -5054,21 +5057,21 @@ This test plan defines the testing activities required to verify the functionali
 - CSRF considerations
 - Sensitive-data protection
 
-### 4. Testing Levels
+## 4. Testing Levels
 
-#### Unit Testing
+### Unit Testing
 Individual application components are tested independently.
 
-#### Integration Testing
+### Integration Testing
 Interaction between application components, security, database, and APIs is tested.
 
-#### System Testing
+### System Testing
 The complete FinPay application is tested as an integrated system.
 
-#### User Acceptance Testing
+### User Acceptance Testing
 Business-level workflows are validated against expected user requirements.
 
-### 5. Testing Types
+## 5. Testing Types
 
 | Testing Type | Purpose |
 |---|---|
@@ -5081,14 +5084,14 @@ Business-level workflows are validated against expected user requirements.
 | Performance | Evaluate system behavior under load |
 | UAT | Validate business acceptance |
 
-### 6. Test Environment
+## 6. Test Environment
 
 - Backend: Java, Spring Boot, Maven, Spring Security, JWT, Hibernate/JPA
 - Database: PostgreSQL 17 running through Docker
 - Frontend: React, Vite, JavaScript, npm
 - API testing: curl and Postman where applicable
 
-### 7. Test Data
+## 7. Test Data
 
 - Valid user accounts
 - Invalid credentials
@@ -5102,7 +5105,7 @@ Business-level workflows are validated against expected user requirements.
 
 Test data must not contain real customer financial information.
 
-### 8. Test Execution Order
+## 8. Test Execution Order
 
 1. Environment verification
 2. Backend build and unit tests
@@ -5115,7 +5118,7 @@ Test data must not contain real customer financial information.
 9. Frontend build verification
 10. User acceptance testing
 
-### 9. Entry Criteria
+## 9. Entry Criteria
 
 - Required functionality has been implemented.
 - Application builds successfully.
@@ -5124,7 +5127,7 @@ Test data must not contain real customer financial information.
 - Test data is available.
 - Test cases are prepared.
 
-### 10. Exit Criteria
+## 10. Exit Criteria
 
 - Required test cases have been executed.
 - Critical defects are resolved.
@@ -5135,7 +5138,7 @@ Test data must not contain real customer financial information.
 - Frontend build succeeds.
 - No blocking defects remain.
 
-### 11. Defect Handling
+## 11. Defect Handling
 
 Every confirmed defect should contain:
 
@@ -5157,7 +5160,7 @@ If a retest fails:
 
 Retest → Reopened → In Progress
 
-### 12. Test Evidence
+## 12. Test Evidence
 
 Evidence may include:
 
@@ -5172,14 +5175,14 @@ Evidence may include:
 - Performance results
 - Defect reports
 
-### 13. Current FinPay Baseline
+## 13. Current FinPay Baseline
 
 - Backend Maven tests complete successfully.
 - Frontend Vite production build completes successfully.
 - PostgreSQL 17 is running through Docker.
 - JWT authentication has been verified through the login API.
 
-### 14. Risks
+## 14. Risks
 
 - Incorrect or inconsistent test data.
 - Database state affecting test results.
@@ -5190,13 +5193,13 @@ Evidence may include:
 
 ---
 
-## 15. Stage 30.2 API QA Execution Results
+# 15. Stage 30.2 API QA Execution Results
 
-### Execution Date
+## Execution Date
 
 2026-08-19
 
-### Environment
+## Environment
 
 - Backend: FinPay Spring Boot API
 - Java: 25
@@ -5206,7 +5209,7 @@ Evidence may include:
 - Authentication: JWT
 - Password hashing: BCrypt
 
-### Execution Summary
+## Execution Summary
 
 Stage 30.2 API QA execution was completed against the running FinPay
 application.
@@ -5229,7 +5232,7 @@ The following areas were verified:
 - Database transaction persistence
 - Account balance integrity
 
-### Results
+## Results
 
 | Test Area | Expected | Actual | Result |
 |---|---|---|---|
@@ -5254,7 +5257,7 @@ The following areas were verified:
 | Database persistence | Transaction recorded | Verified | PASS |
 | Balance integrity | No unexpected changes | Verified | PASS |
 
-### Database Verification
+## Database Verification
 
 Account 7 was used for authenticated transaction testing.
 
@@ -5268,12 +5271,12 @@ After transfer of 5 KES: 60.0000 KES
 Final verified balance: 60.0000 KES
 ```
 
-### Stage 30.3 Frontend QA
+## Stage 30.3 Frontend QA
 
 Stage 30.3 frontend QA was completed against the running FinPay
 React/Vite frontend and Spring Boot API.
 
-#### Frontend Build and Static Checks
+### Frontend Build and Static Checks
 
 - Vite production build completed successfully.
 - Oxlint completed with zero errors.
@@ -5284,7 +5287,7 @@ React/Vite frontend and Spring Boot API.
 - Frontend API base URL was verified as:
   `http://localhost:8080/api`
 
-#### Functional UI Verification
+### Functional UI Verification
 
 The following frontend flows were verified:
 
@@ -5299,7 +5302,7 @@ The following frontend flows were verified:
 | Balance refresh | Updated balance displayed after transaction | Account refreshed successfully | PASS |
 | Error handling | API errors displayed | Error state implemented | PASS |
 
-#### UI Transfer Verification
+### UI Transfer Verification
 
 A controlled frontend transfer test was completed using account 7
 as the source and account 6 as the destination.
@@ -5319,7 +5322,7 @@ Balances after the test:
 - Account 7: 64.0000 KES
 - Account 6: 66.0000 KES
 
-#### Frontend Balance Refresh Improvement
+### Frontend Balance Refresh Improvement
 
 After a successful transaction, `Transactions.jsx` now re-fetches
 the authenticated account before reloading transaction history.
@@ -5328,7 +5331,7 @@ This ensures the displayed account balance reflects the latest
 database state immediately after deposits, withdrawals, and
 transfers.
 
-#### Stage 30.3 Conclusion
+### Stage 30.3 Conclusion
 
 Stage 30.3 frontend QA passed. The FinPay frontend successfully
 communicates with the secured backend API, performs authenticated
@@ -5336,13 +5339,13 @@ financial transactions, displays transaction history, handles
 transaction responses, and refreshes account balances after
 successful transactions.
 
-### Stage 30.4 End-to-End / System Testing
+## Stage 30.4 End-to-End / System Testing
 
 Stage 30.4 end-to-end and system testing was completed against the
 running FinPay React/Vite frontend, Spring Boot API, and PostgreSQL
 database.
 
-#### System Availability
+### System Availability
 
 | Component | Expected | Actual | Result |
 |---|---|---|---|
@@ -5353,7 +5356,7 @@ database.
 | Frontend lint | No errors | 0 errors | PASS |
 | Frontend production build | Successful | Successful | PASS |
 
-#### Authentication E2E
+### Authentication E2E
 
 JWT authentication was verified using the authorized test account.
 
@@ -5361,7 +5364,7 @@ JWT authentication was verified using the authorized test account.
 - Authenticated `/api/accounts/me` returned HTTP 200.
 - Account 7 was correctly associated with the authenticated user.
 
-#### Financial Transaction E2E
+### Financial Transaction E2E
 
 | Transaction | Expected | Actual | Result |
 |---|---|---|---|
@@ -5372,7 +5375,7 @@ JWT authentication was verified using the authorized test account.
 | Database persistence | Transaction recorded | Verified | PASS |
 | Balance updates | Correct | Verified | PASS |
 
-#### Negative E2E Testing
+### Negative E2E Testing
 
 | Scenario | Expected | Actual | Result |
 |---|---|---|---|
@@ -5385,7 +5388,7 @@ JWT authentication was verified using the authorized test account.
 No tested negative transaction scenario resulted in an uncontrolled
 HTTP 500 response.
 
-#### Authorization Boundary Testing
+### Authorization Boundary Testing
 
 The authenticated test user attempted to operate on account 6,
 which is not owned by that user.
@@ -5401,7 +5404,7 @@ which is not owned by that user.
 The rejected authorization requests did not create transactions or
 modify account balances.
 
-#### Final System State
+### Final System State
 
 After completion of Stage 30.4:
 
@@ -5413,7 +5416,7 @@ After completion of Stage 30.4:
 - Transaction 45 source: Account 7
 - Transaction 45 destination: Account 6
 
-#### Frontend Regression
+### Frontend Regression
 
 The frontend was linted and built after the E2E tests.
 
@@ -5421,7 +5424,7 @@ The frontend was linted and built after the E2E tests.
 - Existing Fast Refresh warning in `AuthContext.jsx`
 - Vite production build: PASS
 
-#### Stage 30.4 Conclusion
+### Stage 30.4 Conclusion
 
 Stage 30.4 End-to-End / System Testing passed.
 
@@ -5436,11 +5439,11 @@ Production Readiness.
 
 ---
 
-<!-- source: docs/06-qa/uat.md -->
+# DOCUMENT: docs/06-qa/uat.md
 
-## FinPay User Acceptance Testing (UAT)
+# FinPay User Acceptance Testing (UAT)
 
-### 1. Purpose
+## 1. Purpose
 
 This document defines User Acceptance Testing for the FinPay payment
 platform.
@@ -5452,7 +5455,7 @@ non-production environment using synthetic test data.
 A scenario in this document is a planned acceptance check until
 execution evidence and an authorised decision are recorded.
 
-### 2. UAT Scope
+## 2. UAT Scope
 
 UAT covers the target customer and operational workflows:
 
@@ -5475,7 +5478,7 @@ Only features included in the approved release scope are subject to
 release acceptance. Future or deferred capabilities must be identified
 as exclusions rather than silently treated as accepted.
 
-### 3. UAT Preconditions
+## 3. UAT Preconditions
 
 - The release candidate is deployed to the designated UAT environment.
 - Backend, database and required client applications are available.
@@ -5487,7 +5490,7 @@ as exclusions rather than silently treated as accepted.
 - Known defects and environment limitations are documented.
 - UAT participants understand that sandbox activity is not real settlement.
 
-### 4. Original UAT Scenarios
+## 4. Original UAT Scenarios
 
 These 14 scenarios are retained from the earlier UAT baseline.
 
@@ -5513,7 +5516,7 @@ expanded baseline does not convert those scenarios into new PASS
 results. Historical execution evidence remains in the QA test plan
 and related execution records.
 
-### 5. Additional Target-State UAT Scenarios
+## 5. Additional Target-State UAT Scenarios
 
 | ID | Scenario | Expected Result | Status |
 |---|---|---|---|
@@ -5539,7 +5542,7 @@ and related execution records.
 | UAT-034 | Experience a temporary network or provider failure | User sees a safe state and can recover without duplicate financial action | Planned |
 | UAT-035 | Review an audit-sensitive staff action | Action is recorded with actor, time and action details | Planned |
 
-### 6. Acceptance Criteria
+## 6. Acceptance Criteria
 
 The release may be accepted only when:
 
@@ -5558,7 +5561,7 @@ The release may be accepted only when:
 - Required security and operational checks are complete.
 - UAT evidence is reviewed and approval is recorded.
 
-### 7. UAT Execution Record
+## 7. UAT Execution Record
 
 For every executed scenario, record:
 
@@ -5577,7 +5580,7 @@ For every executed scenario, record:
 Do not place passwords, PINs, OTP values, JWTs or production secrets
 in this document or its evidence attachments.
 
-### 8. UAT Evidence
+## 8. UAT Evidence
 
 Evidence may include:
 
@@ -5591,7 +5594,7 @@ Evidence may include:
 - Build and deployment records
 - Signed or formally recorded acceptance
 
-### 9. UAT Result and Approval
+## 9. UAT Result and Approval
 
 **Overall UAT status:** Pending execution.
 
@@ -5610,19 +5613,19 @@ No production release approval is implied by this document.
 
 ---
 
-<!-- source: docs/07-security/security-and-compliance.md -->
+# DOCUMENT: docs/07-security/security-and-compliance.md
 
-## FinPay Security, Privacy and Compliance Design
+# FinPay Security, Privacy and Compliance Design
 
-### 1. Security objectives
+## 1. Security objectives
 
 Protect customer identity, credentials, account information, payment instructions and financial records. Preserve confidentiality, integrity, availability, accountability and non-repudiation where appropriate.
 
-### 2. Threat model
+## 2. Threat model
 
 Key threats include account takeover, credential stuffing, OTP abuse, PIN guessing, broken object-level authorisation, privilege escalation, injection, session theft, callback spoofing, replay attacks, duplicate payment processing, race conditions, insider misuse, secret leakage, data exfiltration, denial of service and supply-chain compromise.
 
-### 3. Identity and access
+## 3. Identity and access
 
 - Hash passwords with a modern adaptive password hashing function and appropriate work factor.
 - Never store plaintext passwords or transaction PINs.
@@ -5634,7 +5637,7 @@ Key threats include account takeover, credential stuffing, OTP abuse, PIN guessi
 - Require stronger authentication for privileged staff.
 - Log and alert on suspicious authentication activity.
 
-### 4. Transaction PIN controls
+## 4. Transaction PIN controls
 
 - Store only a salted adaptive hash of the PIN.
 - Enforce PIN format and disallow trivial values.
@@ -5644,7 +5647,7 @@ Key threats include account takeover, credential stuffing, OTP abuse, PIN guessi
 - Exclude PINs from application logs, analytics, crash reports and support tools.
 - Provide a secure reset process with identity verification and audit trail.
 
-### 5. Payment callback security
+## 5. Payment callback security
 
 - Treat callback endpoints as externally reachable and untrusted until validated.
 - Use provider-supported callback authentication, signatures, allowlisting or mutual TLS where available and appropriate.
@@ -5654,7 +5657,7 @@ Key threats include account takeover, credential stuffing, OTP abuse, PIN guessi
 - Do not credit balances based solely on a client claim or unverified callback payload.
 - Reconcile callbacks with provider transaction reports.
 
-### 6. Application and infrastructure security
+## 6. Application and infrastructure security
 
 - Validate and encode input/output.
 - Use parameterised database access.
@@ -5668,36 +5671,36 @@ Key threats include account takeover, credential stuffing, OTP abuse, PIN guessi
 - Apply container image scanning and minimal runtime images.
 - Protect CI/CD credentials and require review for production changes.
 
-### 7. Privacy and data protection
+## 7. Privacy and data protection
 
 FinPay should implement privacy by design: purpose limitation, data minimisation, transparency, access controls, retention limits, secure disposal and processes for data-subject requests. Before live operation in Kenya, assess applicable obligations including the Data Protection Act, 2019 and relevant regulations, and obtain qualified legal/compliance advice. Applicability depends on the actual service, roles, data flows and operating model.
 
-### 8. Financial regulatory considerations
+## 8. Financial regulatory considerations
 
 Before offering live financial services, determine the required licences, registrations, contractual arrangements and oversight based on the actual activities and partners. Assess relevant Central Bank of Kenya requirements, payment service provider rules, AML/CFT obligations, customer due diligence, sanctions screening, consumer protection, complaints handling, safeguarding/settlement arrangements and record retention. Do not represent FinPay as a licensed bank or regulated provider unless that status has been formally obtained.
 
-### 9. Audit and monitoring
+## 9. Audit and monitoring
 
 Record actor, action, target, timestamp, outcome, source/correlation identifier and relevant reason code for sensitive events. Protect audit logs against unauthorised modification. Do not log passwords, PINs, full tokens, API secrets or unnecessary personal data.
 
 Monitor login failures, OTP retries, PIN lockouts, unusual transaction velocity, callback failures, provider timeouts, reconciliation breaks, privilege changes and abnormal administrative actions.
 
-### 10. Security verification
+## 10. Security verification
 
 The security programme should include secure code review, dependency scanning, secret scanning, static analysis, dynamic testing, authorisation testing, API fuzzing where appropriate, infrastructure review, penetration testing by qualified personnel and remediation retesting. A checklist is not a substitute for independent testing.
 
 
 ---
 
-<!-- source: docs/08-quality-assurance/quality-assurance-plan.md -->
+# DOCUMENT: docs/08-quality-assurance/quality-assurance-plan.md
 
-## FinPay Quality Assurance and Test Strategy
+# FinPay Quality Assurance and Test Strategy
 
-### 1. Purpose
+## 1. Purpose
 
 Define how the intended FinPay product will be verified and validated. Test cases in this document are planned coverage until executed with recorded evidence.
 
-### 2. Quality objectives
+## 2. Quality objectives
 
 - Verify business requirements and financial rules.
 - Protect account and transaction ownership boundaries.
@@ -5707,7 +5710,7 @@ Define how the intended FinPay product will be verified and validated. Test case
 - Verify security, performance, accessibility and operational resilience.
 - Provide objective evidence for acceptance and release decisions.
 
-### 3. Test levels
+## 3. Test levels
 
 1. Unit testing — isolated domain logic and validation.
 2. Repository/data testing — persistence, constraints and transaction boundaries.
@@ -5720,7 +5723,7 @@ Define how the intended FinPay product will be verified and validated. Test case
 9. Performance testing — latency, throughput, concurrency and resource behaviour.
 10. UAT — business/user acceptance against agreed criteria.
 
-### 4. Core test scenarios
+## 4. Core test scenarios
 
 | Area | Positive scenarios | Negative / edge scenarios |
 |---|---|---|
@@ -5737,7 +5740,7 @@ Define how the intended FinPay product will be verified and validated. Test case
 | Web/mobile | Accessible responsive flows | Offline, expired session, app interruption |
 | Reconciliation | Matched records | Missing, duplicate or mismatched provider records |
 
-### 5. Financial integrity test requirements
+## 5. Financial integrity test requirements
 
 - Verify every posted transaction has balanced ledger entries.
 - Verify failed operations do not leave partial debits or credits.
@@ -5748,46 +5751,46 @@ Define how the intended FinPay product will be verified and validated. Test case
 - Verify balance projections reconcile to ledger totals.
 - Verify all amounts and currencies preserve required precision.
 
-### 6. Security test requirements
+## 6. Security test requirements
 
 Test authentication bypass, token tampering/expiry, object-level authorisation, privilege escalation, SQL injection, XSS, CSRF applicability, CORS, brute force, OTP abuse, PIN guessing, callback spoofing, replay, secret exposure and sensitive logging.
 
-### 7. Performance and resilience
+## 7. Performance and resilience
 
 Establish workload profiles for normal, peak and stress conditions. Measure p50/p95/p99 latency, throughput, error rate, CPU, memory, database connections, query performance and provider response time. Test recovery from provider outage, database failover, application restart, delayed callbacks and queue backlog.
 
 Numerical thresholds must be approved before testing; do not report target thresholds as achieved measurements.
 
-### 8. Entry and exit criteria
+## 8. Entry and exit criteria
 
 **Entry:** requirements and acceptance criteria reviewed; build deployable to test environment; test data prepared; dependencies available; test cases reviewed.
 
 **Exit:** planned tests executed; critical/high defects resolved or formally accepted; financial integrity verified; security and performance results reviewed; UAT approval recorded; rollback and operational procedures reviewed.
 
-### 9. Defect management
+## 9. Defect management
 
 Each defect should include unique ID, summary, environment, build, severity, priority, reproduction steps, expected/actual result, evidence, owner, status, root cause and retest outcome.
 
-### 10. Test evidence
+## 10. Test evidence
 
 Retain test run identifiers, environment/configuration, logs, screenshots where appropriate, API responses, database verification queries, provider sandbox references, defect links and approval records. Redact secrets and personal data.
 
-### 11. Release decision
+## 11. Release decision
 
 Release readiness is a documented decision by authorised stakeholders. Passing a subset of unit tests does not establish production readiness. Live financial release additionally requires provider approval, legal/compliance review, security assurance, reconciliation operations, support readiness and tested recovery procedures.
 
 
 ---
 
-<!-- source: docs/09-devops-operations/devops-and-operations.md -->
+# DOCUMENT: docs/09-devops-operations/devops-and-operations.md
 
-## FinPay DevOps, Deployment and Operations
+# FinPay DevOps, Deployment and Operations
 
-### 1. Environment strategy
+## 1. Environment strategy
 
 Maintain separate local development, automated test, integration/sandbox, staging and production environments. Each environment must have separate credentials, data and access controls. Production data must not be copied into lower environments without approved masking and controls.
 
-### 2. Proposed delivery pipeline
+## 2. Proposed delivery pipeline
 
 ```mermaid
 flowchart LR
@@ -5804,7 +5807,7 @@ flowchart LR
  Prod --> Monitor[Monitor and verify]
 ```
 
-### 3. CI/CD controls
+## 3. CI/CD controls
 
 - Branch protection and pull-request review.
 - Reproducible builds and pinned dependencies.
@@ -5816,11 +5819,11 @@ flowchart LR
 - Database migration review and backup before risky schema changes.
 - Rollback or forward-fix strategy documented for each release.
 
-### 4. Container and configuration
+## 4. Container and configuration
 
 Use minimal container images, non-root runtime users, health checks, resource limits and explicit ports. Configuration should be environment-driven. Secrets must not be committed to Git, baked into images or printed in logs. Rotate credentials and document ownership.
 
-### 5. Database operations
+## 5. Database operations
 
 - Managed PostgreSQL with restricted network access.
 - Connection pooling and query monitoring.
@@ -5831,13 +5834,13 @@ Use minimal container images, non-root runtime users, health checks, resource li
 - Migration rollback/forward-fix plans.
 - Database credentials separated by environment and privilege.
 
-### 6. Observability
+## 6. Observability
 
 Collect structured application logs, metrics and distributed traces. Include correlation IDs across API requests, transactions and provider events. Monitor API health, database health, provider latency/error rate, callback processing, pending-payment age, reconciliation exceptions, failed logins and resource saturation.
 
 Never put secrets, passwords, PINs or full payment credentials into telemetry.
 
-### 7. Incident management
+## 7. Incident management
 
 1. Detect and classify incident.
 2. Assign incident owner and severity.
@@ -5849,15 +5852,15 @@ Never put secrets, passwords, PINs or full payment credentials into telemetry.
 8. Perform root-cause analysis.
 9. Track corrective and preventive actions.
 
-### 8. Backup and disaster recovery
+## 8. Backup and disaster recovery
 
 Define recovery time objective (RTO) and recovery point objective (RPO) with stakeholders. Document backup frequency, retention, encryption, access, restore procedure and disaster-recovery responsibilities. Test restoration, not merely backup creation.
 
-### 9. Operational runbooks
+## 9. Operational runbooks
 
 Create runbooks for deployment, rollback, database restore, provider outage, delayed callback, duplicate callback, reconciliation mismatch, stuck pending payment, suspected account takeover, credential rotation and incident communications.
 
-### 10. Release checklist
+## 10. Release checklist
 
 - Approved scope and release notes.
 - Security and QA evidence reviewed.
@@ -5872,15 +5875,15 @@ Create runbooks for deployment, rollback, database restore, provider outage, del
 
 ---
 
-<!-- source: docs/10-project-management/project-management-plan.md -->
+# DOCUMENT: docs/10-project-management/project-management-plan.md
 
-## FinPay Project Management Plan
+# FinPay Project Management Plan
 
-### 1. Delivery approach
+## 1. Delivery approach
 
 Use an iterative delivery approach with controlled scope, documented requirements, short implementation cycles, frequent review and evidence-based acceptance. Maintain a prioritised backlog and distinguish mandatory MVP capabilities from later enhancements.
 
-### 2. Work breakdown structure
+## 2. Work breakdown structure
 
 | Workstream | Deliverables |
 |---|---|
@@ -5898,7 +5901,7 @@ Use an iterative delivery approach with controlled scope, documented requirement
 | Operations | Runbooks, support, reconciliation and incident processes |
 | Finalisation | User guides, technical report, presentation and handover |
 
-### 3. Prioritisation
+## 3. Prioritisation
 
 **MVP foundation:** onboarding, authentication, customer/account management, secure account view, transaction history, M-Pesa funding sandbox, internal transfers, notifications, audit and core QA.
 
@@ -5906,7 +5909,7 @@ Use an iterative delivery approach with controlled scope, documented requirement
 
 **Future expansion:** additional currencies, cross-border payments, bank/card rails, ISO 8583 integration, merchant services and regional rollout.
 
-### 4. Milestones
+## 4. Milestones
 
 1. Scope and requirements baseline approved.
 2. UX journeys and design baseline approved.
@@ -5923,7 +5926,7 @@ Use an iterative delivery approach with controlled scope, documented requirement
 
 Dates and owners should be added in the project schedule after resource availability is confirmed.
 
-### 5. Risk register
+## 5. Risk register
 
 | ID | Risk | Impact | Mitigation |
 |---|---|---|---|
@@ -5938,30 +5941,30 @@ Dates and owners should be added in the project schedule after resource availabi
 | R-09 | External provider outage | Delayed payments | Pending-state design, retries and reconciliation |
 | R-10 | Inaccurate documentation | Misleading handover | Traceability and document review |
 
-### 6. Change management
+## 6. Change management
 
 Every scope or design change should include a description, reason, affected requirements, cost/time impact, risk, approval and document updates. Changes to financial rules, security controls, data model and provider contracts require technical review.
 
-### 7. Communication and reporting
+## 7. Communication and reporting
 
 Maintain a weekly progress summary covering completed work, planned work, blockers, risks, decisions, defects and evidence. Escalate high-impact financial/security risks immediately.
 
-### 8. Definition of done
+## 8. Definition of done
 
 A work item is done when its acceptance criteria are met, code is reviewed, automated tests pass, security implications are reviewed, documentation is updated, deployment/configuration implications are addressed and evidence is linked.
 
 
 ---
 
-<!-- source: docs/11-user-guides/user-and-support-guide.md -->
+# DOCUMENT: docs/11-user-guides/user-and-support-guide.md
 
-## FinPay Customer, Support and Operations Guide
+# FinPay Customer, Support and Operations Guide
 
-### 1. Purpose
+## 1. Purpose
 
 This guide defines the intended customer and staff procedures. Screens and exact steps may change as the final user interface is implemented.
 
-### 2. Customer onboarding
+## 2. Customer onboarding
 
 1. Open the official FinPay application.
 2. Select registration.
@@ -5974,11 +5977,11 @@ This guide defines the intended customer and staff procedures. Screens and exact
 
 Never share passwords, one-time codes or transaction PINs with anyone, including people claiming to be FinPay support.
 
-### 3. Login and account security
+## 3. Login and account security
 
 Use the registered sign-in method. Sign out on shared devices. Use the official recovery process if access is lost. Report suspected unauthorised access promptly. Do not reuse passwords from other services.
 
-### 4. Add money
+## 4. Add money
 
 1. Open Add Money.
 2. Select M-Pesa or another enabled funding method.
@@ -5991,7 +5994,7 @@ Use the registered sign-in method. Sign out on shared devices. Use the official 
 
 Do not repeat a funding request merely because a prompt or response is delayed. Check transaction history or contact support using the reference.
 
-### 5. Send money
+## 5. Send money
 
 1. Select Send Money.
 2. Enter or select the recipient.
@@ -6003,11 +6006,11 @@ Do not repeat a funding request merely because a prompt or response is delayed. 
 
 Always verify recipient details before confirming.
 
-### 6. Withdraw money
+## 6. Withdraw money
 
 Use this feature only when a supported payout channel is available. Review destination, amount, fees and expected processing time. A payout may remain pending while provider confirmation is outstanding.
 
-### 7. Transaction statuses
+## 7. Transaction statuses
 
 | Status | Meaning |
 |---|---|
@@ -6019,30 +6022,30 @@ Use this feature only when a supported payout channel is available. Review desti
 | Reversed | A compensating operation has been recorded |
 | Under review | Requires investigation or reconciliation |
 
-### 8. Support procedure
+## 8. Support procedure
 
 Provide the transaction reference, approximate date/time, amount and a concise description. Never send a password, PIN, OTP or full authentication token. Support should verify identity using approved procedures and must not ask customers to disclose secrets.
 
-### 9. Staff support and operations
+## 9. Staff support and operations
 
 Staff must access only the information required for their role. Search by approved identifiers, review event history and record case notes. Financial adjustments require documented reason, evidence and the required approval workflow. Staff must not directly edit balances or delete financial history.
 
-### 10. Suspected fraud or security incident
+## 10. Suspected fraud or security incident
 
 Escalate immediately through the approved incident channel. Preserve evidence, restrict access only through authorised procedures, avoid alerting suspected attackers and follow the incident response runbook.
 
 
 ---
 
-<!-- source: docs/12-final-report/final-project-report.md -->
+# DOCUMENT: docs/12-final-report/final-project-report.md
 
-## FinPay Final Project Report — Master Structure
+# FinPay Final Project Report — Master Structure
 
-### 1. Executive summary
+## 1. Executive summary
 
 Describe FinPay as a proposed digital financial services platform focused initially on Kenya. Summarise the customer problem, intended solution, project objectives, target architecture, principal workflows and project outcome. Update this section at project completion using verified implementation and evaluation evidence.
 
-### 2. Introduction
+## 2. Introduction
 
 - Background and context.
 - Problem statement.
@@ -6051,7 +6054,7 @@ Describe FinPay as a proposed digital financial services platform focused initia
 - Stakeholders.
 - Assumptions and constraints.
 
-### 3. Business analysis
+## 3. Business analysis
 
 - Stakeholder analysis.
 - As-is context and problem analysis.
@@ -6060,7 +6063,7 @@ Describe FinPay as a proposed digital financial services platform focused initia
 - Use cases and business rules.
 - Requirements traceability.
 
-### 4. System analysis and design
+## 4. System analysis and design
 
 - System context.
 - Architecture rationale.
@@ -6070,35 +6073,35 @@ Describe FinPay as a proposed digital financial services platform focused initia
 - Security and privacy design.
 - User journeys, wireframes and mockups.
 
-### 5. Implementation
+## 5. Implementation
 
 Describe the actual backend, web, Android, database, payment integration, DevOps and security work delivered. Include versions, module boundaries, important design decisions and selected code/implementation evidence. Clearly distinguish implemented, partially implemented and planned capabilities.
 
-### 6. Testing and evaluation
+## 6. Testing and evaluation
 
 Include test strategy, test environment, test cases, executed test results, defects, security findings, performance results, integration evidence, UAT outcomes and acceptance decision. Do not convert planned tests into passed results.
 
-### 7. Results and discussion
+## 7. Results and discussion
 
 Evaluate the delivered system against each objective and requirement. Discuss observed behaviour, test evidence, limitations, trade-offs and lessons learned.
 
-### 8. Security, privacy and ethics
+## 8. Security, privacy and ethics
 
 Discuss data protection, access control, payment integrity, auditability, risks, compliance assumptions and any outstanding approvals.
 
-### 9. Deployment and operations
+## 9. Deployment and operations
 
 Describe deployment architecture, environment configuration, CI/CD, monitoring, backup/recovery, support and operational readiness. State clearly whether deployment is local, sandbox, staging or production.
 
-### 10. Conclusion and recommendations
+## 10. Conclusion and recommendations
 
 Summarise what was achieved, what remains, and recommended next steps. Avoid claiming commercial readiness without the required legal, provider, security and operational evidence.
 
-### 11. References
+## 11. References
 
-List official technical documentation, provider documentation, legislation/regulatory guidance, standards and academic references actually consulted. Use one consistent citation style required by the institution.
+List the official technical documentation, payment-provider documentation, applicable legislation and regulatory guidance, industry standards and other authoritative sources actually consulted. Apply a consistent professional referencing style throughout the report.
 
-### 12. Appendices
+## 12. Appendices
 
 - Requirements traceability matrix.
 - API specification.
@@ -6109,7 +6112,7 @@ List official technical documentation, provider documentation, legislation/regul
 - Deployment and runbook excerpts.
 - Approval records.
 
-### 13. Requirements traceability matrix
+## 13. Requirements traceability matrix
 
 The authoritative requirements traceability matrix is maintained in:
 
@@ -6119,7 +6122,7 @@ It maps all functional requirements (FR-001 to FR-022) and non-functional requir
 
 The matrix must be updated throughout implementation and testing. Only verified evidence may be used to mark a requirement implemented, tested or accepted.
 
-### 14. Report completion and approval
+## 14. Report completion and approval
 
 The final submission must include:
 
@@ -6137,9 +6140,9 @@ The report remains a master structure until implementation, testing and evaluati
 
 ---
 
-<!-- source: docs/glossary.md -->
+# DOCUMENT: docs/glossary.md
 
-## FinPay Glossary
+# FinPay Glossary
 
 | Term | Definition |
 |---|---|
@@ -6164,15 +6167,15 @@ The report remains a master structure until implementation, testing and evaluati
 
 ---
 
-<!-- source: docs/qa/API-INTEGRATION-QA.md -->
+# DOCUMENT: docs/qa/API-INTEGRATION-QA.md
 
-## FinPay API Integration QA
+# FinPay API Integration QA
 
-### Status
+## Status
 
 **API Integration QA: COMPLETE**
 
-### Environment
+## Environment
 
 - Backend: Spring Boot
 - Database: PostgreSQL
@@ -6180,7 +6183,7 @@ The report remains a master structure until implementation, testing and evaluati
 - Authentication: JWT
 - Testing method: cURL / manual API testing
 
-### Authentication QA
+## Authentication QA
 
 | Test | Expected | Result |
 |---|---|---|
@@ -6193,7 +6196,7 @@ The report remains a master structure until implementation, testing and evaluati
 | Blank credentials | 401 | PASS |
 | Malformed login JSON | 400 | PASS |
 
-### Account API QA
+## Account API QA
 
 | Test | Expected | Result |
 |---|---|---|
@@ -6205,7 +6208,7 @@ The report remains a master structure until implementation, testing and evaluati
 | Unauthorized account access | 403 | PASS |
 | Account lookup by number | 200 | PASS |
 
-### Deposit API QA
+## Deposit API QA
 
 | Test | Expected | Result |
 |---|---|---|
@@ -6223,7 +6226,7 @@ The report remains a master structure until implementation, testing and evaluati
 | Wrong Content-Type | 415 | PASS |
 | Wrong HTTP method | 405 | PASS |
 
-### Withdrawal API QA
+## Withdrawal API QA
 
 | Test | Expected | Result |
 |---|---|---|
@@ -6234,7 +6237,7 @@ The report remains a master structure until implementation, testing and evaluati
 | Insufficient balance | 400 | PASS |
 | Unauthorized account | 404 | PASS |
 
-### Transfer API QA
+## Transfer API QA
 
 | Test | Expected | Result |
 |---|---|---|
@@ -6252,7 +6255,7 @@ The report remains a master structure until implementation, testing and evaluati
 | Cross-user transfer | 201 | PASS |
 | GET instead of POST | 405 | PASS |
 
-### Transaction History QA
+## Transaction History QA
 
 | Test | Expected | Result |
 |---|---|---|
@@ -6262,7 +6265,7 @@ The report remains a master structure until implementation, testing and evaluati
 | Source user transaction access | 200 | PASS |
 | Destination user transaction access | 200 | PASS |
 
-### Transaction Reference QA
+## Transaction Reference QA
 
 | Test | Expected | Result |
 |---|---|---|
@@ -6272,7 +6275,7 @@ The report remains a master structure until implementation, testing and evaluati
 | Unrelated user access | 404 | PASS |
 | Unknown reference | 404 | PASS |
 
-### Security Observations
+## Security Observations
 
 The following security behaviors were verified:
 
@@ -6285,7 +6288,7 @@ The following security behaviors were verified:
 - Security response headers are present.
 - Passwords are not returned in account API responses.
 
-### Known Cleanup Items
+## Known Cleanup Items
 
 These items did not block API QA completion:
 
@@ -6293,7 +6296,7 @@ These items did not block API QA completion:
 2. Spring Security logs a non-blocking `AuthenticationProvider` / `UserDetailsService` configuration warning.
 3. These items should be addressed during the later security/API cleanup phase.
 
-### Final Result
+## Final Result
 
 **API Integration QA: PASS**
 

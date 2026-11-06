@@ -3,7 +3,7 @@
 **Project:** FinPay
 **Document pack:** Target-state product and system specification
 **Version:** 1.0
-**Audience:** Tracom Academy assessors, product stakeholders, business analysts, developers, QA, operations and future maintainers.
+**Intended audience:** Product stakeholders, business analysts, software engineers, QA professionals, security teams, operations personnel and future maintainers.
 
 ## 1. Documentation purpose
 
@@ -40,7 +40,7 @@ The platform is intended to combine a responsive web application, an Android mob
 | Environments, delivery and operations | `docs/09-devops-operations/devops-and-operations.md` |
 | Project delivery and risk controls | `docs/10-project-management/project-management-plan.md` |
 | End-user and support procedures | `docs/11-user-guides/user-and-support-guide.md` |
-| Academic and technical report structure | `docs/12-final-report/final-project-report.md` |
+| Project completion and technical report | `docs/12-final-report/final-project-report.md` |
 | Shared glossary | `docs/glossary.md` |
 
 ## 4. Proposed technology direction
