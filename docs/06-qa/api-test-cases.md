@@ -13,7 +13,7 @@ validation, security, error handling, and database consistency.
 
 ## 3. Authentication Test Cases
 
-### API-001 — Valid Login
+### API-TC-001 — Valid Login
 
 **Method:** POST
 **Endpoint:** `/auth/login`
@@ -35,7 +35,7 @@ validation, security, error handling, and database consistency.
 
 **Status:** PASS
 
-### API-002 — Invalid Password
+### API-TC-002 — Invalid Password
 
 **Method:** POST
 **Endpoint:** `/auth/login`
@@ -47,7 +47,7 @@ validation, security, error handling, and database consistency.
 
 **Status:** PASS
 
-### API-003 — Invalid Email
+### API-TC-003 — Invalid Email
 
 **Method:** POST
 **Endpoint:** `/auth/login`
@@ -58,7 +58,7 @@ validation, security, error handling, and database consistency.
 
 **Status:** PASS
 
-### API-004 — Missing Credentials
+### API-TC-004 — Missing Credentials
 
 **Method:** POST
 **Endpoint:** `/auth/login`
@@ -71,7 +71,7 @@ validation, security, error handling, and database consistency.
 
 ## 4. Account API Test Cases
 
-### API-005 — Create Account
+### API-TC-005 — Create Account
 
 **Method:** POST
 **Endpoint:** `/accounts`
@@ -84,7 +84,7 @@ validation, security, error handling, and database consistency.
 
 **Status:** PASS
 
-### API-006 — Retrieve Own Account
+### API-TC-006 — Retrieve Own Account
 
 **Method:** GET
 **Endpoint:** `/accounts/{id}`
@@ -95,7 +95,7 @@ validation, security, error handling, and database consistency.
 
 **Status:** PASS
 
-### API-007 — Unauthorized Account Access
+### API-TC-007 — Unauthorized Account Access
 
 **Method:** GET
 **Endpoint:** `/accounts/{id}`
@@ -108,7 +108,7 @@ validation, security, error handling, and database consistency.
 
 ## 5. Deposit API Test Cases
 
-### API-008 — Successful Deposit
+### API-TC-008 — Successful Deposit
 
 **Method:** POST
 **Endpoint:** `/transactions/deposit`
@@ -122,7 +122,7 @@ validation, security, error handling, and database consistency.
 
 **Status:** PASS
 
-### API-009 — Zero Deposit
+### API-TC-009 — Zero Deposit
 
 **Method:** POST
 **Endpoint:** `/transactions/deposit`
@@ -134,7 +134,7 @@ validation, security, error handling, and database consistency.
 
 **Status:** PASS
 
-### API-010 — Negative Deposit
+### API-TC-010 — Negative Deposit
 
 **Method:** POST
 **Endpoint:** `/transactions/deposit`
@@ -147,7 +147,7 @@ validation, security, error handling, and database consistency.
 
 ## 6. Withdrawal API Test Cases
 
-### API-011 — Successful Withdrawal
+### API-TC-011 — Successful Withdrawal
 
 **Method:** POST
 **Endpoint:** `/transactions/withdraw`
@@ -160,7 +160,7 @@ validation, security, error handling, and database consistency.
 
 **Status:** PASS
 
-### API-012 — Insufficient Balance
+### API-TC-012 — Insufficient Balance
 
 **Method:** POST
 **Endpoint:** `/transactions/withdraw`
@@ -172,7 +172,7 @@ validation, security, error handling, and database consistency.
 
 **Status:** PASS
 
-### API-013 — Unauthorized Withdrawal
+### API-TC-013 — Unauthorized Withdrawal
 
 **Method:** POST
 **Endpoint:** `/transactions/withdraw`
@@ -185,7 +185,7 @@ validation, security, error handling, and database consistency.
 
 ## 7. Transfer API Test Cases
 
-### API-014 — Successful Transfer
+### API-TC-014 — Successful Transfer
 
 **Method:** POST
 **Endpoint:** `/transactions/transfer`
@@ -198,7 +198,7 @@ validation, security, error handling, and database consistency.
 
 **Status:** PASS
 
-### API-015 — Insufficient Transfer Balance
+### API-TC-015 — Insufficient Transfer Balance
 
 **Method:** POST
 **Endpoint:** `/transactions/transfer`
@@ -210,7 +210,7 @@ validation, security, error handling, and database consistency.
 
 **Status:** PASS
 
-### API-016 — Non-existent Destination Account
+### API-TC-016 — Non-existent Destination Account
 
 **Method:** POST
 **Endpoint:** `/transactions/transfer`
@@ -223,7 +223,7 @@ validation, security, error handling, and database consistency.
 
 ## 8. Transaction History
 
-### API-017 — Retrieve Account Transactions
+### API-TC-017 — Retrieve Account Transactions
 
 **Method:** GET
 **Endpoint:** `/transactions/account/{accountId}`
@@ -234,7 +234,7 @@ validation, security, error handling, and database consistency.
 
 **Status:** PASS
 
-### API-018 — Unauthorized Transaction History
+### API-TC-018 — Unauthorized Transaction History
 
 **Method:** GET
 **Endpoint:** `/transactions/account/{accountId}`
@@ -246,7 +246,7 @@ validation, security, error handling, and database consistency.
 
 ## 9. JWT Security
 
-### API-019 — Missing JWT
+### API-TC-019 — Missing JWT
 
 **Expected Result:**
 - Protected endpoint rejects the request.
@@ -254,7 +254,7 @@ validation, security, error handling, and database consistency.
 
 **Status:** PASS
 
-### API-020 — Invalid JWT
+### API-TC-020 — Invalid JWT
 
 **Expected Result:**
 - Protected endpoint rejects the request.
@@ -262,7 +262,7 @@ validation, security, error handling, and database consistency.
 
 **Status:** PASS
 
-### API-021 — Valid JWT
+### API-TC-021 — Valid JWT
 
 **Expected Result:**
 - Protected endpoint accepts the request.
