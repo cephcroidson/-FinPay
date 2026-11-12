@@ -1,73 +1,146 @@
-# FinPay — Complete Project Documentation
+# FinPay — Digital Payments Platform
 
-**Project:** FinPay
-**Document pack:** Target-state product and system specification
-**Version:** 1.0
-**Intended audience:** Product stakeholders, business analysts, software engineers, QA professionals, security teams, operations personnel and future maintainers.
+<p align="center">
+  **A full-stack digital payments platform built to simplify account management, money transfers and payment experiences.**
+</p>
 
-## 1. Documentation purpose
+<p align="center">
+  <a href="https://finpay-web-cyan.vercel.app">Live Application</a> ·
+  <a href="https://finpay-api-wszn.onrender.com">Backend API</a> ·
+  <a href="https://github.com/cephcroidson/-FinPay">GitHub Repository</a>
+</p>
 
-This pack defines the intended FinPay product: what it is meant to solve, who it serves, how it should behave, and how it should be designed, built, tested, secured and operated. It is a forward-looking specification and development baseline, not a declaration that every capability is already implemented.
+<p align="center">
+  ![Java](https://img.shields.io/badge/Java-25-orange?logo=openjdk)
+  ![Spring Boot](https://img.shields.io/badge/Spring_Boot-4.0.0-6DB33F?logo=springboot)
+  ![React](https://img.shields.io/badge/React-19-61DAFB?logo=react)
+  ![TypeScript](https://img.shields.io/badge/TypeScript-7-3178C6?logo=typescript)
+  ![PostgreSQL](https://img.shields.io/badge/PostgreSQL-17-4169E1?logo=postgresql)
+  ![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-4-06B6D4?logo=tailwindcss)
+</p>
 
-The documents use these labels:
+---
 
-- **Target requirement:** a capability FinPay is intended to provide.
-- **Design decision:** the proposed approach that should guide implementation.
-- **Acceptance criterion:** an observable condition used to determine whether a requirement is satisfied.
-- **Implementation evidence:** code, test results, configuration or operational evidence that demonstrates delivery. Evidence must be recorded separately from the target requirement.
+## Overview
 
-Existing QA execution reports in `docs/06-qa` and `docs/qa` are retained as historical project evidence. They should not be interpreted as proof that every target-state requirement in this pack has been delivered.
+FinPay is a full-stack fintech project designed around digital account management, secure authentication, financial transactions and payment integration.
 
-## 2. Product summary
+The platform explores the development of modern payment systems within the Kenyan financial technology ecosystem, with M-Pesa integration as a key payment channel.
 
-FinPay is a proposed digital financial services platform designed to provide customers with a secure and convenient way to register, access a digital account, manage funds, initiate payments, transfer money, and review transaction activity. The intended initial market is Kenya, with a design that can be extended to additional markets, currencies and payment rails.
+The project brings together software engineering, business analysis, UI/UX design, cybersecurity, quality assurance and deployment.
 
-The platform is intended to combine a responsive web application, an Android mobile application, a secure backend API, a relational data store, and integrations with external payment providers. M-Pesa is a priority local payment channel. The architecture should allow future integration with banks, card processors, international payment service providers and ISO 8583-based payment networks where commercially and technically appropriate.
+## Key Features
 
-## 3. Documentation map
+- User registration, login and authenticated access.
+- Account management and dashboard.
+- Deposits, withdrawals and account transfers.
+- Transaction history and tracking.
+- M-Pesa STK Push integration.
+- Protected application routes and account-level authorisation.
+- Responsive web interface.
+- Kotlin-based Android application module.
 
-| Area | Document |
+## Technology Stack
+
+| Component | Technologies |
 |---|---|
-| Project overview, scope and objectives | `docs/00-project-foundation/project-charter.md` |
-| Business analysis and requirements | `docs/01-business-analysis/business-requirements.md` |
-| Product behaviour and user journeys | `docs/02-product-design/product-specification.md` |
-| Architecture and technical decisions | `docs/03-system-architecture/system-architecture.md` |
-| Data model and dictionary | `docs/04-data-design/data-model.md` |
-| Payments and financial processing | `docs/05-payment-system/payment-system.md` |
-| API standards and endpoint catalogue | `docs/06-api/api-specification.md` |
-| Security, privacy and compliance design | `docs/07-security/security-and-compliance.md` |
-| QA approach and acceptance coverage | `docs/08-quality-assurance/quality-assurance-plan.md` |
-| Environments, delivery and operations | `docs/09-devops-operations/devops-and-operations.md` |
-| Project delivery and risk controls | `docs/10-project-management/project-management-plan.md` |
-| End-user and support procedures | `docs/11-user-guides/user-and-support-guide.md` |
-| Project completion and technical report | `docs/12-final-report/final-project-report.md` |
-| Shared glossary | `docs/glossary.md` |
+| Frontend | React, TypeScript, Vite |
+| Styling | Tailwind CSS |
+| Backend | Java 25, Spring Boot 4 |
+| Security | Spring Security, JWT, BCrypt |
+| Database | PostgreSQL, Supabase |
+| ORM | Spring Data JPA, Hibernate |
+| Migrations | Flyway |
+| Mobile | Kotlin, Android, Jetpack Compose |
+| Payments | M-Pesa Daraja API |
+| Infrastructure | Docker, Docker Compose |
+| Deployment | Vercel, Render, Supabase |
+| Version Control | Git, GitHub |
 
-## 4. Proposed technology direction
+## System Architecture
 
-- Backend: Java and Spring Boot REST API.
-- Web: React, TypeScript, Vite and Tailwind CSS.
-- Mobile: Kotlin and Android Jetpack Compose.
-- Data: PostgreSQL, with Supabase-hosted PostgreSQL as the selected hosting direction.
-- Authentication: secure password hashing, token-based API authentication and transaction-level authorisation.
-- Integrations: M-Pesa Daraja API initially; provider adapters for future payment rails.
-- Delivery: Git, automated builds and tests, Docker-based packaging, environment-based configuration and controlled deployment.
+FinPay follows a client-server architecture. Web and mobile clients communicate with the Spring Boot API, which handles business logic, security, database operations and payment integrations.
 
-Technology versions and provider products must be confirmed against the actual build configuration at implementation time.
+```mermaid
+flowchart TD
+    U[Customer]
+    WEB[React Web Application]
+    MOB[Android Application]
+    API[Spring Boot REST API]
+    SEC[Spring Security and JWT]
+    SVC[Business Services]
+    DB[(Supabase PostgreSQL)]
+    MPESA[M-Pesa Daraja API]
 
-## 5. Guiding principles
+    U --> WEB
+    U --> MOB
+    WEB --> API
+    MOB --> API
+    API --> SEC
+    SEC --> SVC
+    SVC --> DB
+    SVC <--> MPESA
+```
 
-1. The backend is authoritative for balances, transaction state, account ownership and payment outcomes.
-2. Every financial movement must be traceable and auditable.
-3. A client must never be trusted to calculate or directly set a financial balance.
-4. Payment initiation is not the same as payment completion.
-5. Failed, pending, reversed and completed transactions must be represented distinctly.
-6. Sensitive information must be protected in transit, at rest and in logs.
-7. Customer experience must be accessible, understandable and consistent across web and mobile.
-8. The system must be designed for reliability, reconciliation, recovery and controlled growth.
-9. Requirements, design, implementation and test evidence must remain traceable.
-10. Security and regulatory obligations must be validated with qualified providers and relevant authorities before any live financial service launch.
+## Live System
 
-## 6. Status and change control
+| Service | Platform | Address |
+|---|---|---|
+| Web application | Vercel | [FinPay Web](https://finpay-web-cyan.vercel.app) |
+| Backend API | Render | [FinPay API](https://finpay-api-wszn.onrender.com) |
+| Database | Supabase | PostgreSQL |
 
-This pack describes the intended target state. When implementation decisions change, update the relevant design document and record significant architectural changes as Architecture Decision Records (ADRs). Do not silently change financial rules, API contracts, security assumptions or data definitions.
+## Repository Structure
+
+```text
+FinPay/
+├── backend/          # Spring Boot REST API
+├── frontend/         # React web application
+├── mobile/           # Kotlin Android application
+├── database/         # Database migrations and backups
+├── integrations/     # External payment integrations
+├── infrastructure/   # Docker and deployment resources
+├── scripts/          # Development scripts
+├── docs/             # Project documentation
+└── README.md
+```
+
+## Local Development
+
+**Prerequisites:** Java 25, Node.js, npm, Docker and Git.
+
+```bash
+# Clone the repository
+git clone https://github.com/cephcroidson/-FinPay.git
+cd FinPay
+
+# Start the local database
+docker compose up -d postgres
+
+# Start the backend in one terminal
+cd backend/finpay-api
+./mvnw spring-boot:run
+
+# Start the frontend in another terminal
+cd ~/FinPay/frontend
+npm install
+npm run dev
+```
+
+Configure the required database, JWT and payment-provider environment variables before starting the backend. Configure `VITE_API_BASE_URL` for the frontend. Never commit credentials or secrets.
+
+## Project Status
+
+FinPay has a deployed web application, backend API and managed PostgreSQL database, with an Android development module and supporting engineering work.
+
+The project continues to evolve through implementation, testing, documentation and technical improvements. Individual capabilities should be evaluated against their implementation and test evidence.
+
+## Disclaimer
+
+FinPay is a software engineering and demonstration project. It is not a licensed bank or independently authorised financial institution. Real-world financial services require appropriate regulatory approval, provider authorisation, security assessment and operational validation.
+
+---
+
+<p align="center">
+  **FinPay — Connecting accounts, payments and technology.**
+</p>
