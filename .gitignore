@@ -23,3 +23,8 @@ frontend/dist/
 
 # Database backups - never commit customer data
 database/backups/
+
+# Local editor and redesign backups
+*.bak
+*.before-polish.bak
+*.redesign-backup.*
