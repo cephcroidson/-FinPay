@@ -1,8 +1,9 @@
 import BrandLogo from "../components/BrandLogo";
+
 import {
+    ArrowLeftRight,
     Bell,
-    ChevronDown,
-    CreditCard,
+    ChevronRight,
     LayoutDashboard,
     LogOut,
     Menu,
@@ -10,428 +11,295 @@ import {
     Settings,
     ShieldCheck,
     Sun,
+    UserRound,
     WalletCards,
     X,
-    ArrowLeftRight,
-    UserCircle,
 } from "lucide-react";
 
 import {
     NavLink,
     Outlet,
+    useLocation,
     useNavigate,
 } from "react-router-dom";
 
-import {
-    useEffect,
-    useRef,
-    useState,
-} from "react";
-
+import { useEffect, useState } from "react";
 import { useAuth } from "../context/AuthContext";
 
-function AppLayout() {
+const navigation = [
+    {
+        label: "Dashboard",
+        path: "/dashboard",
+        icon: LayoutDashboard,
+        section: "Workspace",
+    },
+    {
+        label: "Accounts",
+        path: "/accounts",
+        icon: WalletCards,
+        section: "Workspace",
+    },
+    {
+        label: "Transactions",
+        path: "/transactions",
+        icon: ArrowLeftRight,
+        section: "Workspace",
+    },
+    {
+        label: "Security",
+        path: "/security",
+        icon: ShieldCheck,
+        section: "Account",
+    },
+    {
+        label: "Notifications",
+        path: "/notifications",
+        icon: Bell,
+        section: "Account",
+    },
+    {
+        label: "Settings",
+        path: "/settings",
+        icon: Settings,
+        section: "Account",
+    },
+];
+
+export default function AppLayout() {
     const { userEmail, logout } = useAuth();
     const navigate = useNavigate();
+    const location = useLocation();
 
-    const [mobileMenuOpen, setMobileMenuOpen] =
-        useState<boolean>(false);
-
-    const [darkMode, setDarkMode] =
-        useState<boolean>(true);
-
-    const [profileMenuOpen, setProfileMenuOpen] =
-        useState<boolean>(false);
-
-    const profileMenuRef = useRef<HTMLDivElement>(null);
+    const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+    const [darkMode, setDarkMode] = useState(
+        () =>
+            typeof window !== "undefined" &&
+            window.localStorage.getItem("finpay-theme") === "dark"
+    );
 
     useEffect(() => {
-        document.documentElement.classList.toggle(
-            "dark",
-            darkMode
+        document.documentElement.classList.toggle("dark", darkMode);
+        window.localStorage.setItem(
+            "finpay-theme",
+            darkMode ? "dark" : "light"
         );
     }, [darkMode]);
 
     useEffect(() => {
-        function handleOutsideClick(event: MouseEvent) {
-            if (
-                profileMenuRef.current &&
-                !profileMenuRef.current.contains(
-                    event.target as Node
-                )
-            ) {
-                setProfileMenuOpen(false);
-            }
-        }
-
-        document.addEventListener(
-            "mousedown",
-            handleOutsideClick
-        );
-
-        return () => {
-            document.removeEventListener(
-                "mousedown",
-                handleOutsideClick
-            );
-        };
-    }, []);
-
-    function closeMobileMenu(): void {
         setMobileMenuOpen(false);
-    }
+    }, [location.pathname]);
 
-    function openProfile(): void {
-        setProfileMenuOpen(false);
-        navigate("/profile");
-    }
-
-    function handleLogout(): void {
-        setProfileMenuOpen(false);
+    function handleLogout() {
+        setMobileMenuOpen(false);
         logout();
     }
 
-    const navigation = [
-        {
-            label: "Dashboard",
-            path: "/dashboard",
-            icon: LayoutDashboard,
-        },
-        {
-            label: "Accounts",
-            path: "/accounts",
-            icon: WalletCards,
-        },
-        {
-            label: "Transactions",
-            path: "/transactions",
-            icon: ArrowLeftRight,
-        },
-    ];
+    const initial = userEmail?.charAt(0).toUpperCase() || "U";
 
     return (
-        <div className="min-h-screen bg-slate-100 text-slate-900 dark:bg-[#07111f] dark:text-slate-100">
+        <div className="min-h-screen bg-[#F5F7FA] text-[#172B45] dark:bg-[#0B1727] dark:text-slate-100">
             {mobileMenuOpen && (
                 <button
                     type="button"
-                    aria-label="Close navigation"
-                    onClick={closeMobileMenu}
-                    className="fixed inset-0 z-40 bg-slate-950/60 backdrop-blur-sm lg:hidden"
+                    aria-label="Close navigation overlay"
+                    onClick={() => setMobileMenuOpen(false)}
+                    className="fixed inset-0 z-40 bg-slate-950/50 backdrop-blur-sm lg:hidden"
                 />
             )}
 
             <aside
-                className={`fixed inset-y-0 left-0 z-50 flex w-72 flex-col border-r border-slate-200 bg-white transition-transform duration-300 dark:border-slate-800/80 dark:bg-[#0a1626] lg:translate-x-0 ${
-                    mobileMenuOpen
-                        ? "translate-x-0"
-                        : "-translate-x-full"
-                }`}
+                className={`fixed inset-y-0 left-0 z-50 flex w-[270px] flex-col bg-[#10243D] text-white shadow-2xl shadow-slate-950/10 transition-transform duration-300 ${
+                    mobileMenuOpen ? "translate-x-0" : "-translate-x-full"
+                } lg:translate-x-0`}
             >
-                <div className="flex h-20 items-center justify-between border-b border-slate-200 px-6 dark:border-slate-800/80">
-                    <BrandLogo onClick={closeMobileMenu} />
+                <div className="flex h-[88px] items-center justify-between border-b border-white/10 px-7">
+                    <BrandLogo />
 
                     <button
                         type="button"
-                        onClick={closeMobileMenu}
-                        className="rounded-lg p-2 text-slate-500 hover:bg-slate-100 lg:hidden dark:hover:bg-slate-800"
+                        onClick={() => setMobileMenuOpen(false)}
+                        className="rounded-lg p-2 text-slate-300 hover:bg-white/10 lg:hidden"
                         aria-label="Close menu"
                     >
                         <X size={20} />
                     </button>
                 </div>
 
-                <nav className="flex-1 space-y-8 overflow-y-auto px-4 py-7">
-                    <div>
-                        <p className="mb-3 px-3 text-[10px] font-bold uppercase tracking-[0.2em] text-slate-400">
-                            Overview
-                        </p>
+                <div className="px-6 pb-2 pt-8">
+                    <p className="text-[10px] font-bold uppercase tracking-[0.22em] text-slate-400">
+                        Financial workspace
+                    </p>
+                </div>
 
-                        <div className="space-y-1">
-                            {navigation.map((item) => {
-                                const Icon = item.icon;
+                <nav className="flex-1 space-y-8 overflow-y-auto px-4 py-5">
+                    {["Workspace", "Account"].map((section) => (
+                        <div key={section}>
+                            <p className="mb-3 px-3 text-[10px] font-bold uppercase tracking-[0.18em] text-slate-500">
+                                {section}
+                            </p>
 
-                                return (
-                                    <NavLink
-                                        key={item.path}
-                                        to={item.path}
-                                        onClick={closeMobileMenu}
-                                        className={({ isActive }) =>
-                                            `group flex items-center gap-3 rounded-xl px-3 py-3 text-sm font-medium transition ${
-                                                isActive
-                                                    ? "bg-[#d4af37]/10 text-[#b8941f] dark:bg-[#d4af37]/10 dark:text-[#e5c45a]"
-                                                    : "text-slate-600 hover:bg-slate-100 hover:text-slate-950 dark:text-slate-400 dark:hover:bg-slate-800/70 dark:hover:text-white"
-                                            }`
-                                        }
-                                    >
-                                        {({ isActive }) => (
-                                            <>
-                                                <Icon
-                                                    size={19}
-                                                    strokeWidth={
+                            <div className="space-y-1">
+                                {navigation
+                                    .filter((item) => item.section === section)
+                                    .map((item) => {
+                                        const Icon = item.icon;
+
+                                        return (
+                                            <NavLink
+                                                key={item.path}
+                                                to={item.path}
+                                                className={({ isActive }) =>
+                                                    `group flex items-center gap-3 rounded-xl px-3.5 py-3 text-[13px] font-medium transition ${
                                                         isActive
-                                                            ? 2.4
-                                                            : 2
-                                                    }
-                                                />
-
-                                                <span>
-                                                    {item.label}
-                                                </span>
-
-                                                {isActive && (
-                                                    <span className="ml-auto h-1.5 w-1.5 rounded-full bg-[#d4af37]" />
+                                                            ? "bg-[#C7A45B] text-[#10243D] shadow-lg shadow-black/10"
+                                                            : "text-slate-300 hover:bg-white/[0.07] hover:text-white"
+                                                    }`
+                                                }
+                                            >
+                                                {({ isActive }) => (
+                                                    <>
+                                                        <Icon
+                                                            size={18}
+                                                            strokeWidth={isActive ? 2.4 : 1.9}
+                                                        />
+                                                        <span>{item.label}</span>
+                                                        {isActive && (
+                                                            <ChevronRight
+                                                                size={15}
+                                                                className="ml-auto"
+                                                            />
+                                                        )}
+                                                    </>
                                                 )}
-                                            </>
-                                        )}
-                                    </NavLink>
-                                );
-                            })}
+                                            </NavLink>
+                                        );
+                                    })}
+                            </div>
                         </div>
-                    </div>
-
-                    <div>
-                        <p className="mb-3 px-3 text-[10px] font-bold uppercase tracking-[0.2em] text-slate-400">
-                            Management
-                        </p>
-
-                        <div className="space-y-1">
-                            <NavLink
-                                to="/security"
-                                onClick={closeMobileMenu}
-                                className={({ isActive }) =>
-                                    `group flex items-center gap-3 rounded-xl px-3 py-3 text-sm font-medium transition ${
-                                        isActive
-                                            ? "bg-[#d4af37]/10 text-[#b8941f] dark:bg-[#d4af37]/10 dark:text-[#e5c45a]"
-                                            : "text-slate-600 hover:bg-slate-100 hover:text-slate-950 dark:text-slate-400 dark:hover:bg-slate-800/70 dark:hover:text-white"
-                                    }`
-                                }
-                            >
-                                <ShieldCheck size={19} />
-                                <span>Security</span>
-                            </NavLink>
-
-                            <NavLink
-                                to="/settings"
-                                onClick={closeMobileMenu}
-                                className={({ isActive }) =>
-                                    `group flex items-center gap-3 rounded-xl px-3 py-3 text-sm font-medium transition ${
-                                        isActive
-                                            ? "bg-[#d4af37]/10 text-[#b8941f] dark:bg-[#d4af37]/10 dark:text-[#e5c45a]"
-                                            : "text-slate-600 hover:bg-slate-100 hover:text-slate-950 dark:text-slate-400 dark:hover:bg-slate-800/70 dark:hover:text-white"
-                                    }`
-                                }
-                            >
-                                <Settings size={19} />
-                                <span>Settings</span>
-                            </NavLink>
-                        </div>
-                    </div>
+                    ))}
                 </nav>
 
-                <div className="border-t border-slate-200 p-4 dark:border-slate-800/80">
-                    <div className="flex items-center gap-3 rounded-xl p-2">
-                        <button
-                            type="button"
-                            onClick={openProfile}
-                            className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-slate-900 text-sm font-bold text-white transition hover:scale-105 dark:bg-[#d4af37] dark:text-[#07111f]"
-                            aria-label="Open profile"
-                            title="Profile"
-                        >
-                            {userEmail
-                                ?.charAt(0)
-                                .toUpperCase() || "U"}
-                        </button>
-
-                        <div className="min-w-0 flex-1">
-                            <p className="truncate text-sm font-semibold text-slate-900 dark:text-white">
-                                {userEmail}
-                            </p>
-
-                            <p className="text-xs text-slate-400">
-                                FinPay User
-                            </p>
-                        </div>
-
-                        <button
-                            type="button"
-                            onClick={handleLogout}
-                            className="rounded-lg p-2 text-slate-400 transition hover:bg-red-50 hover:text-red-600 dark:hover:bg-red-950/30"
-                            aria-label="Logout"
-                            title="Logout"
-                        >
-                            <LogOut size={18} />
-                        </button>
+                <div className="mx-4 mb-4 rounded-2xl border border-white/10 bg-white/[0.045] p-4">
+                    <div className="flex items-center gap-2">
+                        <ShieldCheck size={16} className="text-[#C7A45B]" />
+                        <p className="text-xs font-semibold text-white">
+                            Secure banking space
+                        </p>
                     </div>
+                    <p className="mt-2 text-[11px] leading-5 text-slate-400">
+                        Your financial workspace is protected by authenticated access.
+                    </p>
+                </div>
+
+                <div className="border-t border-white/10 p-4">
+                    <button
+                        type="button"
+                        onClick={() => navigate("/profile")}
+                        className="flex w-full items-center gap-3 rounded-xl p-2 text-left transition hover:bg-white/[0.07]"
+                    >
+                        <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-[#C7A45B] text-sm font-bold text-[#10243D]">
+                            {initial}
+                        </span>
+
+                        <span className="min-w-0 flex-1">
+                            <span className="block truncate text-xs font-semibold text-white">
+                                {userEmail || "FinPay User"}
+                            </span>
+                            <span className="mt-1 block text-[10px] text-slate-400">
+                                Personal account
+                            </span>
+                        </span>
+
+                        <UserRound size={16} className="text-slate-400" />
+                    </button>
+
+                    <button
+                        type="button"
+                        onClick={handleLogout}
+                        className="mt-2 flex w-full items-center gap-3 rounded-xl px-3 py-2.5 text-xs font-medium text-slate-400 transition hover:bg-red-500/10 hover:text-red-300"
+                    >
+                        <LogOut size={16} />
+                        Sign out
+                    </button>
                 </div>
             </aside>
 
-            <div className="lg:pl-72">
-                <header className="sticky top-0 z-30 flex h-20 items-center justify-between border-b border-slate-200 bg-white/90 px-4 backdrop-blur-xl sm:px-6 lg:px-8 dark:border-slate-800/80 dark:bg-[#07111f]/90">
+            <div className="min-h-screen lg:pl-[270px]">
+                <header className="sticky top-0 z-30 flex h-[76px] items-center justify-between border-b border-[#E6EAF0] bg-white/90 px-4 backdrop-blur-xl dark:border-slate-800 dark:bg-[#0B1727]/90 sm:px-7 lg:px-10">
                     <div className="flex items-center gap-3">
                         <button
                             type="button"
-                            onClick={() =>
-                                setMobileMenuOpen(true)
-                            }
-                            className="rounded-xl p-2.5 text-slate-600 hover:bg-slate-100 lg:hidden dark:text-slate-300 dark:hover:bg-slate-800"
-                            aria-label="Open menu"
+                            onClick={() => setMobileMenuOpen(true)}
+                            className="rounded-xl border border-slate-200 p-2.5 text-slate-600 hover:bg-slate-50 lg:hidden dark:border-slate-700 dark:text-slate-300 dark:hover:bg-slate-800"
+                            aria-label="Open navigation"
                         >
-                            <Menu size={21} />
+                            <Menu size={19} />
                         </button>
 
-                        <div className="lg:hidden">
-                            <span className="text-lg font-bold text-slate-950 dark:text-white">
-                                FinPay
-                            </span>
-                        </div>
-
-                        <div className="hidden lg:block">
-                            <p className="text-xs font-medium text-slate-400">
-                                PAYMENT MANAGEMENT PLATFORM
+                        <div>
+                            <p className="hidden text-[10px] font-bold uppercase tracking-[0.18em] text-slate-400 sm:block">
+                                FinPay / Digital banking
                             </p>
-
-                            <p className="text-sm font-semibold text-slate-800 dark:text-slate-200">
-                                Secure financial operations
+                            <p className="text-sm font-semibold text-[#172B45] dark:text-white">
+                                {navigation.find(
+                                    (item) => item.path === location.pathname
+                                )?.label || "Your financial workspace"}
                             </p>
                         </div>
                     </div>
 
                     <div className="flex items-center gap-2 sm:gap-3">
+                        <span className="hidden items-center gap-2 rounded-full border border-emerald-100 bg-emerald-50 px-3 py-1.5 text-[11px] font-semibold text-emerald-700 sm:inline-flex dark:border-emerald-900/50 dark:bg-emerald-950/30 dark:text-emerald-300">
+                            <span className="h-1.5 w-1.5 rounded-full bg-emerald-500" />
+                            Secure session
+                        </span>
+
                         <button
                             type="button"
-                            onClick={() =>
-                                setDarkMode(
-                                    (previous) =>
-                                        !previous
-                                )
-                            }
-                            className="rounded-xl border border-slate-200 p-2.5 text-slate-500 transition hover:bg-slate-100 hover:text-slate-900 dark:border-slate-800 dark:text-slate-400 dark:hover:bg-slate-800 dark:hover:text-white"
-                            aria-label="Toggle theme"
-                            title="Toggle theme"
+                            onClick={() => setDarkMode((value) => !value)}
+                            className="rounded-xl border border-slate-200 p-2.5 text-slate-500 transition hover:bg-slate-50 hover:text-slate-900 dark:border-slate-700 dark:text-slate-300 dark:hover:bg-slate-800"
+                            aria-label="Toggle colour theme"
+                            title="Toggle colour theme"
                         >
-                            {darkMode ? (
-                                <Sun size={18} />
-                            ) : (
-                                <Moon size={18} />
-                            )}
+                            {darkMode ? <Sun size={18} /> : <Moon size={18} />}
                         </button>
 
                         <button
                             type="button"
-                            onClick={() =>
-                                navigate("/notifications")
-                            }
-                            className="relative rounded-xl border border-slate-200 p-2.5 text-slate-500 transition hover:bg-slate-100 hover:text-slate-900 dark:border-slate-800 dark:text-slate-400 dark:hover:bg-slate-800 dark:hover:text-white"
+                            onClick={() => navigate("/notifications")}
+                            className="relative rounded-xl border border-slate-200 p-2.5 text-slate-500 transition hover:bg-slate-50 hover:text-slate-900 dark:border-slate-700 dark:text-slate-300 dark:hover:bg-slate-800"
                             aria-label="Notifications"
                             title="Notifications"
                         >
                             <Bell size={18} />
-
-                            <span className="absolute right-2 top-2 h-1.5 w-1.5 rounded-full bg-[#d4af37]" />
+                            <span className="absolute right-2 top-2 h-1.5 w-1.5 rounded-full bg-[#C7A45B]" />
                         </button>
 
-                        <div
-                            ref={profileMenuRef}
-                            className="relative hidden sm:block"
+                        <button
+                            type="button"
+                            onClick={() => navigate("/profile")}
+                            className="ml-1 flex h-9 w-9 items-center justify-center rounded-full bg-[#10243D] text-xs font-bold text-white ring-2 ring-[#C7A45B]/30 dark:bg-[#C7A45B] dark:text-[#10243D]"
+                            aria-label="Open profile"
                         >
-                            <button
-                                type="button"
-                                onClick={() =>
-                                    setProfileMenuOpen(
-                                        (previous) =>
-                                            !previous
-                                    )
-                                }
-                                className="flex items-center gap-2 rounded-xl border-l border-slate-200 pl-3 dark:border-slate-800"
-                                aria-label="Open user menu"
-                                aria-expanded={profileMenuOpen}
-                            >
-                                <div className="flex h-9 w-9 items-center justify-center rounded-full bg-slate-900 text-xs font-bold text-white dark:bg-[#d4af37] dark:text-[#07111f]">
-                                    {userEmail
-                                        ?.charAt(0)
-                                        .toUpperCase() ||
-                                        "U"}
-                                </div>
-
-                                <ChevronDown
-                                    size={16}
-                                    className={`text-slate-400 transition ${
-                                        profileMenuOpen
-                                            ? "rotate-180"
-                                            : ""
-                                    }`}
-                                />
-                            </button>
-
-                            {profileMenuOpen && (
-                                <div className="absolute right-0 top-12 w-64 overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-2xl dark:border-slate-800 dark:bg-[#0a1626]">
-                                    <div className="border-b border-slate-200 p-4 dark:border-slate-800">
-                                        <p className="text-sm font-semibold text-slate-950 dark:text-white">
-                                            {userEmail}
-                                        </p>
-
-                                        <p className="mt-1 text-xs text-slate-400">
-                                            FinPay User
-                                        </p>
-                                    </div>
-
-                                    <div className="p-2">
-                                        <button
-                                            type="button"
-                                            onClick={openProfile}
-                                            className="flex w-full items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-medium text-slate-700 hover:bg-slate-100 dark:text-slate-300 dark:hover:bg-slate-800"
-                                        >
-                                            <UserCircle size={18} />
-                                            Profile
-                                        </button>
-
-                                        <button
-                                            type="button"
-                                            onClick={() => {
-                                                setProfileMenuOpen(false);
-                                                navigate("/security");
-                                            }}
-                                            className="flex w-full items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-medium text-slate-700 hover:bg-slate-100 dark:text-slate-300 dark:hover:bg-slate-800"
-                                        >
-                                            <ShieldCheck size={18} />
-                                            Security
-                                        </button>
-
-                                        <button
-                                            type="button"
-                                            onClick={() => {
-                                                setProfileMenuOpen(false);
-                                                navigate("/settings");
-                                            }}
-                                            className="flex w-full items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-medium text-slate-700 hover:bg-slate-100 dark:text-slate-300 dark:hover:bg-slate-800"
-                                        >
-                                            <Settings size={18} />
-                                            Settings
-                                        </button>
-
-                                        <button
-                                            type="button"
-                                            onClick={handleLogout}
-                                            className="mt-1 flex w-full items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-medium text-red-600 hover:bg-red-50 dark:text-red-400 dark:hover:bg-red-950/30"
-                                        >
-                                            <LogOut size={18} />
-                                            Logout
-                                        </button>
-                                    </div>
-                                </div>
-                            )}
-                        </div>
+                            {initial}
+                        </button>
                     </div>
                 </header>
 
-                <main className="min-h-[calc(100vh-5rem)] bg-slate-100 px-4 py-6 sm:px-6 lg:px-8 lg:py-8 dark:bg-[#07111f]">
-                    <div className="mx-auto max-w-7xl">
+                <main className="min-h-[calc(100vh-76px)] px-4 py-7 sm:px-7 sm:py-8 lg:px-10 lg:py-9">
+                    <div className="mx-auto max-w-[1440px]">
                         <Outlet />
                     </div>
                 </main>
+
+                <footer className="border-t border-[#E6EAF0] px-4 py-5 text-center text-[11px] text-slate-400 dark:border-slate-800 sm:px-7 lg:px-10">
+                    <span>FinPay</span>
+                    <span className="mx-2">·</span>
+                    <span>Secure digital payments</span>
+                    <span className="mx-2">·</span>
+                    <span>© {new Date().getFullYear()}</span>
+                </footer>
             </div>
         </div>
     );
 }
-
-export default AppLayout;

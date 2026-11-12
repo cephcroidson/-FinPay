@@ -62,9 +62,9 @@ public class TransactionController {
             @Valid @RequestBody TransferRequest request,
             Authentication authentication) {
 
-        Transaction transaction = transactionService.transfer(
+        Transaction transaction = transactionService.transferToAccountNumber(
                 request.getSourceAccountId(),
-                request.getDestinationAccountId(),
+                request.getDestinationAccountNumber(),
                 request.getAmount(),
                 request.getDescription(),
                 authentication.getName()

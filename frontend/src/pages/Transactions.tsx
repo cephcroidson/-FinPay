@@ -36,8 +36,41 @@ import type {
 interface TransactionForm {
     type: TransactionType;
     amount: string;
-    destinationAccountId: string;
+    destinationAccountNumber: string;
     description: string;
+}
+
+
+function formatKenyanDateTime(value?: string | null): string {
+    if (!value) return "Time unavailable";
+
+    const match = value.match(
+        /^(\d{4})-(\d{2})-(\d{2})T(\d{2}):(\d{2})(?::(\d{2}))?/
+    );
+
+    if (!match) return "Time unavailable";
+
+    const [, year, month, day, hour, minute, second = "0"] = match;
+
+    // The backend LocalDateTime represents Nairobi wall-clock time.
+    const instant = new Date(Date.UTC(
+        Number(year),
+        Number(month) - 1,
+        Number(day),
+        Number(hour) - 3,
+        Number(minute),
+        Number(second)
+    ));
+
+    return new Intl.DateTimeFormat("en-KE", {
+        timeZone: "Africa/Nairobi",
+        day: "2-digit",
+        month: "short",
+        year: "numeric",
+        hour: "2-digit",
+        minute: "2-digit",
+        hour12: true
+    }).format(instant) + " EAT";
 }
 
 function Transactions() {
@@ -63,7 +96,7 @@ function Transactions() {
         useState<TransactionForm>({
             type: "DEPOSIT",
             amount: "",
-            destinationAccountId: "",
+            destinationAccountNumber: "",
             description: "",
         });
 
@@ -163,21 +196,21 @@ function Transactions() {
 
         if (
             form.type === "TRANSFER" &&
-            !form.destinationAccountId.trim()
+            !form.destinationAccountNumber.trim()
         ) {
             setError(
-                "Enter the destination account ID."
+                "Enter the recipient's FinPay account number."
             );
             return;
         }
 
         if (
             form.type === "TRANSFER" &&
-            Number(form.destinationAccountId) ===
-                account.id
+            form.destinationAccountNumber.trim() ===
+                account.accountNumber
         ) {
             setError(
-                "The destination account cannot be the same as the source account."
+                "You cannot transfer to your own account."
             );
             return;
         }
@@ -206,9 +239,7 @@ function Transactions() {
             if (form.type === "TRANSFER") {
                 await transfer(
                     account.id,
-                    Number(
-                        form.destinationAccountId
-                    ),
+                    form.destinationAccountNumber.trim(),
                     amount,
                     form.description.trim() ||
                         undefined
@@ -222,7 +253,7 @@ function Transactions() {
             setForm({
                 type: form.type,
                 amount: "",
-                destinationAccountId: "",
+                destinationAccountNumber: "",
                 description: "",
             });
 
@@ -527,10 +558,10 @@ function Transactions() {
                                                         ) => ({
                                                             ...previous,
                                                             type: option.value,
-                                                            destinationAccountId:
+                                                            destinationAccountNumber:
                                                                 option.value ===
                                                                 "TRANSFER"
-                                                                    ? previous.destinationAccountId
+                                                                    ? previous.destinationAccountNumber
                                                                     : "",
                                                         })
                                                     )
@@ -581,10 +612,10 @@ function Transactions() {
                             "TRANSFER" && (
                             <div>
                                 <label
-                                    htmlFor="destinationAccountId"
+                                    htmlFor="destinationAccountNumber"
                                     className="mb-2 block text-xs font-semibold uppercase tracking-wide text-slate-500 dark:text-slate-400"
                                 >
-                                    Destination account ID
+                                    Recipient account number
                                 </label>
 
                                 <div className="relative">
@@ -594,17 +625,19 @@ function Transactions() {
                                     />
 
                                     <input
-                                        id="destinationAccountId"
-                                        name="destinationAccountId"
-                                        type="number"
-                                        min="1"
+                                        id="destinationAccountNumber"
+                                        name="destinationAccountNumber"
+                                        type="text"
+                                        inputMode="numeric"
+                                        maxLength={20}
+                                        autoComplete="off"
                                         value={
-                                            form.destinationAccountId
+                                            form.destinationAccountNumber
                                         }
                                         onChange={
                                             handleChange
                                         }
-                                        placeholder="Enter destination account ID"
+                                        placeholder="Enter recipient's FinPay account number"
                                         className="w-full rounded-xl border border-slate-200 bg-slate-50 px-10 py-3 text-sm text-slate-900 outline-none transition placeholder:text-slate-400 focus:border-[#d4af37] focus:ring-2 focus:ring-[#d4af37]/20 dark:border-slate-800 dark:bg-slate-900/60 dark:text-white dark:focus:border-[#d4af37]"
                                     />
                                 </div>
@@ -840,6 +873,11 @@ function Transactions() {
                                                         transaction.description ||
                                                         "Payment transaction"
                                                     }
+                                                </p>
+
+                                                <p className="mt-1 flex items-center gap-1 text-[11px] text-slate-400 dark:text-slate-500">
+                                                    <Clock3 size={12} />
+                                                    {formatKenyanDateTime(transaction.createdAt)}
                                                 </p>
 
                                                 <span

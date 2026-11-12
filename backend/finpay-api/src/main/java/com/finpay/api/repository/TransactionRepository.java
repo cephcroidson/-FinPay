@@ -22,7 +22,7 @@ public interface TransactionRepository extends JpaRepository<Transaction, Long> 
 
     boolean existsByReference(String reference);
 
-    List<Transaction> findBySourceAccountIdOrDestinationAccountId(
+    List<Transaction> findBySourceAccountIdOrDestinationAccountIdOrderByCreatedAtDesc(
             Long sourceAccountId,
             Long destinationAccountId
     );

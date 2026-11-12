@@ -42,13 +42,13 @@ export async function withdraw(
 
 export async function transfer(
     sourceAccountId: number,
-    destinationAccountId: number,
+    destinationAccountNumber: string,
     amount: number,
     description?: string
 ): Promise<Transaction | null> {
     const payload: TransferRequest = {
         sourceAccountId,
-        destinationAccountId,
+        destinationAccountNumber,
         amount,
         description,
     };

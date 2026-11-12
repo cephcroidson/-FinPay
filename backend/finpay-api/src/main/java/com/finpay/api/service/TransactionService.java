@@ -1,6 +1,7 @@
 package com.finpay.api.service;
 
 import com.finpay.api.entity.Account;
+import com.finpay.api.entity.AccountStatus;
 import com.finpay.api.entity.Transaction;
 import com.finpay.api.entity.TransactionStatus;
 import com.finpay.api.entity.TransactionType;
@@ -68,7 +69,7 @@ public class TransactionService {
         transaction.setStatus(TransactionStatus.COMPLETED);
         transaction.setType(TransactionType.DEPOSIT);
         transaction.setDestinationAccount(account);
-        transaction.setCompletedAt(LocalDateTime.now());
+        transaction.setCompletedAt(LocalDateTime.now(java.time.ZoneId.of("Africa/Nairobi")));
 
         return transactionRepository.save(transaction);
     }
@@ -116,7 +117,7 @@ public class TransactionService {
         transaction.setStatus(TransactionStatus.COMPLETED);
         transaction.setType(TransactionType.WITHDRAWAL);
         transaction.setSourceAccount(account);
-        transaction.setCompletedAt(LocalDateTime.now());
+        transaction.setCompletedAt(LocalDateTime.now(java.time.ZoneId.of("Africa/Nairobi")));
 
         return transactionRepository.save(transaction);
     }
@@ -124,6 +125,39 @@ public class TransactionService {
     // =========================================================
     // TRANSFER
     // =========================================================
+
+    @Transactional
+    public Transaction transferToAccountNumber(
+            Long sourceAccountId,
+            String destinationAccountNumber,
+            BigDecimal amount,
+            String description,
+            String authenticatedEmail) {
+
+        if (destinationAccountNumber == null ||
+                destinationAccountNumber.isBlank()) {
+            throw new IllegalArgumentException(
+                    "Destination account number is required");
+        }
+
+        Account destinationAccount = accountRepository
+                .findByAccountNumber(destinationAccountNumber.trim())
+                .orElseThrow(() -> new IllegalArgumentException(
+                        "Recipient account number was not found"));
+
+        if (destinationAccount.getStatus() != AccountStatus.ACTIVE) {
+            throw new IllegalArgumentException(
+                    "Recipient account is not active");
+        }
+
+        return transfer(
+                sourceAccountId,
+                destinationAccount.getId(),
+                amount,
+                description,
+                authenticatedEmail
+        );
+    }
 
     @Transactional
     public Transaction transfer(
@@ -188,7 +222,7 @@ public class TransactionService {
         transaction.setType(TransactionType.TRANSFER);
         transaction.setSourceAccount(sourceAccount);
         transaction.setDestinationAccount(destinationAccount);
-        transaction.setCompletedAt(LocalDateTime.now());
+        transaction.setCompletedAt(LocalDateTime.now(java.time.ZoneId.of("Africa/Nairobi")));
 
         return transactionRepository.save(transaction);
     }
@@ -232,7 +266,7 @@ public class TransactionService {
         verifyOwnership(account, authenticatedEmail);
 
         return transactionRepository
-                .findBySourceAccountIdOrDestinationAccountId(
+                .findBySourceAccountIdOrDestinationAccountIdOrderByCreatedAtDesc(
                         accountId,
                         accountId
                 );

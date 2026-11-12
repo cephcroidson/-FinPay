@@ -40,11 +40,22 @@ async function apiRequest<T>(
         try {
             const errorData = await response.json();
 
-            if (
-                errorData &&
-                typeof errorData.message === "string"
-            ) {
+            if (errorData && typeof errorData.message === "string") {
                 errorMessage = errorData.message;
+
+                if (
+                    errorData.errors &&
+                    typeof errorData.errors === "object" &&
+                    !Array.isArray(errorData.errors)
+                ) {
+                    const fieldErrors = Object.entries(errorData.errors)
+                        .map(([field, message]) => `${field}: ${String(message)}`)
+                        .join("; ");
+
+                    if (fieldErrors) {
+                        errorMessage = `${errorMessage}: ${fieldErrors}`;
+                    }
+                }
             }
         } catch {
             // Response may not contain JSON

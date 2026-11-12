@@ -112,7 +112,7 @@ public class MpesaCallbackService {
             payment.setStatus(MpesaPaymentStatus.COMPLETED);
             payment.setMpesaReceiptNumber(
                     metadata.mpesaReceiptNumber);
-            payment.setCompletedAt(LocalDateTime.now());
+            payment.setCompletedAt(LocalDateTime.now(java.time.ZoneId.of("Africa/Nairobi")));
 
             mpesaPaymentRepository.save(payment);
             return;
@@ -136,14 +136,14 @@ public class MpesaCallbackService {
         accountRepository.save(account);
 
         transaction.setStatus(TransactionStatus.COMPLETED);
-        transaction.setCompletedAt(LocalDateTime.now());
+        transaction.setCompletedAt(LocalDateTime.now(java.time.ZoneId.of("Africa/Nairobi")));
 
         transactionRepository.save(transaction);
 
         payment.setStatus(MpesaPaymentStatus.COMPLETED);
         payment.setMpesaReceiptNumber(
                 metadata.mpesaReceiptNumber);
-        payment.setCompletedAt(LocalDateTime.now());
+        payment.setCompletedAt(LocalDateTime.now(java.time.ZoneId.of("Africa/Nairobi")));
 
         mpesaPaymentRepository.save(payment);
     }

@@ -16,6 +16,10 @@ export interface Transaction {
     amount: number;
     description?: string | null;
     status: TransactionStatus;
+    currency?: string;
+    reference?: string;
+    createdAt: string;
+    completedAt?: string | null;
 }
 
 export interface DepositRequest {
@@ -32,7 +36,7 @@ export interface WithdrawRequest {
 
 export interface TransferRequest {
     sourceAccountId: number;
-    destinationAccountId: number;
+    destinationAccountNumber: string;
     amount: number;
     description?: string;
 }

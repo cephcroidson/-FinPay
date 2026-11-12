@@ -2,6 +2,8 @@ package com.finpay.api.dto;
 
 import jakarta.validation.constraints.DecimalMin;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
 
 import java.math.BigDecimal;
 
@@ -10,8 +12,9 @@ public class TransferRequest {
     @NotNull(message = "Source account ID is required")
     private Long sourceAccountId;
 
-    @NotNull(message = "Destination account ID is required")
-    private Long destinationAccountId;
+    @NotBlank(message = "Destination account number is required")
+    @Size(max = 20, message = "Destination account number is too long")
+    private String destinationAccountNumber;
 
     @NotNull(message = "Amount is required")
     @DecimalMin(value = "0.01", message = "Amount must be greater than zero")
@@ -30,12 +33,12 @@ public class TransferRequest {
         this.sourceAccountId = sourceAccountId;
     }
 
-    public Long getDestinationAccountId() {
-        return destinationAccountId;
+    public String getDestinationAccountNumber() {
+        return destinationAccountNumber;
     }
 
-    public void setDestinationAccountId(Long destinationAccountId) {
-        this.destinationAccountId = destinationAccountId;
+    public void setDestinationAccountNumber(String destinationAccountNumber) {
+        this.destinationAccountNumber = destinationAccountNumber;
     }
 
     public BigDecimal getAmount() {

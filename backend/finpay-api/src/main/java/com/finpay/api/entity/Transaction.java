@@ -47,7 +47,7 @@ public class Transaction {
 
     @PrePersist
     protected void onCreate() {
-        createdAt = LocalDateTime.now();
+        createdAt = LocalDateTime.now(java.time.ZoneId.of("Africa/Nairobi"));
 
         if (status == null) {
             status = TransactionStatus.PENDING;
