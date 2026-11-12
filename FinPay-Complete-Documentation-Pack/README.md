@@ -1,8 +1,8 @@
 # FinPay — Complete Project Documentation
 
-**Project:** FinPay  
-**Document pack:** Target-state product and system specification  
-**Version:** 1.0  
+**Project:** FinPay
+**Document pack:** Target-state product and system specification
+**Version:** 1.0
 **Audience:** Tracom Academy assessors, product stakeholders, business analysts, developers, QA, operations and future maintainers.
 
 ## 1. Documentation purpose

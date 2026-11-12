@@ -86,40 +86,40 @@ Numerical service-level objectives must be approved and supported by measured ca
 
 ### UC-01 — Customer onboarding
 
-**Primary actor:** Customer  
-**Preconditions:** Customer has access to a valid contact channel.  
-**Main flow:** Submit registration details → validate details → send verification challenge → verify contact → set password → complete required identity checks → create/activate account → set transaction PIN → show onboarding completion.  
-**Alternative flows:** Duplicate contact, invalid challenge, expired challenge, retry limit reached, provider delivery failure, identity review required.  
+**Primary actor:** Customer
+**Preconditions:** Customer has access to a valid contact channel.
+**Main flow:** Submit registration details → validate details → send verification challenge → verify contact → set password → complete required identity checks → create/activate account → set transaction PIN → show onboarding completion.
+**Alternative flows:** Duplicate contact, invalid challenge, expired challenge, retry limit reached, provider delivery failure, identity review required.
 **Postcondition:** Customer profile and account are in the appropriate lifecycle state.
 
 ### UC-02 — Fund account using M-Pesa
 
-**Primary actor:** Customer  
-**Preconditions:** Customer is authenticated, account is eligible and provider integration is available.  
-**Main flow:** Enter amount and phone → review fee/amount → confirm with transaction PIN or required step-up control → create pending payment instruction → request STK Push → customer approves on handset → provider sends callback → validate callback and correlate payment → post financial credit exactly once → notify customer and provide receipt.  
-**Alternative flows:** Rejected prompt, timeout, cancelled request, callback delay, invalid callback, duplicate callback, amount mismatch or reconciliation exception.  
+**Primary actor:** Customer
+**Preconditions:** Customer is authenticated, account is eligible and provider integration is available.
+**Main flow:** Enter amount and phone → review fee/amount → confirm with transaction PIN or required step-up control → create pending payment instruction → request STK Push → customer approves on handset → provider sends callback → validate callback and correlate payment → post financial credit exactly once → notify customer and provide receipt.
+**Alternative flows:** Rejected prompt, timeout, cancelled request, callback delay, invalid callback, duplicate callback, amount mismatch or reconciliation exception.
 **Postcondition:** Payment and account ledger reflect the verified outcome.
 
 ### UC-03 — Internal transfer
 
-**Primary actor:** Customer  
-**Preconditions:** Customer is authenticated and source account is eligible.  
-**Main flow:** Select recipient → enter amount → show confirmation → verify transaction PIN → validate limits and available balance → atomically post debit and credit entries → issue reference and receipt → notify parties.  
-**Alternative flows:** Invalid recipient, insufficient funds, account restriction, PIN lockout, duplicate request, concurrent debit conflict or posting failure.  
+**Primary actor:** Customer
+**Preconditions:** Customer is authenticated and source account is eligible.
+**Main flow:** Select recipient → enter amount → show confirmation → verify transaction PIN → validate limits and available balance → atomically post debit and credit entries → issue reference and receipt → notify parties.
+**Alternative flows:** Invalid recipient, insufficient funds, account restriction, PIN lockout, duplicate request, concurrent debit conflict or posting failure.
 **Postcondition:** Both sides of the transfer are consistent or neither side is posted.
 
 ### UC-04 — Withdrawal or payout
 
-**Primary actor:** Customer  
-**Preconditions:** A payout provider and customer eligibility are configured.  
-**Main flow:** Select destination/channel → enter amount → review fees and net payout → authenticate action → validate balance and limits → create pending payout → submit to provider → process asynchronous outcome → post completion or failure/reversal → notify customer.  
+**Primary actor:** Customer
+**Preconditions:** A payout provider and customer eligibility are configured.
+**Main flow:** Select destination/channel → enter amount → review fees and net payout → authenticate action → validate balance and limits → create pending payout → submit to provider → process asynchronous outcome → post completion or failure/reversal → notify customer.
 **Alternative flows:** Provider unavailable, rejection, timeout, pending result, returned payout or reconciliation mismatch.
 
 ### UC-05 — Transaction investigation
 
-**Primary actor:** Support/operations user  
-**Preconditions:** Staff user has appropriate role and case-related access.  
-**Main flow:** Search by reference → verify customer and permissions → inspect lifecycle and provider events → compare ledger and provider records → record findings → initiate approved resolution workflow.  
+**Primary actor:** Support/operations user
+**Preconditions:** Staff user has appropriate role and case-related access.
+**Main flow:** Search by reference → verify customer and permissions → inspect lifecycle and provider events → compare ledger and provider records → record findings → initiate approved resolution workflow.
 **Postcondition:** Case activity is recorded and any financial adjustment follows maker-checker controls.
 
 ## 8. Acceptance principles

@@ -2,10 +2,10 @@
 
 ## 1. Project identity
 
-**Name:** FinPay  
-**Category:** Digital financial services / fintech platform  
-**Initial market focus:** Kenya  
-**Primary interfaces:** Responsive web application and Android mobile application  
+**Name:** FinPay
+**Category:** Digital financial services / fintech platform
+**Initial market focus:** Kenya
+**Primary interfaces:** Responsive web application and Android mobile application
 **Primary users:** Individual customers, operations/support personnel and system administrators.
 
 ## 2. Executive summary
